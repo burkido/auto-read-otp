@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_timeout_error">Your SMS has timed out. Please try again.</string>
+    <string name="activity_not_found_error">Unable to start the consent dialog. Please try again.</string>
+    <string name="sms_retriever_error_consent_denied">SMS retrieval consent was denied. Please try again.</string>
+</resources>
