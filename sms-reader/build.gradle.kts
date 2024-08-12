@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("maven-publish")
 }
 
 android {
@@ -45,4 +46,17 @@ dependencies {
 
     // Play Services Auth
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+                groupId = "com.github.burkido"
+                artifactId = "auto-read-otp"
+                version = "1.0.0"
+            }
+        }
+    }
 }
