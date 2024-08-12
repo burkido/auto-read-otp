@@ -67,5 +67,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    implementation(project(":sms-reader"))
+    implementation("com.github.burkido:auto-read-otp:1.0.1")
 }
