@@ -27,16 +27,18 @@ fun VerificationScreen() {
     ) {
         OtpTextField(
             value = code,
+            length = OTP_LENGTH,
             onValueChange = { code = it },
-            length = 5,
             onVerificationExplicitlyTriggered = {
-                // send the code to the server
+                // trigger a function to verify the code
             }
         )
+
         SmsUserConsent(
-            onSmsReceived = { sms ->
-                Log.d("MainActivity", "SMS Received: $sms")
-                code = sms
+            smsCodeLength = OTP_LENGTH,
+            onOTPReceived = { otp ->
+                Log.d("MainActivity", "SMS Received: $otp")
+                code = otp
             },
             onError = { error ->
                 Log.e("MainActivity", "Error: $error")
@@ -50,3 +52,5 @@ fun VerificationScreen() {
 private fun VerificationScreenPreview() {
     VerificationScreen()
 }
+
+private const val OTP_LENGTH = 6

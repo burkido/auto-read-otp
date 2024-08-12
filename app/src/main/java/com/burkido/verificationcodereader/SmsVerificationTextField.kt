@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 fun OtpTextField(
     modifier: Modifier = Modifier,
     value: String,
-    length: Int = 6,
+    length: Int,
     onValueChange: (String) -> Unit,
     onVerificationExplicitlyTriggered: () -> Unit
 ) {
@@ -49,7 +49,10 @@ fun OtpTextField(
         decorationBox = {
             Row(horizontalArrangement = Arrangement.Center) {
                 repeat(length) { index ->
-                    CharView(index = index, text = value)
+                    CharView(
+                        index = index,
+                        text = value
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
                 }
             }
@@ -58,7 +61,11 @@ fun OtpTextField(
 }
 
 @Composable
-private fun CharView(index: Int, text: String) {
+private fun CharView(
+    modifier: Modifier = Modifier,
+    index: Int,
+    text: String
+) {
     val isFocused = index == text.length
     val char = text.getOrNull(index)?.toString().orEmpty()
 
@@ -72,8 +79,8 @@ private fun CharView(index: Int, text: String) {
     )
 
     Box(
-        modifier = Modifier
-            .size(60.dp)
+        modifier = modifier
+            .size(50.dp)
             .border(2.dp, borderColor, RoundedCornerShape(8.dp))
             .clip(RoundedCornerShape(8.dp))
             .background(backgroundColor)

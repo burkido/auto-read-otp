@@ -18,12 +18,11 @@ import com.google.android.gms.common.api.Status
 
 @Composable
 fun SmsUserConsent(
-    smsCodeLength: Int = 5,
-    onSmsReceived: (smsCode: String) -> Unit,
+    smsCodeLength: Int,
+    onOTPReceived: (otp: String) -> Unit,
     onError: (error: String) -> Unit,
 ) {
     val context = LocalContext.current
-
     var shouldRegisterReceiver by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = true) {
@@ -41,7 +40,7 @@ fun SmsUserConsent(
                 val message: String? = it.data!!.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
                 message?.let {
                     val verificationCode = getVerificationCodeFromSms(message, smsCodeLength)
-                    onSmsReceived(verificationCode)
+                    onOTPReceived(verificationCode)
                 }
                 shouldRegisterReceiver = false
             } else {
@@ -53,20 +52,19 @@ fun SmsUserConsent(
         SystemBroadcastReceiver(systemAction = SmsRetriever.SMS_RETRIEVED_ACTION) { intent ->
             if (intent != null && SmsRetriever.SMS_RETRIEVED_ACTION == intent.action) {
                 val extras = intent.extras
-
                 val smsRetrieverStatus = extras?.parcelable<Status>(SmsRetriever.EXTRA_STATUS) as Status
+
                 when (smsRetrieverStatus.statusCode) {
                     CommonStatusCodes.SUCCESS -> {
                         val consentIntent = extras.parcelable<Intent>(SmsRetriever.EXTRA_CONSENT_INTENT)
+
                         try {
-                            // Start activity to show consent dialog to user, activity must be started in
-                            // 5 minutes, otherwise you'll receive another TIMEOUT intent
+                            // Start consent dialog. Timeout intent will be sent after 5 minutes
                             consentIntent?.let { launcher.launch(it) }
                         } catch (e: ActivityNotFoundException) {
                             onError(context.getString(R.string.activity_not_found_error))
                         }
                     }
-
                     CommonStatusCodes.TIMEOUT -> onError(context.getString(R.string.sms_timeout_error))
                 }
             }
