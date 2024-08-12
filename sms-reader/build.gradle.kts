@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.burkido.sms_reader"
+    namespace = "com.burkido.autoreadotp"
     compileSdk = 34
 
     defaultConfig {

@@ -1,4 +1,4 @@
-package com.burkido.sms_reader
+package com.burkido.autoreadotp
 
 import android.app.Activity
 import android.content.ActivityNotFoundException

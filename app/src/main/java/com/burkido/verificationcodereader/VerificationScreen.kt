@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.burkido.sms_reader.SmsUserConsent
+import com.burkido.autoreadotp.SmsUserConsent
 
 @Composable
 fun VerificationScreen() {
