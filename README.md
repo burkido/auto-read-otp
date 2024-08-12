@@ -28,3 +28,6 @@ SmsUserConsent(
         Log.e("MainActivity", "Error: $error")
     }
 )
+```
+
+https://github.com/user-attachments/assets/81cc0afd-e6f7-4bce-bc6a-ee2b5acc7fa2
