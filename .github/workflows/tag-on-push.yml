@@ -1,8 +1,8 @@
-name: Tag on push to main
+name: Tag on Pull Request Merged
 
 on:
   pull_request:
-    types: [ closed ]
+    types: [closed]
 
 jobs:
   tag:
@@ -12,21 +12,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Git as an user
+      - name: Set up Git
         run: |
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
 
-      - name: Get the current tag
-        id: current_tag
-        run: echo "::set-output name=tag::$(git describe --tags --abbrev=0 || echo '1.0.0')"
+      - name: Get the current tag using GITHUB_REF_NAME
+        run: |
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{ github.ref_name }}"
 
       - name: Bump version and create tag
         id: tag_version
         run: |
-          NEW_TAG=$(echo "${{ steps.current_tag.outputs.tag }}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+          NEW_TAG=$(echo "${GITHUB_REF_NAME:-0.0.0}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
           git tag $NEW_TAG
-          echo "New tag: $NEW_TAG"
+          echo "New tag created: $NEW_TAG"
           echo "::set-output name=new_tag::$NEW_TAG"
 
       - name: Push the tag
