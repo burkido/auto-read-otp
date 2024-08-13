@@ -1,0 +1,34 @@
+name: Tag on push to main
+
+on:
+  pull_request:
+    types: [ closed ]
+
+jobs:
+  tag:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Git as an user
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+      - name: Get the current tag
+        id: current_tag
+        run: echo "::set-output name=tag::$(git describe --tags --abbrev=0 || echo '1.0.0')"
+
+      - name: Bump version and create tag
+        id: tag_version
+        run: |
+          NEW_TAG=$(echo "${{ steps.current_tag.outputs.tag }}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+          git tag $NEW_TAG
+          echo "New tag: $NEW_TAG"
+          echo "::set-output name=new_tag::$NEW_TAG"
+
+      - name: Push the tag
+        run: |
+          git push origin ${{ steps.tag_version.outputs.new_tag }}
