@@ -5,31 +5,18 @@ on:
     types: [closed]
 
 jobs:
-  tag:
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Git
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-
-      - name: Get the current tag using GITHUB_REF_NAME
-        run: |
-          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-          echo "Tag name from github.ref_name: ${{ github.ref_name }}"
-
-      - name: Bump version and create tag
+      - uses: actions/checkout@v4
+      - name: Bump version and push tag
         id: tag_version
-        run: |
-          NEW_TAG=$(echo "${GITHUB_REF_NAME:-0.0.0}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
-          git tag $NEW_TAG
-          echo "New tag created: $NEW_TAG"
-          echo "::set-output name=new_tag::$NEW_TAG"
-
-      - name: Push the tag
-        run: |
-          git push origin ${{ steps.tag_version.outputs.new_tag }}
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
