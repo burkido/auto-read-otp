@@ -22,4 +22,4 @@ jobs:
       - name: Create new release
         uses: ./.github/workflows/create-new-release.yml
         with:
-          tag_name: ${{ jobs.main-workflow.steps.create_tag.outputs.tag_name }}
+          tag_name: ${{ steps.create_tag.outputs.tag_name }}
