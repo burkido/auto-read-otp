@@ -6,29 +6,22 @@ on:
       - jitpack-cd
 
 jobs:
-  tag:
+  example:
+    name: Example
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: Clone repository
         uses: actions/checkout@v3
-
-      - name: Set up Git
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Get next version
+        id: get_next_version
+        uses: thenativeweb/get-next-version@main
+        with:
+          prefix: 'v' # optional, defaults to ''
+      - name: Show the next version
         run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-
-      - name: Get the current tag
-        id: current_tag
-        run: echo "::set-output name=tag::$(git describe --tags --abbrev=0 || echo '0.0.0')"
-
-      - name: Bump version and create tag
-        id: tag_version
-        run: |
-          NEW_TAG=$(echo "${{ github.ref_name }}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
-          git tag $NEW_TAG
-          echo "New tag created: $NEW_TAG"
-          echo "::set-output name=new_tag::$NEW_TAG"
-
-      - name: Push the tag
-        run: |
-          git push origin ${{ steps.tag_version.outputs.new_tag }}
+          echo ${{ steps.get_next_version.outputs.version }}
+          echo ${{ steps.get_next_version.outputs.hasNextVersion }}
