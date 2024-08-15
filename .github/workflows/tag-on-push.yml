@@ -5,8 +5,7 @@ on:
     branches:
       - 'jitpack-cd'
 
-permissions:
-  contents: write
+
 
 jobs:
   create-new-tag-and-release:
