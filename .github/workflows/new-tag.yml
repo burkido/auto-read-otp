@@ -1,9 +1,7 @@
 name: Handle new tag
 
 on:
-  push:
-    branches:
-      - 'jitpack-cd'
+  workflow_call:
 
 permissions:
   contents: write

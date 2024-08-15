@@ -1,9 +1,7 @@
 name: Handle new release
 
 on:
-  push:
-    branches:
-      - 'jitpack-cd'
+  workflow_call:
 
 permissions:
   contents: write
