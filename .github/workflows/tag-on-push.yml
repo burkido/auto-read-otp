@@ -24,7 +24,7 @@ jobs:
       - name: Bump version and create tag
         id: tag_version
         run: |
-          NEW_TAG=$(echo "${{ steps.current_tag.outputs.tag }}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+          NEW_TAG=$(echo "${{ github.ref_name }}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
           git tag $NEW_TAG
           echo "New tag created: $NEW_TAG"
           echo "::set-output name=new_tag::$NEW_TAG"
