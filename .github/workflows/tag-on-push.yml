@@ -50,3 +50,4 @@ jobs:
           body: ${{ env.RELEASE_BODY }}
           draft: false
           prerelease: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
