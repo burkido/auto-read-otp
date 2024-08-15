@@ -3,7 +3,7 @@ name: Create new tag on push on main branch
 on:
   push:
     branches:
-      - 'main'
+      - 'jitpack-cd'
 
 permissions:
   contents: write
