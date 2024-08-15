@@ -1,0 +1,56 @@
+name: Add new tag and release on pull request merge to main
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'main'
+
+permissions:
+  contents: write
+
+jobs:
+  create-new-tag-and-release:
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'development' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get next version
+        id: get_next_version
+        uses: thenativeweb/get-next-version@2.6.2
+
+      - name: Check for existing tag
+        id: check_tag
+        run: |
+          if git rev-parse "refs/tags/${{ steps.get_next_version.outputs.version }}" >/dev/null 2>&1; then
+            echo "Tag already exists"
+            exit 1
+          fi
+
+      - name: Push new tag
+        if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
+        run: |
+          git tag ${{ steps.get_next_version.outputs.version }}
+          git push origin ${{ steps.get_next_version.outputs.version }}
+
+      - name: Read release body from file
+        id: read_release_body
+        run: |
+          echo "RELEASE_BODY=$(cat release-notes.txt)" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_next_version.outputs.version }}
+          release_name: 'Auto OTP Reader ${{ steps.get_next_version.outputs.version }}'
+          body: ${{ env.RELEASE_BODY }}
+          draft: false
+          prerelease: false
