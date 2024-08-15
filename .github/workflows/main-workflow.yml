@@ -8,6 +8,7 @@ on:
 permissions:
   contents: write
 
+
 jobs:
   create-new-tag-and-release:
     runs-on: ubuntu-latest
