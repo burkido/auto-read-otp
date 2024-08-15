@@ -20,7 +20,7 @@ jobs:
 
       - name: Get next version
         id: get_next_version
-        uses: thenativeweb/get-next-version@2.5.0
+        uses: thenativeweb/get-next-version@2.6.2
 
       - name: Check for existing tag
         id: check_tag
