@@ -1,4 +1,4 @@
-name: Main Workflow
+name: Create new tag and release on push to jitpack-cd branch
 
 on:
   push:
@@ -9,9 +9,46 @@ permissions:
   contents: write
 
 jobs:
-  handle-new-tag:
-    uses: ./.github/workflows/new-tag.yml
+  create-new-tag-and-release:
+    runs-on: ubuntu-latest
 
-  handle-new-release:
-    needs: handle-new-tag
-    uses: ./.github/workflows/new-release.yml
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get next version
+        id: get_next_version
+        uses: thenativeweb/get-next-version@2.6.2
+
+      - name: Check for existing tag
+        id: check_tag
+        run: |
+          if git rev-parse "refs/tags/${{ steps.get_next_version.outputs.version }}" >/dev/null 2>&1; then
+            echo "Tag already exists"
+            exit 1
+          fi
+
+      - name: Push new tag
+        if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
+        run: |
+          git tag ${{ steps.get_next_version.outputs.version }}
+          git push origin ${{ steps.get_next_version.outputs.version }}
+
+      - name: Read release body from file
+        id: read_release_body
+        run: |
+          echo "RELEASE_BODY=$(cat release-notes.txt)" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_next_version.outputs.version }}
+          release_name: 'Auto OTP Reader ${{ steps.get_next_version.outputs.version }}'
+          body: ${{ env.RELEASE_BODY }}
+          draft: false
+          prerelease: false
