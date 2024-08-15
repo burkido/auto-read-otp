@@ -10,8 +10,8 @@ permissions:
 
 jobs:
   handle-new-tag:
-    uses: ./.github/workflows/handle-new-tag.yml
+    uses: ./.github/workflows/new-tag.yml
 
   handle-new-release:
     needs: handle-new-tag
-    uses: ./.github/workflows/handle-new-release.yml
+    uses: ./.github/workflows/new-release.yml
