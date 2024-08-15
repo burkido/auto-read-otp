@@ -1,4 +1,4 @@
-name: Create new tag and release on push to jitpack-cd branch
+name: Main branch workflow
 
 on:
   push:
@@ -9,46 +9,17 @@ permissions:
   contents: write
 
 jobs:
-  create-new-tag-and-release:
+  main-workflow:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Create new tag
+        id: create_tag
+        uses: ./.github/workflows/create-new-tag.yml
         with:
-          fetch-depth: 0
+          branch: 'main'
 
-      - name: Get next version
-        id: get_next_version
-        uses: thenativeweb/get-next-version@2.6.2
-
-      - name: Check for existing tag
-        id: check_tag
-        run: |
-          if git rev-parse "refs/tags/${{ steps.get_next_version.outputs.version }}" >/dev/null 2>&1; then
-            echo "Tag already exists"
-            exit 1
-          fi
-
-      - name: Push new tag
-        if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
-        run: |
-          git tag ${{ steps.get_next_version.outputs.version }}
-          git push origin ${{ steps.get_next_version.outputs.version }}
-
-      - name: Read release body from file
-        id: read_release_body
-        run: |
-          echo "RELEASE_BODY=$(cat release-notes.txt)" >> $GITHUB_ENV
-
-      - name: Create GitHub Release
-        if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create new release
+        uses: ./.github/workflows/create-new-release.yml
         with:
-          tag_name: ${{ steps.get_next_version.outputs.version }}
-          release_name: 'Auto OTP Reader ${{ steps.get_next_version.outputs.version }}'
-          body: ${{ env.RELEASE_BODY }}
-          draft: false
-          prerelease: false
+          tag_name: ${{ jobs.main-workflow.steps.create_tag.outputs.tag_name }}
