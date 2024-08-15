@@ -16,11 +16,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Get next version # checks if conventional commit would cause a new version
         id: get_next_version
         uses: thenativeweb/get-next-version@2.5.0
+
 
       - name: Create new tag
         if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' }}
