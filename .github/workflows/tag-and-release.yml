@@ -24,14 +24,6 @@ jobs:
         id: get_next_version
         uses: thenativeweb/get-next-version@2.6.2
 
-      - name: Check for existing tag
-        id: check_tag
-        run: |
-          if git rev-parse "refs/tags/${{ steps.get_next_version.outputs.version }}" >/dev/null 2>&1; then
-            echo "Tag already exists"
-            exit 1
-          fi
-
       - name: Push new tag
         if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
         run: |
