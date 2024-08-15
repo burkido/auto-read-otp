@@ -24,9 +24,9 @@ jobs:
       - name: Check hasNextVersion
         run: |
           if [ "${{ steps.get_next_version.outputs.hasNextVersion }}" == "true" ]; then
-            echo "yes"
+            echo "There is a next version"
           else
-            echo "no"
+            echo "There is no next version"
           fi
 
       - name: Create GitHub Release
