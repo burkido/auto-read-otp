@@ -9,6 +9,7 @@ permissions:
 jobs:
   create-new-release:
     runs-on: ubuntu-latest
+    needs: handle-new-tag
 
     steps:
       - name: Checkout repository
@@ -23,14 +24,14 @@ jobs:
 
       - name: Check hasNextVersion
         run: |
-          if [ "${{ steps.get_next_version.outputs.hasNextVersion }}" == "true" ]; then
+          if [ "${{ needs.handle-new-tag.outputs.hasNextVersion }}" == "true" ]; then
             echo "There is a next version"
           else
             echo "There is no next version"
           fi
 
       - name: Create GitHub Release
-        if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
+        if: ${{ needs.handle-new-tag.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
