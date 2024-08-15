@@ -47,7 +47,7 @@ fun VerificationScreen() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun VerificationScreenPreview() {
     VerificationScreen()
