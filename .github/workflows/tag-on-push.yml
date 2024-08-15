@@ -1,27 +1,29 @@
-name: Tag on Push to Main
+name: Create new tag on push on main branch
 
 on:
   push:
     branches:
-      - jitpack-cd
+      - 'main'
+
+permissions:
+  contents: write
 
 jobs:
-  example:
-    name: Example
+  create-new-tag:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repository
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Get next version
+
+      - name: Get next version # checks if conventional commit would cause a new version
         id: get_next_version
-        uses: thenativeweb/get-next-version@main
-        with:
-          prefix: 'v' # optional, defaults to ''
-      - name: Show the next version
+        uses: thenativeweb/get-next-version@2.5.0
+
+      - name: Create new tag
+        if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' }}
         run: |
-          echo ${{ steps.get_next_version.outputs.version }}
-          echo ${{ steps.get_next_version.outputs.hasNextVersion }}
+          git tag ${{steps.get_next_version.outputs.version}}
+          git push origin ${{steps.get_next_version.outputs.version}}
