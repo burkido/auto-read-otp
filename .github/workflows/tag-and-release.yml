@@ -1,15 +1,17 @@
-name: Create new tag and release on push to jitpack-cd branch
+name: Add new tag and release on pull request merge to main
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
-      - 'jitpack-cd'
+      - 'main'
 
 permissions:
   contents: write
 
 jobs:
   create-new-tag-and-release:
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'development' }}
     runs-on: ubuntu-latest
 
     steps:
