@@ -1,21 +1,16 @@
-name: Create new tag
+name: Create new tag and release on push to jitpack-cd branch
 
 on:
-  workflow_call:
-    inputs:
-      branch:
-        required: true
-        type: string
+  push:
+    branches:
+      - 'jitpack-cd'
 
 permissions:
   contents: write
 
 jobs:
-  create-new-tag:
+  create-new-tag-and-release:
     runs-on: ubuntu-latest
-
-    outputs:
-      tag_name: ${{ steps.get_next_version.outputs.version }}
 
     steps:
       - name: Checkout repository
@@ -40,3 +35,20 @@ jobs:
         run: |
           git tag ${{ steps.get_next_version.outputs.version }}
           git push origin ${{ steps.get_next_version.outputs.version }}
+
+      - name: Read release body from file
+        id: read_release_body
+        run: |
+          echo "RELEASE_BODY=$(cat release-notes.txt)" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_next_version.outputs.version }}
+          release_name: 'Auto OTP Reader ${{ steps.get_next_version.outputs.version }}'
+          body: ${{ env.RELEASE_BODY }}
+          draft: false
+          prerelease: false
