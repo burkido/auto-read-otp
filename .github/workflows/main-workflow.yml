@@ -1,0 +1,17 @@
+name: Main Workflow
+
+on:
+  push:
+    branches:
+      - 'jitpack-cd'
+
+permissions:
+  contents: write
+
+jobs:
+  handle-new-tag:
+    uses: ./.github/workflows/handle-new-tag.yml
+
+  handle-new-release:
+    needs: handle-new-tag
+    uses: ./.github/workflows/handle-new-release.yml
