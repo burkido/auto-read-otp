@@ -1,10 +1,9 @@
 name: Add new tag and release on pull request merge to main
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
-      - 'main'
+      - 'development'
 
 permissions:
   contents: write
