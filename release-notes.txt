@@ -1,0 +1,1 @@
+The first version of auto-reader-otp simplifies the use of the SMS Consent API, displaying the OTP on the screen with just a single composable function call.
