@@ -1,0 +1,38 @@
+name: Handle new release
+
+on:
+  workflow_call:
+
+permissions:
+  contents: write
+
+jobs:
+  create-new-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Read release body from file
+        id: read_release_body
+        run: |
+          echo "RELEASE_BODY=$(cat release-notes.txt)" >> $GITHUB_ENV
+
+      - name: Print hasNextVersion
+        run:
+          echo "hasNextVersion: ${{ steps.get_next_version.outputs.hasNextVersion }}"
+
+      - name: Create GitHub Release
+        if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_next_version.outputs.version }}
+          release_name: 'Auto OTP Reader ${{ steps.get_next_version.outputs.version }}'
+          body: ${{ env.RELEASE_BODY }}
+          draft: false
+          prerelease: false
