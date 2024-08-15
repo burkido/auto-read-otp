@@ -13,5 +13,4 @@ jobs:
     uses: ./.github/workflows/new-tag.yml
 
   handle-new-release:
-    needs: handle-new-tag
     uses: ./.github/workflows/new-release.yml
