@@ -21,9 +21,13 @@ jobs:
         run: |
           echo "RELEASE_BODY=$(cat release-notes.txt)" >> $GITHUB_ENV
 
-      - name: Print hasNextVersion
-        run:
-          echo "hasNextVersion: ${{ steps.get_next_version.outputs.hasNextVersion }}"
+      - name: Check hasNextVersion
+        run: |
+          if [ "${{ steps.get_next_version.outputs.hasNextVersion }}" == "true" ]; then
+            echo "yes"
+          else
+            echo "no"
+          fi
 
       - name: Create GitHub Release
         if: ${{ steps.get_next_version.outputs.hasNextVersion == 'true' && steps.check_tag.outcome != 'failure' }}
