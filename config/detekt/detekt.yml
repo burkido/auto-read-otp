@@ -5,16 +5,15 @@
 
 complexity:
   LongMethod:
-    threshold: 60
+    maxLines: 60
   LongParameterList:
-    functionThreshold: 8
-    constructorThreshold: 10
+    maxParameters: 10
   TooManyFunctions:
-    thresholdInFiles: 15
-    thresholdInClasses: 15
-    thresholdInInterfaces: 15
-    thresholdInObjects: 15
-    thresholdInEnums: 15
+    maxInFiles: 15
+    maxInClasses: 15
+    maxInInterfaces: 15
+    maxInObjects: 15
+    maxInEnums: 15
 
 style:
   MaxLineLength:
