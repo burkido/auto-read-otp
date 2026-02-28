@@ -61,6 +61,35 @@ jobs:
             **/build/reports/detekt/
           retention-days: 7
 
+  commit-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Lint PR title (conventional commit)
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            fix
+            feat
+            docs
+            chore
+            ci
+            refactor
+            perf
+            test
+            build
+            style
+            revert
+          requireScope: false
+          subjectPattern: ^(?![A-Z]).+$
+          subjectPatternError: |
+            The subject "{subject}" must not start with an uppercase letter.
+
   lint:
     runs-on: ubuntu-latest
     steps:
