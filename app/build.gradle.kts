@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-    id("burkido.detekt")
+    //id("burkido.detekt")
 }
 
 android {
