@@ -1,0 +1,43 @@
+# Detekt configuration
+# This file builds upon the default detekt configuration (buildUponDefaultConfig = true).
+# Only overrides are specified here.
+# Full reference: https://detekt.dev/docs/rules/style
+
+complexity:
+  LongMethod:
+    threshold: 60
+  LongParameterList:
+    functionThreshold: 8
+    constructorThreshold: 10
+  TooManyFunctions:
+    thresholdInFiles: 15
+    thresholdInClasses: 15
+    thresholdInInterfaces: 15
+    thresholdInObjects: 15
+    thresholdInEnums: 15
+
+style:
+  MaxLineLength:
+    maxLineLength: 120
+    excludeCommentStatements: true
+  MagicNumber:
+    ignorePropertyDeclaration: true
+    ignoreAnnotation: true
+    ignoreEnums: true
+    ignoreNumbers:
+      - '-1'
+      - '0'
+      - '1'
+      - '2'
+  WildcardImport:
+    active: true
+  ReturnCount:
+    max: 4
+
+naming:
+  FunctionNaming:
+    # Allow Compose @Composable functions to start with uppercase
+    functionPattern: '[a-zA-Z][a-zA-Z0-9]*'
+
+coroutines:
+  active: true
