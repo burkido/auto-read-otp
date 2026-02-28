@@ -5,15 +5,16 @@
 
 complexity:
   LongMethod:
-    maxLines: 60
+    allowedLines: 60
   LongParameterList:
-    maxParameters: 10
+    allowedFunctionParameters: 8
+    allowedConstructorParameters: 10
   TooManyFunctions:
-    maxInFiles: 15
-    maxInClasses: 15
-    maxInInterfaces: 15
-    maxInObjects: 15
-    maxInEnums: 15
+    allowedFunctionsPerFile: 15
+    allowedFunctionsPerClass: 15
+    allowedFunctionsPerInterface: 15
+    allowedFunctionsPerObject: 15
+    allowedFunctionsPerEnum: 15
 
 style:
   MaxLineLength:
@@ -35,7 +36,6 @@ style:
 
 naming:
   FunctionNaming:
-    # Allow Compose @Composable functions to start with uppercase
     functionPattern: '[a-zA-Z][a-zA-Z0-9]*'
 
 coroutines:
