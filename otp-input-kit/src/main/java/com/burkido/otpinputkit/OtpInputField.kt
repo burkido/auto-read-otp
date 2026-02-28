@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
@@ -285,7 +286,7 @@ private fun OtpInputFieldLayout(
     cell: @Composable (index: Int, char: Char?, focused: Boolean, error: Boolean) -> Unit,
     separator: (@Composable (index: Int) -> Unit)?,
     modifier: Modifier = Modifier,
-    hiddenTextField: @Composable () -> Unit,
+    hiddenTextField: @Composable BoxScope.() -> Unit,
 ) {
     Box(modifier = modifier) {
         // Hidden text field to capture keyboard input
