@@ -9,7 +9,7 @@ import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.get
-import org.gradle.kotlin.dsl.registering
+
 
 class PublishConventionPlugin : Plugin<Project> {
 
@@ -34,7 +34,7 @@ class PublishConventionPlugin : Plugin<Project> {
         }
 
         // Package Dokka HTML output as javadoc.jar for Maven publishing
-        val dokkaHtmlJar by tasks.registering(Jar::class) {
+        val dokkaHtmlJar = tasks.register("dokkaHtmlJar", Jar::class.java) {
             description = "A Javadoc JAR containing Dokka HTML documentation"
             from(tasks.named("dokkaGeneratePublicationHtml").map { it.outputs })
             archiveClassifier.set("javadoc")
