@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
@@ -17,3 +18,5 @@ dependencyResolutionManagement {
 rootProject.name = "VerificationCodeReader"
 include(":app")
 include(":sms-reader")
+include(":otp-input-kit")
+include(":otp-bom")

@@ -1,62 +1,34 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("maven-publish")
+    id("burkido.android.library")
+    id("burkido.android.compose")
+    id("burkido.android.publish")
+    id("burkido.detekt")
 }
 
 android {
     namespace = "com.burkido.autoreadotp"
-    compileSdk = 34
+}
 
-    defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+libraryPublish {
+    artifactId.set("auto-read-otp")
 }
 
 dependencies {
-
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.activity:activity-compose:1.9.1")
+    implementation(libs.core.ktx)
+    implementation(libs.activity.compose)
 
     // Play Services Auth
-    implementation("com.google.android.gms:play-services-auth:21.2.0")
-}
+    implementation(libs.play.services.auth)
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                from(components["release"])
-                groupId = "com.github.burkido"
-                artifactId = "auto-read-otp"
-                version = "1.0.0"
-            }
-        }
-    }
+    // Unit tests
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.test.ext.junit)
+
+    // Android / Compose UI tests
+    androidTestImplementation(libs.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 }
