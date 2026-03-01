@@ -7,6 +7,10 @@ plugins {
     alias(libs.plugins.dokka)
 }
 
+dokka {
+    moduleName.set("VerificationCodeReader")
+}
+
 // Aggregate Dokka documentation from library subprojects
 dependencies {
     dokka(project(":sms-reader"))

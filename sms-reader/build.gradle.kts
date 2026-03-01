@@ -9,6 +9,10 @@ android {
     namespace = "com.burkido.autoreadotp"
 }
 
+dokka {
+    moduleName.set("SMS Reader")
+}
+
 libraryPublish {
     artifactId.set("auto-read-otp")
 }
