@@ -2,11 +2,15 @@ plugins {
     id("burkido.android.library")
     id("burkido.android.compose")
     id("burkido.android.publish")
-    //id("burkido.detekt")
+    id("burkido.detekt")
 }
 
 android {
     namespace = "com.burkido.otpinputkit"
+}
+
+dokka {
+    moduleName.set("OTP Input Kit")
 }
 
 libraryPublish {
