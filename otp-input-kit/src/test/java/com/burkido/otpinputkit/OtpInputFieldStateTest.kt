@@ -10,7 +10,7 @@ import org.junit.Test
  * Covers: initial state, onValueChange filtering, focusedIndex tracking,
  * isComplete, clear, and fill.
  */
-class OtpInputStateTest {
+class OtpInputFieldStateTest {
 
     private lateinit var state: OtpInputFieldState
 

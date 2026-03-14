@@ -1,5 +1,6 @@
 package com.burkido.otpinputkit.style
 
+import com.burkido.otpinputkit.OtpInputDefaults
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
@@ -10,7 +11,7 @@ class OtpCellDimensionsTest {
 
     @Test
     fun `default dimensions have expected values`() {
-        val dims = OtpCellDimensions()
+        val dims = OtpInputDefaults.dimensions()
         assertThat(dims.cellWidth.value).isEqualTo(48f)
         assertThat(dims.cellHeight.value).isEqualTo(56f)
         assertThat(dims.borderWidth.value).isEqualTo(1.5f)
@@ -22,7 +23,7 @@ class OtpCellDimensionsTest {
 
     @Test
     fun `copy preserves unchanged values`() {
-        val original = OtpCellDimensions()
+        val original = OtpInputDefaults.dimensions()
         val copied = original.copy(cellWidth = original.cellWidth * 2)
         assertThat(copied.cellHeight).isEqualTo(original.cellHeight)
         assertThat(copied.borderWidth).isEqualTo(original.borderWidth)
@@ -31,15 +32,15 @@ class OtpCellDimensionsTest {
 
     @Test
     fun `data class equality works`() {
-        val a = OtpCellDimensions()
-        val b = OtpCellDimensions()
+        val a = OtpInputDefaults.dimensions()
+        val b = OtpInputDefaults.dimensions()
         assertThat(a).isEqualTo(b)
     }
 
     @Test
     fun `data class inequality when values differ`() {
-        val a = OtpCellDimensions()
-        val b = OtpCellDimensions(cellWidth = a.cellWidth * 2)
+        val a = OtpInputDefaults.dimensions()
+        val b = OtpInputDefaults.dimensions(cellWidth = a.cellWidth * 2)
         assertThat(a).isNotEqualTo(b)
     }
 }

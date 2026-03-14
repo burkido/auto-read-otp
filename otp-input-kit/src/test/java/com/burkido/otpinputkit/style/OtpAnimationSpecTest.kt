@@ -1,5 +1,6 @@
 package com.burkido.otpinputkit.style
 
+import com.burkido.otpinputkit.OtpInputDefaults
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
@@ -10,18 +11,19 @@ class OtpAnimationSpecTest {
 
     @Test
     fun `default animation spec has expected values`() {
-        val spec = OtpAnimationSpec()
-        assertThat(spec.cursorBlinkInterval).isEqualTo(500L)
+        val spec = OtpInputDefaults.animationSpec()
         assertThat(spec.shakeOnError).isTrue()
         assertThat(spec.cellEntryAnimation).isEqualTo(CellAnimation.Scale)
         assertThat(spec.animationDuration).isEqualTo(150)
+        assertThat(spec.shakeAmplitude).isEqualTo(OtpTokens.ShakeAmplitude)
+        assertThat(spec.shakeStepDuration).isEqualTo(OtpTokens.ShakeStepDuration)
+        assertThat(spec.shakeRepeatCount).isEqualTo(OtpTokens.ShakeRepeatCount)
     }
 
     @Test
     fun `copy preserves unchanged values`() {
-        val original = OtpAnimationSpec()
+        val original = OtpInputDefaults.animationSpec()
         val copied = original.copy(shakeOnError = false)
-        assertThat(copied.cursorBlinkInterval).isEqualTo(original.cursorBlinkInterval)
         assertThat(copied.cellEntryAnimation).isEqualTo(original.cellEntryAnimation)
         assertThat(copied.animationDuration).isEqualTo(original.animationDuration)
         assertThat(copied.shakeOnError).isFalse()
@@ -40,15 +42,15 @@ class OtpAnimationSpecTest {
 
     @Test
     fun `data class equality works`() {
-        val a = OtpAnimationSpec()
-        val b = OtpAnimationSpec()
+        val a = OtpInputDefaults.animationSpec()
+        val b = OtpInputDefaults.animationSpec()
         assertThat(a).isEqualTo(b)
     }
 
     @Test
     fun `data class inequality works`() {
-        val a = OtpAnimationSpec()
-        val b = OtpAnimationSpec(cellEntryAnimation = CellAnimation.FadeIn)
+        val a = OtpInputDefaults.animationSpec()
+        val b = OtpInputDefaults.animationSpec(cellEntryAnimation = CellAnimation.FadeIn)
         assertThat(a).isNotEqualTo(b)
     }
 }

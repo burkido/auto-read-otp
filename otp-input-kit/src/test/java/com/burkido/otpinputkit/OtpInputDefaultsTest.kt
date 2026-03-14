@@ -32,17 +32,15 @@ class OtpInputDefaultsTest {
     @Test
     fun `animationSpec returns defaults when no args provided`() {
         val spec = OtpInputDefaults.animationSpec()
-        assertThat(spec.cursorBlinkInterval).isEqualTo(500L)
         assertThat(spec.shakeOnError).isTrue()
+        assertThat(spec.animationDuration).isEqualTo(150)
     }
 
     @Test
     fun `animationSpec respects custom values`() {
         val spec = OtpInputDefaults.animationSpec(
-            cursorBlinkInterval = 1000L,
             shakeOnError = false,
         )
-        assertThat(spec.cursorBlinkInterval).isEqualTo(1000L)
         assertThat(spec.shakeOnError).isFalse()
     }
 
@@ -54,18 +52,37 @@ class OtpInputDefaultsTest {
         assertThat(shape).isNotNull()
     }
 
-    // ── textStyle ──────────────────────────────────────────────────
+    // ── maskConfig ─────────────────────────────────────────────────
 
     @Test
-    fun `textStyle returns style with correct font size`() {
-        val style = OtpInputDefaults.textStyle()
-        assertThat(style.fontSize.value).isEqualTo(24f)
+    fun `maskConfig returns defaults when no args provided`() {
+        val config = OtpInputDefaults.maskConfig()
+        assertThat(config.isMasked).isFalse()
+        assertThat(config.maskCharacter).isEqualTo('●')
+        assertThat(config.maskDelay).isEqualTo(300L)
     }
 
     @Test
-    fun `textStyle respects custom font size`() {
-        val style = OtpInputDefaults.textStyle(textSize = 32.sp)
-        assertThat(style.fontSize.value).isEqualTo(32f)
+    fun `maskConfig respects custom values`() {
+        val config = OtpInputDefaults.maskConfig(isMasked = true, maskDelay = 500L)
+        assertThat(config.isMasked).isTrue()
+        assertThat(config.maskDelay).isEqualTo(500L)
+    }
+
+    // ── contentPadding ─────────────────────────────────────────────
+
+    @Test
+    fun `contentPadding returns defaults when no args provided`() {
+        val padding = OtpInputDefaults.contentPadding()
+        assertThat(padding.horizontal.value).isEqualTo(8f)
+        assertThat(padding.vertical.value).isEqualTo(12f)
+    }
+
+    @Test
+    fun `contentPadding respects custom values`() {
+        val padding = OtpInputDefaults.contentPadding(horizontal = 16.dp)
+        assertThat(padding.horizontal.value).isEqualTo(16f)
+        assertThat(padding.vertical.value).isEqualTo(12f)
     }
 }
 
