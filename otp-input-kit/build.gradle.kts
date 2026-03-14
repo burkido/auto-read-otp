@@ -1,6 +1,5 @@
 plugins {
     id("burkido.android.library")
-    id("burkido.android.publish")
 }
 
 android {
@@ -9,10 +8,6 @@ android {
 
 dokka {
     moduleName.set("OTP Input Kit")
-}
-
-libraryPublish {
-    artifactId.set("otp-input-kit")
 }
 
 dependencies {

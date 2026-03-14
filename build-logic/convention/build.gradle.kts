@@ -20,9 +20,5 @@ gradlePlugin {
             id = "burkido.android.library"
             implementationClass = "com.burkido.convention.AndroidLibraryConventionPlugin"
         }
-        register("androidPublish") {
-            id = "burkido.android.publish"
-            implementationClass = "com.burkido.convention.PublishConventionPlugin"
-        }
     }
 }
