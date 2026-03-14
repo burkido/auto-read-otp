@@ -5,11 +5,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.TextStyle
 import com.burkido.otpinputkit.OtpInputDefaults
 import com.burkido.otpinputkit.style.OtpAnimationSpec
 import com.burkido.otpinputkit.style.OtpCellColors
 import com.burkido.otpinputkit.style.OtpCellDimensions
+import com.burkido.otpinputkit.style.OtpCellPadding
+import com.burkido.otpinputkit.style.OtpCursorConfig
+import com.burkido.otpinputkit.style.OtpMaskConfig
+import com.burkido.otpinputkit.style.OtpTextStyles
 
 /**
  * Outlined (circle / pill) OTP cell with transparent background.
@@ -34,8 +37,6 @@ fun OutlinedOtpCell(
     focused: Boolean,
     isError: Boolean,
     modifier: Modifier = Modifier,
-    obscureText: Boolean = false,
-    obscureCharacter: String = "●",
     placeholder: String = "",
     colors: OtpCellColors = OtpInputDefaults.colors(
         focusedContainerColor = Color.Transparent,
@@ -44,30 +45,34 @@ fun OutlinedOtpCell(
         errorContainerColor = Color.Transparent,
     ),
     dimensions: OtpCellDimensions = OtpInputDefaults.dimensions(
-        cellWidth = dimensions().cellWidth,
-        cellHeight = dimensions().cellWidth, // Square for circle shape
+        cellWidth = defaultDimensions().cellWidth,
+        cellHeight = defaultDimensions().cellWidth, // Square for circle shape
     ),
     animationSpec: OtpAnimationSpec = OtpInputDefaults.animationSpec(),
     shape: Shape = CircleShape,
-    textStyle: TextStyle = OtpInputDefaults.textStyle(dimensions.textSize),
+    maskConfig: OtpMaskConfig = OtpInputDefaults.maskConfig(),
+    cursorConfig: OtpCursorConfig = OtpCursorConfig(color = colors.cursorColor),
+    textStyles: OtpTextStyles = OtpInputDefaults.textStyles(dimensions.textSize),
+    contentPadding: OtpCellPadding = OtpInputDefaults.contentPadding(),
 ) {
     DefaultOtpCell(
         char = char,
         focused = focused,
         isError = isError,
         modifier = modifier,
-        obscureText = obscureText,
-        obscureCharacter = obscureCharacter,
         placeholder = placeholder,
         colors = colors,
         dimensions = dimensions,
         animationSpec = animationSpec,
         shape = shape,
-        textStyle = textStyle,
+        maskConfig = maskConfig,
+        cursorConfig = cursorConfig,
+        textStyles = textStyles,
+        contentPadding = contentPadding,
     )
 }
 
 /**
  * Internal helper to avoid calling the composable function in a default argument.
  */
-private fun dimensions(): OtpCellDimensions = OtpInputDefaults.dimensions()
+private fun defaultDimensions(): OtpCellDimensions = OtpInputDefaults.dimensions()
