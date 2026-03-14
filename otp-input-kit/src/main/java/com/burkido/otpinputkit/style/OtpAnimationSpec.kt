@@ -1,6 +1,7 @@
 package com.burkido.otpinputkit.style
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.unit.Dp
 
 /**
  * Configures animations for OTP input cells.
@@ -10,14 +11,18 @@ import androidx.compose.runtime.Immutable
  */
 @Immutable
 data class OtpAnimationSpec(
-    /** Cursor blink interval in milliseconds. */
-    val cursorBlinkInterval: Long = 500L,
     /** Whether to shake the input field on error. */
-    val shakeOnError: Boolean = true,
+    val shakeOnError: Boolean,
     /** Animation applied when a character enters a cell. */
-    val cellEntryAnimation: CellAnimation = CellAnimation.Scale,
+    val cellEntryAnimation: CellAnimation,
     /** Duration of entry/transition animations in milliseconds. */
-    val animationDuration: Int = 150,
+    val animationDuration: Int,
+    /** Maximum horizontal displacement of the cell during a shake, in dp. */
+    val shakeAmplitude: Dp,
+    /** Duration in milliseconds of each individual shake step. */
+    val shakeStepDuration: Int,
+    /** Number of oscillations performed during a shake. */
+    val shakeRepeatCount: Int,
 )
 
 /** Possible animation styles when a new character is entered into a cell. */
