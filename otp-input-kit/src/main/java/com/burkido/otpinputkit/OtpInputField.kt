@@ -26,12 +26,15 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import com.burkido.otpinputkit.cell.DefaultOtpCell
 import com.burkido.otpinputkit.style.OtpAnimationSpec
 import com.burkido.otpinputkit.style.OtpCellColors
 import com.burkido.otpinputkit.style.OtpCellDimensions
+import com.burkido.otpinputkit.style.OtpCellPadding
+import com.burkido.otpinputkit.style.OtpCursorConfig
+import com.burkido.otpinputkit.style.OtpMaskConfig
+import com.burkido.otpinputkit.style.OtpTextStyles
 import kotlinx.coroutines.flow.collectLatest
 
 // ────────────────────────────────────────────────────────────────────
@@ -70,14 +73,14 @@ import kotlinx.coroutines.flow.collectLatest
  * @param modifier Modifier for the root layout.
  * @param enabled Whether the input is enabled.
  * @param isError Whether to show error styling.
- * @param obscureText If true, characters are replaced with [obscureCharacter].
- * @param obscureCharacter The character shown when [obscureText] is true.
  * @param placeholder Text shown in unfocused empty cells.
  * @param colors Color configuration.
  * @param dimensions Size configuration.
  * @param animationSpec Animation configuration.
  * @param shape Shape of default cells.
- * @param textStyle Text style for default cells.
+ * @param maskConfig Masking configuration for obscuring entered digits.
+ * @param textStyles State-aware text styles for filled and placeholder content.
+ * @param contentPadding Inner padding applied inside each cell box.
  * @param keyboardOptions Keyboard configuration. Defaults to number keyboard.
  * @param inputTransformation Input filter. Defaults to digits-only + max length.
  * @param onComplete Called when all digits have been entered.
@@ -91,14 +94,14 @@ fun OtpInputField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isError: Boolean = false,
-    obscureText: Boolean = false,
-    obscureCharacter: String = "●",
     placeholder: String = "",
     colors: OtpCellColors = OtpInputDefaults.colors(),
     dimensions: OtpCellDimensions = OtpInputDefaults.dimensions(),
     animationSpec: OtpAnimationSpec = OtpInputDefaults.animationSpec(),
     shape: Shape = RoundedCornerShape(dimensions.cornerRadius),
-    textStyle: TextStyle = OtpInputDefaults.textStyle(dimensions.textSize),
+    maskConfig: OtpMaskConfig = OtpInputDefaults.maskConfig(),
+    textStyles: OtpTextStyles = OtpInputDefaults.textStyles(dimensions.textSize),
+    contentPadding: OtpCellPadding = OtpInputDefaults.contentPadding(),
     keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     inputTransformation: InputTransformation = OtpInputTransformation(otpLength),
     onComplete: ((String) -> Unit)? = null,
@@ -107,14 +110,15 @@ fun OtpInputField(
             char = char,
             focused = focused,
             isError = error,
-            obscureText = obscureText,
-            obscureCharacter = obscureCharacter,
             placeholder = placeholder,
             colors = colors,
             dimensions = dimensions,
             animationSpec = animationSpec,
             shape = shape,
-            textStyle = textStyle,
+            maskConfig = maskConfig,
+            cursorConfig = OtpCursorConfig(color = colors.cursorColor),
+            textStyles = textStyles,
+            contentPadding = contentPadding,
         )
     },
     separator: (@Composable (index: Int) -> Unit)? = null,
@@ -185,14 +189,14 @@ fun OtpInputField(
  * @param modifier Modifier for the root layout.
  * @param enabled Whether the input is enabled.
  * @param isError Whether to show error styling.
- * @param obscureText If true, characters are replaced with [obscureCharacter].
- * @param obscureCharacter The character shown when [obscureText] is true.
  * @param placeholder Text shown in unfocused empty cells.
  * @param colors Color configuration.
  * @param dimensions Size configuration.
  * @param animationSpec Animation configuration.
  * @param shape Shape of default cells.
- * @param textStyle Text style for default cells.
+ * @param maskConfig Masking configuration for obscuring entered digits.
+ * @param textStyles State-aware text styles for filled and placeholder content.
+ * @param contentPadding Inner padding applied inside each cell box.
  * @param keyboardOptions Keyboard configuration. Defaults to number keyboard.
  * @param onComplete Called when all digits have been entered.
  * @param cell Slot for rendering each individual cell. Receives (index, char, focused, error).
@@ -206,14 +210,14 @@ fun OtpInputField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isError: Boolean = false,
-    obscureText: Boolean = false,
-    obscureCharacter: String = "●",
     placeholder: String = "",
     colors: OtpCellColors = OtpInputDefaults.colors(),
     dimensions: OtpCellDimensions = OtpInputDefaults.dimensions(),
     animationSpec: OtpAnimationSpec = OtpInputDefaults.animationSpec(),
     shape: Shape = RoundedCornerShape(dimensions.cornerRadius),
-    textStyle: TextStyle = OtpInputDefaults.textStyle(dimensions.textSize),
+    maskConfig: OtpMaskConfig = OtpInputDefaults.maskConfig(),
+    textStyles: OtpTextStyles = OtpInputDefaults.textStyles(dimensions.textSize),
+    contentPadding: OtpCellPadding = OtpInputDefaults.contentPadding(),
     keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     onComplete: ((String) -> Unit)? = null,
     cell: @Composable (index: Int, char: Char?, focused: Boolean, error: Boolean) -> Unit = { _, char, focused, error ->
@@ -221,14 +225,15 @@ fun OtpInputField(
             char = char,
             focused = focused,
             isError = error,
-            obscureText = obscureText,
-            obscureCharacter = obscureCharacter,
             placeholder = placeholder,
             colors = colors,
             dimensions = dimensions,
             animationSpec = animationSpec,
             shape = shape,
-            textStyle = textStyle,
+            maskConfig = maskConfig,
+            cursorConfig = OtpCursorConfig(color = colors.cursorColor),
+            textStyles = textStyles,
+            contentPadding = contentPadding,
         )
     },
     separator: (@Composable (index: Int) -> Unit)? = null,

@@ -3,17 +3,21 @@ package com.burkido.otpinputkit
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.graphics.Color
 import com.burkido.otpinputkit.style.CellAnimation
 import com.burkido.otpinputkit.style.OtpAnimationSpec
 import com.burkido.otpinputkit.style.OtpCellColors
 import com.burkido.otpinputkit.style.OtpCellDimensions
+import com.burkido.otpinputkit.style.OtpCellPadding
+import com.burkido.otpinputkit.style.OtpCursorConfig
+import com.burkido.otpinputkit.style.OtpMaskConfig
+import com.burkido.otpinputkit.style.OtpTextStyles
+import com.burkido.otpinputkit.style.OtpTokens
 
 /**
  * Contains default values and factory functions for OTP input components.
@@ -59,13 +63,13 @@ object OtpInputDefaults {
      * Creates an [OtpCellDimensions] instance with sensible defaults.
      */
     fun dimensions(
-        cellWidth: Dp = 48.dp,
-        cellHeight: Dp = 56.dp,
-        borderWidth: Dp = 1.5.dp,
-        focusedBorderWidth: Dp = 2.dp,
-        cornerRadius: Dp = 12.dp,
-        spacing: Dp = 8.dp,
-        textSize: TextUnit = 24.sp,
+        cellWidth: Dp = OtpTokens.CellWidth,
+        cellHeight: Dp = OtpTokens.CellHeight,
+        borderWidth: Dp = OtpTokens.BorderWidth,
+        focusedBorderWidth: Dp = OtpTokens.FocusedBorderWidth,
+        cornerRadius: Dp = OtpTokens.CornerRadius,
+        spacing: Dp = OtpTokens.Spacing,
+        textSize: TextUnit = OtpTokens.TextSize,
     ): OtpCellDimensions = OtpCellDimensions(
         cellWidth = cellWidth,
         cellHeight = cellHeight,
@@ -80,24 +84,92 @@ object OtpInputDefaults {
      * Creates an [OtpAnimationSpec] instance with sensible defaults.
      */
     fun animationSpec(
-        cursorBlinkInterval: Long = 500L,
         shakeOnError: Boolean = true,
         cellEntryAnimation: CellAnimation = CellAnimation.Scale,
-        animationDuration: Int = 150,
+        animationDuration: Int = OtpTokens.AnimationDuration,
+        shakeAmplitude: Dp = OtpTokens.ShakeAmplitude,
+        shakeStepDuration: Int = OtpTokens.ShakeStepDuration,
+        shakeRepeatCount: Int = OtpTokens.ShakeRepeatCount,
     ): OtpAnimationSpec = OtpAnimationSpec(
-        cursorBlinkInterval = cursorBlinkInterval,
         shakeOnError = shakeOnError,
         cellEntryAnimation = cellEntryAnimation,
         animationDuration = animationDuration,
+        shakeAmplitude = shakeAmplitude,
+        shakeStepDuration = shakeStepDuration,
+        shakeRepeatCount = shakeRepeatCount,
+    )
+
+    /**
+     * Creates an [OtpMaskConfig] for obscuring entered digits.
+     *
+     * When [isMasked] is true each digit is shown for [maskDelay] ms before
+     * being replaced by [maskCharacter].
+     */
+    fun maskConfig(
+        isMasked: Boolean = false,
+        maskCharacter: Char = OtpTokens.MaskCharacter,
+        maskDelay: Long = OtpTokens.MaskDelay,
+    ): OtpMaskConfig = OtpMaskConfig(
+        isMasked = isMasked,
+        maskCharacter = maskCharacter,
+        maskDelay = maskDelay,
+    )
+
+    /**
+     * Creates an [OtpCursorConfig] with Material3-derived defaults.
+     *
+     * The cursor [color] defaults to the primary color of the current theme.
+     */
+    @Composable
+    fun cursorConfig(
+        color: Color = MaterialTheme.colorScheme.primary,
+        width: Dp = OtpTokens.CursorWidth,
+        height: Dp = OtpTokens.CursorHeight,
+        cornerRadius: Dp = OtpTokens.CursorCornerRadius,
+        blinkInterval: Long = OtpTokens.CursorBlinkInterval,
+    ): OtpCursorConfig = OtpCursorConfig(
+        color = color,
+        width = width,
+        height = height,
+        cornerRadius = cornerRadius,
+        blinkInterval = blinkInterval,
+    )
+
+    /**
+     * Creates an [OtpCellPadding] for inner padding inside each cell box.
+     */
+    fun contentPadding(
+        horizontal: Dp = OtpTokens.ContentPaddingHorizontal,
+        vertical: Dp = OtpTokens.ContentPaddingVertical,
+    ): OtpCellPadding = OtpCellPadding(
+        horizontal = horizontal,
+        vertical = vertical,
+    )
+
+    /**
+     * Creates an [OtpTextStyles] with state-aware text styles.
+     *
+     * [filledTextStyle] is applied to an entered character; [placeholderTextStyle]
+     * is applied to placeholder text in unfocused empty cells.
+     */
+    @Composable
+    fun textStyles(
+        textSize: TextUnit = OtpTokens.TextSize,
+        filledTextStyle: TextStyle = TextStyle(
+            fontSize = textSize,
+            fontWeight = FontWeight.Bold,
+        ),
+        placeholderTextStyle: TextStyle = TextStyle(
+            fontSize = textSize,
+            fontWeight = FontWeight.Light,
+        ),
+    ): OtpTextStyles = OtpTextStyles(
+        filledTextStyle = filledTextStyle,
+        placeholderTextStyle = placeholderTextStyle,
     )
 
     /**
      * Default shape for OTP cells.
      */
-    fun shape(cornerRadius: Dp = 12.dp): Shape = RoundedCornerShape(cornerRadius)
-
-    /**
-     * Default text style for OTP cell characters.
-     */
-    fun textStyle(textSize: TextUnit = 24.sp): TextStyle = TextStyle(fontSize = textSize)
+    fun shape(cornerRadius: Dp = OtpTokens.CornerRadius): Shape = RoundedCornerShape(cornerRadius)
 }

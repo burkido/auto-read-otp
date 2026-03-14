@@ -20,7 +20,7 @@ import androidx.core.text.isDigitsOnly
  * ```
  */
 class OtpInputTransformation(
-    private val otpLength: Int,
+    otpLength: Int,
 ) : InputTransformation {
 
     private val maxLengthTransformation = InputTransformation.maxLength(otpLength)

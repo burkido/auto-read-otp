@@ -14,10 +14,10 @@ import androidx.compose.runtime.setValue
  * If you prefer the modern TextFieldState-based API, use the `OtpInputField`
  * overload that accepts a `TextFieldState` instead.
  *
- * Create via [rememberOtpInputState].
+ * Create via [rememberOtpInputFieldState].
  */
 @Stable
-class OtpInputState(
+class OtpInputFieldState(
     val otpLength: Int = 6,
     initialValue: String = "",
 ) {
@@ -58,15 +58,15 @@ class OtpInputState(
 }
 
 /**
- * Creates and remembers an [OtpInputState].
+ * Creates and remembers an [OtpInputFieldState].
  *
  * @param otpLength Number of OTP digits (default: 6).
  * @param initialValue Optional initial value to pre-fill.
  */
 @Composable
-fun rememberOtpInputState(
+fun rememberOtpInputFieldState(
     otpLength: Int = 6,
     initialValue: String = "",
-): OtpInputState = remember {
-    OtpInputState(otpLength = otpLength, initialValue = initialValue)
+): OtpInputFieldState = remember {
+    OtpInputFieldState(otpLength = otpLength, initialValue = initialValue)
 }
