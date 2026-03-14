@@ -1,8 +1,6 @@
 plugins {
     id("burkido.android.library")
-    id("burkido.android.compose")
     id("burkido.android.publish")
-    id("burkido.detekt")
 }
 
 android {
