@@ -32,7 +32,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Generate Dokka Documentation
-        run: ./gradlew dokkaGenerate
+        run: ./gradlew :dokkaGeneratePublicationHtml
 
       - name: Prepare Documentation for Pages
         run: |
