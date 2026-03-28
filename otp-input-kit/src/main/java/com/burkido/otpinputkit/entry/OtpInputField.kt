@@ -1,4 +1,4 @@
-package com.burkido.otpinputkit
+package com.burkido.otpinputkit.entry
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -27,14 +27,14 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.KeyboardType
-import com.burkido.otpinputkit.cell.DefaultOtpCell
-import com.burkido.otpinputkit.style.OtpAnimationSpec
-import com.burkido.otpinputkit.style.OtpCellColors
-import com.burkido.otpinputkit.style.OtpCellDimensions
-import com.burkido.otpinputkit.style.OtpCellPadding
-import com.burkido.otpinputkit.style.OtpCursorConfig
-import com.burkido.otpinputkit.style.OtpMaskConfig
-import com.burkido.otpinputkit.style.OtpTextStyles
+import com.burkido.otpinputkit.entry.cell.DefaultOtpCell
+import com.burkido.otpinputkit.entry.style.OtpAnimationSpec
+import com.burkido.otpinputkit.entry.style.OtpCellColors
+import com.burkido.otpinputkit.entry.style.OtpCellDimensions
+import com.burkido.otpinputkit.entry.style.OtpCellPadding
+import com.burkido.otpinputkit.entry.style.OtpCursorConfig
+import com.burkido.otpinputkit.entry.style.OtpMaskConfig
+import com.burkido.otpinputkit.entry.style.OtpTextStyles
 import kotlinx.coroutines.flow.collectLatest
 
 // ────────────────────────────────────────────────────────────────────

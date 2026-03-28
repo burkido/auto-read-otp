@@ -1,4 +1,4 @@
-package com.burkido.otpinputkit.style
+package com.burkido.otpinputkit.entry.style
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp

@@ -1,4 +1,4 @@
-package com.burkido.otpinputkit
+package com.burkido.otpinputkit.entry
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -9,15 +9,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import com.burkido.otpinputkit.style.CellAnimation
-import com.burkido.otpinputkit.style.OtpAnimationSpec
-import com.burkido.otpinputkit.style.OtpCellColors
-import com.burkido.otpinputkit.style.OtpCellDimensions
-import com.burkido.otpinputkit.style.OtpCellPadding
-import com.burkido.otpinputkit.style.OtpCursorConfig
-import com.burkido.otpinputkit.style.OtpMaskConfig
-import com.burkido.otpinputkit.style.OtpTextStyles
-import com.burkido.otpinputkit.style.OtpTokens
+import com.burkido.otpinputkit.entry.style.CellAnimation
+import com.burkido.otpinputkit.entry.style.OtpAnimationSpec
+import com.burkido.otpinputkit.entry.style.OtpCellColors
+import com.burkido.otpinputkit.entry.style.OtpCellDimensions
+import com.burkido.otpinputkit.entry.style.OtpCellPadding
+import com.burkido.otpinputkit.entry.style.OtpCursorConfig
+import com.burkido.otpinputkit.entry.style.OtpMaskConfig
+import com.burkido.otpinputkit.entry.style.OtpTextStyles
+import com.burkido.otpinputkit.entry.style.OtpTokens
 
 /**
  * Contains default values and factory functions for OTP input components.

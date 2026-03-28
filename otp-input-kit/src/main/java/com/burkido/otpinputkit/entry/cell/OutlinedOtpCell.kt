@@ -1,18 +1,18 @@
-package com.burkido.otpinputkit.cell
+package com.burkido.otpinputkit.entry.cell
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import com.burkido.otpinputkit.OtpInputDefaults
-import com.burkido.otpinputkit.style.OtpAnimationSpec
-import com.burkido.otpinputkit.style.OtpCellColors
-import com.burkido.otpinputkit.style.OtpCellDimensions
-import com.burkido.otpinputkit.style.OtpCellPadding
-import com.burkido.otpinputkit.style.OtpCursorConfig
-import com.burkido.otpinputkit.style.OtpMaskConfig
-import com.burkido.otpinputkit.style.OtpTextStyles
+import com.burkido.otpinputkit.entry.OtpInputDefaults
+import com.burkido.otpinputkit.entry.style.OtpAnimationSpec
+import com.burkido.otpinputkit.entry.style.OtpCellColors
+import com.burkido.otpinputkit.entry.style.OtpCellDimensions
+import com.burkido.otpinputkit.entry.style.OtpCellPadding
+import com.burkido.otpinputkit.entry.style.OtpCursorConfig
+import com.burkido.otpinputkit.entry.style.OtpMaskConfig
+import com.burkido.otpinputkit.entry.style.OtpTextStyles
 
 /**
  * Outlined (circle / pill) OTP cell with transparent background.

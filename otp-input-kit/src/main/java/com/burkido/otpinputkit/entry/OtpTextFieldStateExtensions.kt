@@ -1,4 +1,4 @@
-package com.burkido.otpinputkit
+package com.burkido.otpinputkit.entry
 
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
