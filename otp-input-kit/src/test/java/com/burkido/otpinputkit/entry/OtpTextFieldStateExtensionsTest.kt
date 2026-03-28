@@ -1,4 +1,4 @@
-package com.burkido.otpinputkit
+package com.burkido.otpinputkit.entry
 
 import androidx.compose.foundation.text.input.TextFieldState
 import com.google.common.truth.Truth.assertThat

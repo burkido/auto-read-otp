@@ -1,4 +1,4 @@
-package com.burkido.otpinputkit.style
+package com.burkido.otpinputkit.entry.style
 
 import androidx.compose.ui.graphics.Color
 import com.google.common.truth.Truth.assertThat

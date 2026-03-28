@@ -1,6 +1,6 @@
-package com.burkido.otpinputkit.style
+package com.burkido.otpinputkit.entry.style
 
-import com.burkido.otpinputkit.OtpInputDefaults
+import com.burkido.otpinputkit.entry.OtpInputDefaults
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

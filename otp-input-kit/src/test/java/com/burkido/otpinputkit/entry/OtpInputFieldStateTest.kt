@@ -1,4 +1,4 @@
-package com.burkido.otpinputkit
+package com.burkido.otpinputkit.entry
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
