@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.burkido.otpinputkit.OtpInputField
+import com.burkido.otpinputkit.entry.OtpInputField
 
 /**
  * Default OTP input — rounded box cells with Material3 theming.
