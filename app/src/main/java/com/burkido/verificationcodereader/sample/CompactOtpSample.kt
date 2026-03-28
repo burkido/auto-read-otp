@@ -11,10 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.burkido.otpinputkit.OtpInputDefaults
-import com.burkido.otpinputkit.OtpInputField
-import com.burkido.otpinputkit.cell.DefaultOtpCell
-import com.burkido.otpinputkit.style.OtpCursorConfig
+import com.burkido.otpinputkit.entry.OtpInputDefaults
+import com.burkido.otpinputkit.entry.OtpInputField
+import com.burkido.otpinputkit.entry.cell.DefaultOtpCell
+import com.burkido.otpinputkit.entry.style.OtpCursorConfig
 
 private val CompactColors
     @Composable get() = OtpInputDefaults.colors(

@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.burkido.otpinputkit.OtpInputField
-import com.burkido.otpinputkit.cell.OutlinedOtpCell
+import com.burkido.otpinputkit.entry.OtpInputField
+import com.burkido.otpinputkit.entry.cell.OutlinedOtpCell
 
 /**
  * Outlined OTP input — circular cells with transparent backgrounds.

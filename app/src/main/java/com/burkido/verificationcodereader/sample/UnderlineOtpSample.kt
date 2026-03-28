@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.burkido.otpinputkit.OtpInputField
-import com.burkido.otpinputkit.cell.UnderlineOtpCell
+import com.burkido.otpinputkit.entry.OtpInputField
+import com.burkido.otpinputkit.entry.cell.UnderlineOtpCell
 
 /**
  * Underline OTP input — iOS-style digit above an animated bottom line, no border box.
