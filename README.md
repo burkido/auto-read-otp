@@ -196,6 +196,41 @@ https://github.com/user-attachments/assets/81cc0afd-e6f7-4bce-bc6a-ee2b5acc7fa2
 
 ## Contributing
 
+Pull requests are welcome. PR titles must follow the [Conventional Commits](https://www.conventionalcommits.org/) format, which is enforced automatically by CI:
+
+```
+<type>: <subject>
+```
+
+**Allowed types:**
+
+| Type | When to use |
+|---|---|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `docs` | Documentation changes only |
+| `refactor` | Code change that is neither a fix nor a feature |
+| `perf` | Performance improvement |
+| `test` | Adding or updating tests |
+| `build` | Changes to the build system or dependencies |
+| `ci` | Changes to CI configuration |
+| `chore` | Maintenance tasks |
+| `style` | Code style / formatting (no logic change) |
+| `revert` | Reverts a previous commit |
+
+**Rules:**
+- Scope is optional: `feat(sms-reader): ...` is valid but not required
+- The subject must **not** start with an uppercase letter
+
+**Examples:**
+
+```
+feat: add underline cell animation
+fix: prevent crash on empty SMS body
+docs: update installation instructions
+refactor(otp-input-kit): simplify cell drawing logic
+```
+
 ## License
 
 ```

@@ -1,8 +1,5 @@
 plugins {
     id("burkido.android.library")
-    id("burkido.android.compose")
-    id("burkido.android.publish")
-    id("burkido.detekt")
 }
 
 android {
@@ -11,10 +8,6 @@ android {
 
 dokka {
     moduleName.set("SMS Reader")
-}
-
-libraryPublish {
-    artifactId.set("auto-read-otp")
 }
 
 dependencies {

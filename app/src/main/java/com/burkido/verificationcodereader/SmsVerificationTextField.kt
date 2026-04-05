@@ -28,14 +28,15 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.burkido.verificationcodereader.ui.theme.VerificationCodeReaderTheme
 
 @Composable
 fun OtpTextField(
-    modifier: Modifier = Modifier,
     value: String,
     length: Int,
     onValueChange: (String) -> Unit,
-    onVerificationExplicitlyTriggered: () -> Unit
+    onVerificationExplicitlyTriggered: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     BasicTextField(
         modifier = modifier.clearFocusOnTap(),
@@ -98,10 +99,12 @@ private fun CharView(
 @Preview
 @Composable
 private fun OtpTextFieldPreview() {
-    OtpTextField(
-        value = "1234",
-        length = 4,
-        onValueChange = {},
-        onVerificationExplicitlyTriggered = {}
-    )
+    VerificationCodeReaderTheme {
+        OtpTextField(
+            value = "1234",
+            length = 4,
+            onValueChange = {},
+            onVerificationExplicitlyTriggered = {}
+        )
+    }
 }
