@@ -1,5 +1,6 @@
 plugins {
     id("burkido.android.library")
+    id("burkido.publish")
 }
 
 android {
@@ -11,10 +12,13 @@ dokka {
 }
 
 dependencies {
-    implementation(libs.core.ktx)
-    implementation(platform(libs.compose.bom))
-    implementation(libs.compose.ui)
-    implementation(libs.compose.foundation)
+    // Types exposed in the public API (Modifier, Shape, Color, TextStyle,
+    // TextFieldState, KeyboardOptions, @Composable) -> api scope
+    api(platform(libs.compose.bom))
+    api(libs.compose.runtime)
+    api(libs.compose.ui)
+    api(libs.compose.foundation)
+
     implementation(libs.compose.animation)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui.tooling.preview)

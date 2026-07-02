@@ -1,5 +1,6 @@
 plugins {
     id("burkido.android.library")
+    id("burkido.publish")
 }
 
 android {
@@ -11,6 +12,11 @@ dokka {
 }
 
 dependencies {
+    // @Composable in the public API surface -> consumers need these at compile time
+    api(platform(libs.compose.bom))
+    api(libs.compose.runtime)
+
+    implementation(libs.compose.ui)
     implementation(libs.core.ktx)
     implementation(libs.activity.compose)
 

@@ -1,16 +1,14 @@
 plugins {
     `java-platform`
-    id("maven-publish")
+    id("burkido.publish")
 }
 
-javaPlatform {
-    allowDependencies()
-}
-
+// Constraints derive group/artifact/version from the sibling projects, so the
+// BOM always pins the exact versions built from the same tag.
 dependencies {
     constraints {
-        api("com.github.burkido:auto-read-otp:1.0.3")
-        api("com.github.burkido:otp-input-kit:1.0.0")
+        api(project(":sms-reader"))
+        api(project(":otp-input-kit"))
     }
 }
 
@@ -18,9 +16,6 @@ publishing {
     publications {
         create<MavenPublication>("release") {
             from(components["javaPlatform"])
-            groupId = "com.github.burkido"
-            artifactId = "otp-bom"
-            version = "1.0.0"
         }
     }
 }

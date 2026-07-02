@@ -1,2 +1,6 @@
 jdk:
   - openjdk21
+# JitPack sets the VERSION env var to the tag being built; the publish
+# convention plugin picks it up for the artifact version.
+install:
+  - ./gradlew publishToMavenLocal

@@ -22,7 +22,7 @@ jobs:
         run: ./gradlew assemble check
 
   publish:
-    name: Publish to JitPack
+    name: Verify JitPack publication
     needs: checks
     runs-on: ubuntu-latest
     steps:
@@ -38,13 +38,18 @@ jobs:
       - name: Extract version from tag
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      - name: Build release artifacts
-        run: ./gradlew assemble
+      # JitPack builds the tag on first request by running publishToMavenLocal
+      # with VERSION set to the tag name. Run the exact same command here so a
+      # broken publication fails this workflow instead of the JitPack build.
+      - name: Verify publications (simulates JitPack build)
+        run: ./gradlew publishToMavenLocal
         env:
-          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+          VERSION: ${{ env.RELEASE_VERSION }}
 
-      # JitPack automatically picks up the tag created by the GitHub Release.
-      # No extra publish step needed — JitPack will build on the first request
-      # for this version at: https://jitpack.io/#<owner>/<repo>/<tag>
+      - name: List published artifacts
+        run: find ~/.m2/repository/com/github/burkido -type f -name "*.pom" -o -type f -name "*.aar" -o -type f -name "*.jar" | sort
+
+      # JitPack automatically picks up the tag created by the GitHub Release
+      # and serves it at: https://jitpack.io/#burkido/auto-read-otp/<tag>
       - name: Confirm release tag
-        run: echo "✅ Tag ${{ env.RELEASE_VERSION }} is live — JitPack will build on first request."
+        run: echo "✅ Tag ${{ env.RELEASE_VERSION }} verified — JitPack will build it on first request."
