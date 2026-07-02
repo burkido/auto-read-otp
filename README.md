@@ -24,36 +24,35 @@ dependencyResolutionManagement {
 }
 ```
 
+All modules are published from a single Git tag under the JitPack multi-module
+group `com.github.burkido.auto-read-otp`, so every module shares the same version.
+
 ### Using Version Catalog (Recommended)
 
-Define versions in `gradle/libs.versions.toml`:
+Define the version once in `gradle/libs.versions.toml`:
 
 ```toml
 [versions]
-auto-read-otp = "1.0.3"
-otp-input-kit = "1.0.0"
-otp-bom = "1.0.0"
+auto-read-otp = "v2.0.0"
 
 [libraries]
-auto-read-otp = { module = "com.github.burkido:auto-read-otp", version.ref = "auto-read-otp" }
-otp-input-kit = { module = "com.github.burkido:otp-input-kit", version.ref = "otp-input-kit" }
-otp-bom = { module = "com.github.burkido:otp-bom", version.ref = "otp-bom" }
+otp-bom = { module = "com.github.burkido.auto-read-otp:otp-bom", version.ref = "auto-read-otp" }
+sms-reader = { module = "com.github.burkido.auto-read-otp:sms-reader" }
+otp-input-kit = { module = "com.github.burkido.auto-read-otp:otp-input-kit" }
 ```
 
 Then reference them in your **module**'s `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    // Using BOM (recommended)
     implementation(platform(libs.otp.bom))
-    implementation(libs.auto.read.otp)
+    implementation(libs.sms.reader)
     implementation(libs.otp.input.kit)
 }
 ```
 
 **Benefits:**
-- Single source of truth for versions across all modules
-- Easy to bump versions (edit `libs.versions.toml` once, all modules update)
+- Single source of truth for the version (the BOM pins all modules)
 - Type-safe dependency management via generated accessors
 - Works seamlessly with IDE autocomplete
 
@@ -64,15 +63,19 @@ Alternatively, add dependencies directly to your **module**'s `build.gradle.kts`
 ```kotlin
 dependencies {
     // BOM (recommended)
-    implementation(platform("com.github.burkido:otp-bom:1.0.0"))
-    implementation("com.github.burkido:auto-read-otp")
-    implementation("com.github.burkido:otp-input-kit")
+    implementation(platform("com.github.burkido.auto-read-otp:otp-bom:v2.0.0"))
+    implementation("com.github.burkido.auto-read-otp:sms-reader")
+    implementation("com.github.burkido.auto-read-otp:otp-input-kit")
 
     // Or individually
-    implementation("com.github.burkido:auto-read-otp:1.0.3")
-    implementation("com.github.burkido:otp-input-kit:1.0.0")
+    implementation("com.github.burkido.auto-read-otp:sms-reader:v2.0.0")
+    implementation("com.github.burkido.auto-read-otp:otp-input-kit:v2.0.0")
 }
 ```
+
+> **Note:** Versions `1.0.x` were published under the legacy single-module
+> coordinate `com.github.burkido:auto-read-otp`. Starting with `v2.0.0` use the
+> coordinates above.
 
 ## Usage
 
@@ -161,12 +164,40 @@ textFieldState.clearOtp()       // Clear input
 
 ### SMS Auto-Read
 
+Uses Google's SMS User Consent API — no SMS permissions required.
+
 ```kotlin
 SmsUserConsent(
     smsCodeLength = 6,
-    onOTPReceived = { otp -> textFieldState.fillOtp(otp, 6) },
-    onError = { error -> Log.e("OTP", error) },
+    onOtpReceived = { otp -> textFieldState.fillOtp(otp, 6) },
+    onError = { error ->
+        when (error) {
+            SmsConsentError.Timeout -> { /* show resend button */ }
+            SmsConsentError.ConsentDenied -> { /* user dismissed the dialog */ }
+            else -> Log.e("OTP", "SMS consent failed: $error")
+        }
+    },
 )
+```
+
+Optional parameters:
+
+```kotlin
+SmsUserConsent(
+    smsCodeLength = 6,
+    onOtpReceived = { otp -> /* ... */ },
+    senderPhoneNumber = "+901234567890", // only listen to this sender
+    retryKey = attempt,                  // change to restart the 5-minute window
+)
+```
+
+The consent window lasts 5 minutes and is one-shot. To listen again (e.g. after
+a "resend code" tap), bump `retryKey`:
+
+```kotlin
+var attempt by remember { mutableIntStateOf(0) }
+SmsUserConsent(smsCodeLength = 6, onOtpReceived = { /* ... */ }, retryKey = attempt)
+Button(onClick = { resendCode(); attempt++ }) { Text("Resend") }
 ```
 
 ### Full Example
@@ -185,8 +216,8 @@ fun VerificationScreen() {
 
         SmsUserConsent(
             smsCodeLength = 6,
-            onOTPReceived = { otp -> textFieldState.fillOtp(otp, 6) },
-            onError = { error -> Log.e("OTP", error) },
+            onOtpReceived = { otp -> textFieldState.fillOtp(otp, 6) },
+            onError = { error -> Log.e("OTP", "SMS consent failed: $error") },
         )
     }
 }
