@@ -99,12 +99,12 @@ fun VerificationScreen() {
         // SMS auto-read — fills all 6 designs simultaneously
         SmsUserConsent(
             smsCodeLength = OTP_LENGTH,
-            onOTPReceived = { otp ->
+            onOtpReceived = { otp ->
                 Log.d(TAG, "SMS received: $otp")
                 listOf(defaultState, outlinedState, underlineState, midnightState, pillState, compactState)
                     .forEach { it.fillOtp(otp, OTP_LENGTH) }
             },
-            onError = { error -> Log.e(TAG, "Error: $error") },
+            onError = { error -> Log.e(TAG, "SMS consent error: $error") },
         )
     }
 }

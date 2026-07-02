@@ -3,4 +3,6 @@
     <string name="sms_timeout_error">Your SMS has timed out. Please try again.</string>
     <string name="activity_not_found_error">Unable to start the consent dialog. Please try again.</string>
     <string name="sms_retriever_error_consent_denied">SMS retrieval consent was denied. Please try again.</string>
+    <string name="sms_otp_not_found_error">No verification code was found in the SMS.</string>
+    <string name="sms_retriever_unavailable_error">SMS retrieval is not available on this device.</string>
 </resources>
