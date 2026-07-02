@@ -14,10 +14,10 @@ import androidx.compose.ui.unit.Dp
  * @param blinkInterval Duration in milliseconds of one blink half-cycle.
  */
 @Immutable
-data class OtpCursorConfig(
-    val color: Color,
-    val width: Dp = OtpTokens.CursorWidth,
-    val height: Dp = OtpTokens.CursorHeight,
-    val cornerRadius: Dp = OtpTokens.CursorCornerRadius,
-    val blinkInterval: Long = OtpTokens.CursorBlinkInterval,
+public data class OtpCursorConfig(
+    public val color: Color,
+    public val width: Dp = OtpTokens.CursorWidth,
+    public val height: Dp = OtpTokens.CursorHeight,
+    public val cornerRadius: Dp = OtpTokens.CursorCornerRadius,
+    public val blinkInterval: Long = OtpTokens.CursorBlinkInterval,
 )

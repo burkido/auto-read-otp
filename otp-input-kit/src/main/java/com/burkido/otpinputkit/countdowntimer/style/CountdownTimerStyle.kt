@@ -14,8 +14,8 @@ import androidx.compose.ui.text.TextStyle
  * @param separatorColor Color of the colon `:` separators between boxes.
  */
 @Immutable
-data class CountdownTimerStyle(
-    val backgroundColor: Color,
-    val textStyle: TextStyle,
-    val separatorColor: Color,
+public data class CountdownTimerStyle(
+    public val backgroundColor: Color,
+    public val textStyle: TextStyle,
+    public val separatorColor: Color,
 )

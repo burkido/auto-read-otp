@@ -17,40 +17,40 @@ import androidx.compose.runtime.setValue
  * Create via [rememberOtpInputFieldState].
  */
 @Stable
-class OtpInputFieldState(
-    val otpLength: Int = 6,
+public class OtpInputFieldState(
+    public val otpLength: Int = 6,
     initialValue: String = "",
 ) {
     /** Current OTP text. */
-    var otpValue by mutableStateOf(initialValue)
+    public var otpValue: String by mutableStateOf(initialValue)
         private set
 
     /** Index of the currently focused cell. */
-    var focusedIndex by mutableIntStateOf(initialValue.length.coerceAtMost(otpLength - 1))
+    public var focusedIndex: Int by mutableIntStateOf(initialValue.length.coerceAtMost(otpLength - 1))
         private set
 
     /** Whether all cells have been filled. */
-    val isComplete: Boolean
+    public val isComplete: Boolean
         get() = otpValue.length == otpLength
 
     /**
      * Call this from the text field's onValueChange callback.
      * Filters to digits only and enforces the length limit.
      */
-    fun onValueChange(value: String) {
+    public fun onValueChange(value: String) {
         val filtered = value.filter { it.isDigit() }.take(otpLength)
         otpValue = filtered
         focusedIndex = filtered.length.coerceAtMost(otpLength - 1)
     }
 
     /** Clears the OTP value and resets focus to the first cell. */
-    fun clear() {
+    public fun clear() {
         otpValue = ""
         focusedIndex = 0
     }
 
     /** Fills the OTP with the given string (e.g. from SMS auto-read). */
-    fun fill(otp: String) {
+    public fun fill(otp: String) {
         val filtered = otp.filter { it.isDigit() }.take(otpLength)
         otpValue = filtered
         focusedIndex = filtered.length.coerceAtMost(otpLength - 1)
@@ -64,7 +64,7 @@ class OtpInputFieldState(
  * @param initialValue Optional initial value to pre-fill.
  */
 @Composable
-fun rememberOtpInputFieldState(
+public fun rememberOtpInputFieldState(
     otpLength: Int = 6,
     initialValue: String = "",
 ): OtpInputFieldState = remember {

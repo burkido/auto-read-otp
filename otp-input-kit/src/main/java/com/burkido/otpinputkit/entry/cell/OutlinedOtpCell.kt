@@ -32,7 +32,7 @@ import com.burkido.otpinputkit.entry.style.OtpTextStyles
  * ```
  */
 @Composable
-fun OutlinedOtpCell(
+public fun OutlinedOtpCell(
     char: Char?,
     focused: Boolean,
     isError: Boolean,

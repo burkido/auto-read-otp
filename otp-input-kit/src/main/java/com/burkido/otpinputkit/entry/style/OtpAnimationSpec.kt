@@ -10,23 +10,23 @@ import androidx.compose.ui.unit.Dp
  * with sensible defaults.
  */
 @Immutable
-data class OtpAnimationSpec(
+public data class OtpAnimationSpec(
     /** Whether to shake the input field on error. */
-    val shakeOnError: Boolean,
+    public val shakeOnError: Boolean,
     /** Animation applied when a character enters a cell. */
-    val cellEntryAnimation: CellAnimation,
+    public val cellEntryAnimation: CellAnimation,
     /** Duration of entry/transition animations in milliseconds. */
-    val animationDuration: Int,
+    public val animationDuration: Int,
     /** Maximum horizontal displacement of the cell during a shake, in dp. */
-    val shakeAmplitude: Dp,
+    public val shakeAmplitude: Dp,
     /** Duration in milliseconds of each individual shake step. */
-    val shakeStepDuration: Int,
+    public val shakeStepDuration: Int,
     /** Number of oscillations performed during a shake. */
-    val shakeRepeatCount: Int,
+    public val shakeRepeatCount: Int,
 )
 
 /** Possible animation styles when a new character is entered into a cell. */
-enum class CellAnimation {
+public enum class CellAnimation {
     /** No animation. */
     None,
     /** The cell scales up briefly. */

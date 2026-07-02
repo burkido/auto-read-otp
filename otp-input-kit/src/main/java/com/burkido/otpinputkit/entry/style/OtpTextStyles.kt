@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
  * @param placeholderTextStyle Style applied to the placeholder text.
  */
 @Immutable
-data class OtpTextStyles(
-    val filledTextStyle: TextStyle,
-    val placeholderTextStyle: TextStyle,
+public data class OtpTextStyles(
+    public val filledTextStyle: TextStyle,
+    public val placeholderTextStyle: TextStyle,
 )

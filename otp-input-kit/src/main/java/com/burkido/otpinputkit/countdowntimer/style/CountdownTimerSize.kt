@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.TextUnit
  * @param boxSpacing Space between a time box and its adjacent colon separator.
  * @param textSize Font size of the time-unit text.
  */
-data class CountdownTimerSize(
-    val verticalPadding: Dp,
-    val horizontalPadding: Dp,
-    val boxSpacing: Dp,
-    val textSize: TextUnit,
+public data class CountdownTimerSize(
+    public val verticalPadding: Dp,
+    public val horizontalPadding: Dp,
+    public val boxSpacing: Dp,
+    public val textSize: TextUnit,
 )

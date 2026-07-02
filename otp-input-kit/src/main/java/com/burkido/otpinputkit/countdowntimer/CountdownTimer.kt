@@ -56,7 +56,7 @@ import java.util.concurrent.TimeUnit
  * @param onTimerFinish Called once when the countdown reaches zero.
  */
 @Composable
-fun CountdownTimer(
+public fun CountdownTimer(
     state: CountdownTimerState,
     modifier: Modifier = Modifier,
     style: CountdownTimerStyle = CountdownTimerDefaults.style(),

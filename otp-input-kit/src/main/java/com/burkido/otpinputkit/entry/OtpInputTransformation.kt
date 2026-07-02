@@ -3,8 +3,6 @@ package com.burkido.otpinputkit.entry
 import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.TextFieldBuffer
 import androidx.compose.foundation.text.input.maxLength
-import androidx.compose.foundation.text.input.then
-import androidx.core.text.isDigitsOnly
 
 /**
  * An [InputTransformation] that restricts input to digits only
@@ -19,7 +17,7 @@ import androidx.core.text.isDigitsOnly
  * )
  * ```
  */
-class OtpInputTransformation(
+public class OtpInputTransformation(
     otpLength: Int,
 ) : InputTransformation {
 
@@ -30,7 +28,7 @@ class OtpInputTransformation(
         with(maxLengthTransformation) { transformInput() }
 
         // Then filter non-digits
-        if (!asCharSequence().isDigitsOnly()) {
+        if (!asCharSequence().all { it.isDigit() }) {
             revertAllChanges()
         }
     }

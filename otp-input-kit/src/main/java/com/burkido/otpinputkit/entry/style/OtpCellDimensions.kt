@@ -11,12 +11,12 @@ import androidx.compose.ui.unit.TextUnit
  * with sensible defaults, then override only the dimensions you want to change.
  */
 @Immutable
-data class OtpCellDimensions(
-    val cellWidth: Dp,
-    val cellHeight: Dp,
-    val borderWidth: Dp,
-    val focusedBorderWidth: Dp,
-    val cornerRadius: Dp,
-    val spacing: Dp,
-    val textSize: TextUnit,
+public data class OtpCellDimensions(
+    public val cellWidth: Dp,
+    public val cellHeight: Dp,
+    public val borderWidth: Dp,
+    public val focusedBorderWidth: Dp,
+    public val cornerRadius: Dp,
+    public val spacing: Dp,
+    public val textSize: TextUnit,
 )

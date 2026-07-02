@@ -65,7 +65,7 @@ import kotlin.math.roundToInt
  * @param contentPadding Inner padding applied inside the cell box.
  */
 @Composable
-fun DefaultOtpCell(
+public fun DefaultOtpCell(
     char: Char?,
     focused: Boolean,
     isError: Boolean,

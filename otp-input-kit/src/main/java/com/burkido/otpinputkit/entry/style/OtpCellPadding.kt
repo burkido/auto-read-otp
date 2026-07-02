@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.Dp
  * @param vertical Padding on the top and bottom edges of the cell content.
  */
 @Immutable
-data class OtpCellPadding(
-    val horizontal: Dp,
-    val vertical: Dp,
+public data class OtpCellPadding(
+    public val horizontal: Dp,
+    public val vertical: Dp,
 )

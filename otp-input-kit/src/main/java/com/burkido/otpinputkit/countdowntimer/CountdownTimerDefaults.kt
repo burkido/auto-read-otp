@@ -22,7 +22,7 @@ import com.burkido.otpinputkit.countdowntimer.style.CountdownTimerTokens
  * )
  * ```
  */
-object CountdownTimerDefaults {
+public object CountdownTimerDefaults {
 
     /**
      * Creates a [CountdownTimerStyle] with Material3-derived defaults.
@@ -38,7 +38,7 @@ object CountdownTimerDefaults {
      *   Defaults to [MaterialTheme.colorScheme.onSurface].
      */
     @Composable
-    fun style(
+    public fun style(
         backgroundColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.primaryContainer,
         textStyle: TextStyle = MaterialTheme.typography.labelLarge.copy(
             fontWeight = FontWeight.Bold,
@@ -72,7 +72,7 @@ object CountdownTimerDefaults {
      * @param boxSpacing Space between a time box and its adjacent colon separator.
      * @param textSize Font size of the time-unit text.
      */
-    fun size(
+    public fun size(
         verticalPadding: Dp = CountdownTimerTokens.VerticalPadding,
         horizontalPadding: Dp = CountdownTimerTokens.HorizontalPadding,
         boxSpacing: Dp = CountdownTimerTokens.BoxSpacing,

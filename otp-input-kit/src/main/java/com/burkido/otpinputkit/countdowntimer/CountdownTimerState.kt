@@ -25,22 +25,22 @@ import java.util.concurrent.TimeUnit
  * @property isFinished `true` once the timer reaches zero.
  */
 @Stable
-class CountdownTimerState(val endDate: Long) {
+public class CountdownTimerState(public val endDate: Long) {
 
     private var onTimerFinish: () -> Unit = {}
 
     private val countDownTimer: CountDownTimer by lazy { createCountDownTimer() }
 
-    var remainingTime: Long by mutableLongStateOf(
+    public var remainingTime: Long by mutableLongStateOf(
         (endDate - System.currentTimeMillis()).coerceAtLeast(0L)
     )
         private set
 
-    var isFinished: Boolean by mutableStateOf(endDate <= 0L || endDate <= System.currentTimeMillis())
+    public var isFinished: Boolean by mutableStateOf(endDate <= 0L || endDate <= System.currentTimeMillis())
         private set
 
     /** Starts the countdown. If [endDate] is already in the past the timer finishes immediately. */
-    fun startTimer() {
+    public fun startTimer() {
         if (endDate <= 0L || endDate <= System.currentTimeMillis()) {
             remainingTime = 0L
             isFinished = true
@@ -51,7 +51,7 @@ class CountdownTimerState(val endDate: Long) {
     }
 
     /** Cancels the countdown without triggering [onTimerFinish]. */
-    fun cancelTimer() {
+    public fun cancelTimer() {
         countDownTimer.cancel()
     }
 
@@ -59,14 +59,14 @@ class CountdownTimerState(val endDate: Long) {
      * Registers a callback that fires once when the timer reaches zero.
      * Call this before [startTimer]. Replacing the listener does not restart the timer.
      */
-    fun setOnTimerFinishListener(action: () -> Unit) {
+    public fun setOnTimerFinishListener(action: () -> Unit) {
         onTimerFinish = action
     }
 
     /**
      * Converts [time] (milliseconds) into a [Triple] of `(hours, minutes, seconds)`.
      */
-    fun getRemainingTimes(time: Long): Triple<Long, Long, Long> {
+    public fun getRemainingTimes(time: Long): Triple<Long, Long, Long> {
         val totalSeconds = time / ONE_SECOND_MS
         val hours = totalSeconds / ONE_HOUR_SECONDS
         val minutes = (totalSeconds % ONE_HOUR_SECONDS) / ONE_MINUTE_SECONDS
@@ -87,7 +87,7 @@ class CountdownTimerState(val endDate: Long) {
             }
         }
 
-    companion object {
+    public companion object {
         private val TICK_INTERVAL = TimeUnit.SECONDS.toMillis(1)
         private const val ONE_HOUR_SECONDS = 3600L
         private const val ONE_MINUTE_SECONDS = 60L
@@ -108,7 +108,7 @@ class CountdownTimerState(val endDate: Long) {
  * @param endDate The countdown target time in milliseconds since epoch.
  */
 @Composable
-fun rememberCountdownTimerState(endDate: Long): CountdownTimerState =
+public fun rememberCountdownTimerState(endDate: Long): CountdownTimerState =
     rememberSaveable(endDate, saver = CountdownTimerState.Saver) {
         CountdownTimerState(endDate = endDate)
     }

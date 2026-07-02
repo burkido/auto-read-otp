@@ -88,7 +88,7 @@ import kotlinx.coroutines.flow.collectLatest
  * @param separator Optional slot for rendering separators between cells.
  */
 @Composable
-fun OtpInputField(
+public fun OtpInputField(
     textFieldState: TextFieldState,
     otpLength: Int,
     modifier: Modifier = Modifier,
@@ -203,7 +203,7 @@ fun OtpInputField(
  * @param separator Optional slot for rendering separators between cells.
  */
 @Composable
-fun OtpInputField(
+public fun OtpInputField(
     value: String,
     onValueChange: (String) -> Unit,
     otpLength: Int,

@@ -25,18 +25,18 @@ import androidx.compose.foundation.text.input.placeCursorAtEnd
  */
 
 /** The current OTP value as a plain [String]. */
-val TextFieldState.otpValue: String
+public val TextFieldState.otpValue: String
     get() = text.toString()
 
 /** Whether the OTP is complete (all digits filled). */
-fun TextFieldState.isOtpComplete(length: Int): Boolean =
+public fun TextFieldState.isOtpComplete(length: Int): Boolean =
     text.length == length
 
 /**
  * Fills the text field with the given OTP string.
  * Filters to digits only and limits to [length] characters.
  */
-fun TextFieldState.fillOtp(otp: String, length: Int) {
+public fun TextFieldState.fillOtp(otp: String, length: Int) {
     val filtered = otp.filter { it.isDigit() }.take(length)
     edit {
         replace(0, this.length, filtered)
@@ -45,6 +45,6 @@ fun TextFieldState.fillOtp(otp: String, length: Int) {
 }
 
 /** Clears the OTP text field. */
-fun TextFieldState.clearOtp() {
+public fun TextFieldState.clearOtp() {
     clearText()
 }

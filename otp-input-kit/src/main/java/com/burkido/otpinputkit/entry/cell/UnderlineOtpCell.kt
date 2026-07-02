@@ -58,7 +58,7 @@ import kotlin.math.roundToInt
  * ```
  */
 @Composable
-fun UnderlineOtpCell(
+public fun UnderlineOtpCell(
     char: Char?,
     focused: Boolean,
     isError: Boolean,

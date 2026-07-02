@@ -14,8 +14,8 @@ import androidx.compose.runtime.Immutable
  * @param maskDelay How long (in ms) a digit stays visible before being masked.
  */
 @Immutable
-data class OtpMaskConfig(
-    val isMasked: Boolean,
-    val maskCharacter: Char,
-    val maskDelay: Long,
+public data class OtpMaskConfig(
+    public val isMasked: Boolean,
+    public val maskCharacter: Char,
+    public val maskDelay: Long,
 )
