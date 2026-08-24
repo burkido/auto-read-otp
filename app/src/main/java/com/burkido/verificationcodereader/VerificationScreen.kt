@@ -44,6 +44,7 @@ fun VerificationScreen() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .clearFocusOnTap()
             .verticalScroll(rememberScrollState())
             .padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
