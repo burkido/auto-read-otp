@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,7 +44,7 @@ import java.util.concurrent.TimeUnit
  *     style = CountdownTimerDefaults.style(
  *         backgroundColor = MaterialTheme.colorScheme.errorContainer
  *     ),
- *     size = CountdownTimerSize.Large,
+ *     size = CountdownTimerDefaults.size(textSize = 18.sp),
  *     onTimerFinish = { /* resend button becomes enabled */ }
  * )
  * ```
@@ -51,7 +52,7 @@ import java.util.concurrent.TimeUnit
  * @param state A [CountdownTimerState] created via [rememberCountdownTimerState].
  * @param modifier Modifier for the root [Row].
  * @param style Visual configuration. Defaults to [CountdownTimerDefaults.style].
- * @param size Size/padding configuration. Defaults to [CountdownTimerDefaults.size] ([CountdownTimerSize.Medium]).
+ * @param size Size/padding configuration. Defaults to [CountdownTimerDefaults.size].
  * @param backgroundAlpha Alpha multiplier for the time-box backgrounds (0f–1f).
  * @param onTimerFinish Called once when the countdown reaches zero.
  */
@@ -79,27 +80,35 @@ public fun CountdownTimer(
     }
     val (hours, minutes, seconds) = remainingTimes
 
+    // size.textSize wins when specified; otherwise the style's own font size applies.
+    val resolvedTextStyle = remember(style, size) {
+        style.textStyle.merge(TextStyle(fontSize = size.textSize))
+    }
+    val separatorTextStyle = remember(resolvedTextStyle, style.separatorColor) {
+        resolvedTextStyle.copy(color = style.separatorColor)
+    }
+
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TimeBoxItem(time = hours, style = style, size = size, backgroundAlpha = backgroundAlpha)
+        TimeBoxItem(time = hours, textStyle = resolvedTextStyle, backgroundColor = style.backgroundColor, size = size, backgroundAlpha = backgroundAlpha)
         Spacer(modifier = Modifier.width(size.boxSpacing))
-        Separator(style = style)
+        Separator(textStyle = separatorTextStyle)
         Spacer(modifier = Modifier.width(size.boxSpacing))
-        TimeBoxItem(time = minutes, style = style, size = size, backgroundAlpha = backgroundAlpha)
+        TimeBoxItem(time = minutes, textStyle = resolvedTextStyle, backgroundColor = style.backgroundColor, size = size, backgroundAlpha = backgroundAlpha)
         Spacer(modifier = Modifier.width(size.boxSpacing))
-        Separator(style = style)
+        Separator(textStyle = separatorTextStyle)
         Spacer(modifier = Modifier.width(size.boxSpacing))
-        TimeBoxItem(time = seconds, style = style, size = size, backgroundAlpha = backgroundAlpha)
+        TimeBoxItem(time = seconds, textStyle = resolvedTextStyle, backgroundColor = style.backgroundColor, size = size, backgroundAlpha = backgroundAlpha)
     }
 }
 
 @Composable
-private fun Separator(style: CountdownTimerStyle) {
+private fun Separator(textStyle: TextStyle) {
     Text(
         text = ":",
-        style = style.textStyle.copy(color = style.separatorColor),
+        style = textStyle,
         modifier = Modifier.width(CountdownTimerTokens.SeparatorHorizontalPadding * 2),
     )
 }

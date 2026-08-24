@@ -16,7 +16,9 @@ import androidx.compose.ui.unit.TextUnit
  * @param verticalPadding Vertical padding inside each time box.
  * @param horizontalPadding Horizontal padding inside each time box.
  * @param boxSpacing Space between a time box and its adjacent colon separator.
- * @param textSize Font size of the time-unit text.
+ * @param textSize Font size of the time-unit text and separators. When specified,
+ *   it overrides the font size of [CountdownTimerStyle.textStyle]; when
+ *   [androidx.compose.ui.unit.TextUnit.Unspecified], the style's font size applies.
  */
 public data class CountdownTimerSize(
     public val verticalPadding: Dp,

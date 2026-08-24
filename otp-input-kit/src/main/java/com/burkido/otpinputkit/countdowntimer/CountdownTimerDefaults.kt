@@ -30,10 +30,10 @@ public object CountdownTimerDefaults {
      * @param backgroundColor Background color of each time box.
      *   Defaults to [MaterialTheme.colorScheme.primaryContainer].
      * @param textStyle Text style applied to time-unit values.
-     *   Defaults to a bold variant of [MaterialTheme.typography.labelLarge]
-     *   at the given [textSize].
-     * @param textSize Font size override for the time-unit text.
-     *   Ignored when [textStyle] is provided explicitly.
+     *   Defaults to a bold variant of [MaterialTheme.typography.labelLarge].
+     * @param textSize Optional font size override applied on top of [textStyle].
+     *   A `textSize` specified via [CountdownTimerDefaults.size] takes precedence
+     *   over both this value and [textStyle]'s font size.
      * @param separatorColor Color of the colon `:` separators.
      *   Defaults to [MaterialTheme.colorScheme.onSurface].
      */
@@ -70,13 +70,15 @@ public object CountdownTimerDefaults {
      * @param verticalPadding Vertical padding inside each time box.
      * @param horizontalPadding Horizontal padding inside each time box.
      * @param boxSpacing Space between a time box and its adjacent colon separator.
-     * @param textSize Font size of the time-unit text.
+     * @param textSize Font size of the time-unit text and separators. When specified,
+     *   it overrides the font size of the style's text style; defaults to
+     *   [TextUnit.Unspecified], which inherits the font size from the style.
      */
     public fun size(
         verticalPadding: Dp = CountdownTimerTokens.VerticalPadding,
         horizontalPadding: Dp = CountdownTimerTokens.HorizontalPadding,
         boxSpacing: Dp = CountdownTimerTokens.BoxSpacing,
-        textSize: TextUnit = CountdownTimerTokens.TextSize,
+        textSize: TextUnit = TextUnit.Unspecified,
     ): CountdownTimerSize = CountdownTimerSize(
         verticalPadding = verticalPadding,
         horizontalPadding = horizontalPadding,

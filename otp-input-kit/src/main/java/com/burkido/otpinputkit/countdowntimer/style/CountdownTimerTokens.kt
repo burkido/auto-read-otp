@@ -1,7 +1,6 @@
 package com.burkido.otpinputkit.countdowntimer.style
 
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 /**
  * Single source of truth for all primitive default values used in the countdown timer.
@@ -12,7 +11,6 @@ import androidx.compose.ui.unit.sp
 internal object CountdownTimerTokens {
 
     // ── Box dimensions ─────────────────────────────────────────────────────
-    val TextSize = 14.sp
     val VerticalPadding = 2.dp
     val HorizontalPadding = 4.dp
     val BoxSpacing = 1.dp
