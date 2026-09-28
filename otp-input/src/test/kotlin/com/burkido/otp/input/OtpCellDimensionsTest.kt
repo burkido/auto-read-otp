@@ -3,9 +3,6 @@ package com.burkido.otp.input
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
-/**
- * Unit tests for [OtpCellDimensions] data class defaults and copy behavior.
- */
 class OtpCellDimensionsTest {
 
     @Test
@@ -30,14 +27,14 @@ class OtpCellDimensionsTest {
     }
 
     @Test
-    fun `data class equality works`() {
+    fun `equal values are equal`() {
         val a = OtpInputDefaults.dimensions()
         val b = OtpInputDefaults.dimensions()
         assertThat(a).isEqualTo(b)
     }
 
     @Test
-    fun `data class inequality when values differ`() {
+    fun `different values are not equal`() {
         val a = OtpInputDefaults.dimensions()
         val b = OtpInputDefaults.dimensions(cellWidth = a.cellWidth * 2)
         assertThat(a).isNotEqualTo(b)

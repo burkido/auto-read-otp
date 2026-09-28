@@ -1,14 +1,10 @@
 package com.burkido.otp.input
 
+import androidx.compose.ui.unit.dp
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
-/**
- * Unit tests for [OtpInputDefaults] factory functions (non-composable ones).
- */
 class OtpInputDefaultsTest {
-
-    // ── dimensions ─────────────────────────────────────────────────
 
     @Test
     fun `dimensions returns defaults when no args provided`() {
@@ -27,8 +23,6 @@ class OtpInputDefaultsTest {
         assertThat(dims.cellHeight.value).isEqualTo(56f)
     }
 
-    // ── animationSpec ──────────────────────────────────────────────
-
     @Test
     fun `animationSpec returns defaults when no args provided`() {
         val spec = OtpInputDefaults.animationSpec()
@@ -44,15 +38,11 @@ class OtpInputDefaultsTest {
         assertThat(spec.shakeOnError).isFalse()
     }
 
-    // ── shape ──────────────────────────────────────────────────────
-
     @Test
     fun `shape returns non-null shape`() {
         val shape = OtpInputDefaults.shape()
         assertThat(shape).isNotNull()
     }
-
-    // ── maskConfig ─────────────────────────────────────────────────
 
     @Test
     fun `maskConfig returns defaults when no args provided`() {
@@ -69,8 +59,6 @@ class OtpInputDefaultsTest {
         assertThat(config.maskDelay).isEqualTo(500L)
     }
 
-    // ── contentPadding ─────────────────────────────────────────────
-
     @Test
     fun `contentPadding returns defaults when no args provided`() {
         val padding = OtpInputDefaults.contentPadding()
@@ -85,10 +73,3 @@ class OtpInputDefaultsTest {
         assertThat(padding.vertical.value).isEqualTo(12f)
     }
 }
-
-// Helpers to create Dp/Sp literals outside Compose context
-private inline val Number.dp get() = androidx.compose.ui.unit.Dp(this.toFloat())
-private inline val Number.sp get() = androidx.compose.ui.unit.TextUnit(
-    this.toFloat(),
-    androidx.compose.ui.unit.TextUnitType.Sp,
-)

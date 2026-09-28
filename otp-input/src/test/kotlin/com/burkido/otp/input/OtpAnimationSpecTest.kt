@@ -3,9 +3,6 @@ package com.burkido.otp.input
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
-/**
- * Unit tests for [OtpAnimationSpec] data class defaults and enum values.
- */
 class OtpAnimationSpecTest {
 
     @Test
@@ -40,14 +37,14 @@ class OtpAnimationSpecTest {
     }
 
     @Test
-    fun `data class equality works`() {
+    fun `equal values are equal`() {
         val a = OtpInputDefaults.animationSpec()
         val b = OtpInputDefaults.animationSpec()
         assertThat(a).isEqualTo(b)
     }
 
     @Test
-    fun `data class inequality works`() {
+    fun `different values are not equal`() {
         val a = OtpInputDefaults.animationSpec()
         val b = OtpInputDefaults.animationSpec(cellEntryAnimation = CellAnimation.FadeIn)
         assertThat(a).isNotEqualTo(b)

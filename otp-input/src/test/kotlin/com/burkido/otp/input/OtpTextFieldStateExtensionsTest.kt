@@ -4,13 +4,7 @@ import androidx.compose.foundation.text.input.TextFieldState
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
-/**
- * Unit tests for [TextFieldState] OTP extension functions:
- * [otpValue], [isOtpComplete], [fillOtp], [clearOtp].
- */
 class OtpTextFieldStateExtensionsTest {
-
-    // ── otpValue ───────────────────────────────────────────────────
 
     @Test
     fun `otpValue returns empty string for new state`() {
@@ -23,8 +17,6 @@ class OtpTextFieldStateExtensionsTest {
         val state = TextFieldState(initialText = "1234")
         assertThat(state.otpValue).isEqualTo("1234")
     }
-
-    // ── isOtpComplete ──────────────────────────────────────────────
 
     @Test
     fun `isOtpComplete returns false when text is shorter than length`() {
@@ -49,8 +41,6 @@ class OtpTextFieldStateExtensionsTest {
         val state = TextFieldState(initialText = "1234567")
         assertThat(state.isOtpComplete(6)).isFalse()
     }
-
-    // ── fillOtp ────────────────────────────────────────────────────
 
     @Test
     fun `fillOtp sets digits into the state`() {
@@ -86,8 +76,6 @@ class OtpTextFieldStateExtensionsTest {
         state.fillOtp("222333", 6)
         assertThat(state.otpValue).isEqualTo("222333")
     }
-
-    // ── clearOtp ───────────────────────────────────────────────────
 
     @Test
     fun `clearOtp removes all text`() {

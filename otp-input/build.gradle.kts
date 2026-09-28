@@ -1,10 +1,15 @@
 plugins {
     id("burkido.android.library")
+    alias(libs.plugins.roborazzi)
 }
 
 android {
     namespace = "com.burkido.otp.input"
     resourcePrefix = "otp_input_"
+}
+
+roborazzi {
+    outputDir.set(file("src/test/screenshots"))
 }
 
 dokka {
@@ -24,5 +29,7 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.test.ext.junit)
     testImplementation(libs.compose.ui.test.junit4)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
     debugImplementation(libs.compose.ui.test.manifest)
 }

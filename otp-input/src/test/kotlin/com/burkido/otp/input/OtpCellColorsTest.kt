@@ -4,9 +4,6 @@ import androidx.compose.ui.graphics.Color
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
-/**
- * Unit tests for [OtpCellColors.borderColor] and [OtpCellColors.containerColor] resolution logic.
- */
 class OtpCellColorsTest {
 
     private val colors = OtpCellColors(
@@ -22,8 +19,6 @@ class OtpCellColorsTest {
         cursorColor = Color.Blue,
         placeholderColor = Color.LightGray,
     )
-
-    // ── borderColor ────────────────────────────────────────────────
 
     @Test
     fun `borderColor returns error color when error is true`() {
@@ -60,8 +55,6 @@ class OtpCellColorsTest {
         assertThat(colors.borderColor(focused = true, filled = true, error = false))
             .isEqualTo(Color.Blue)
     }
-
-    // ── containerColor ─────────────────────────────────────────────
 
     @Test
     fun `containerColor returns error color when error is true`() {

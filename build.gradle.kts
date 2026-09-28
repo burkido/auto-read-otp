@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
+    alias(libs.plugins.roborazzi) apply false
 }
 
 dokka {
@@ -23,6 +24,12 @@ dependencies {
 
 kover {
     reports {
+        verify {
+            rule {
+                // A little under the current line coverage, so it only fails when coverage really drops.
+                minBound(75)
+            }
+        }
         filters {
             excludes {
                 // Previews are for the IDE and never run in tests.
