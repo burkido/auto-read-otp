@@ -28,7 +28,7 @@ internal fun TimeBoxItem(
     backgroundAlpha: Float = 1f,
 ) {
     Text(
-        text = String.format(TIME_FORMAT, time),
+        text = time.toString().padStart(2, '0'),
         style = style.textStyle.copy(fontSize = size.textSize),
         maxLines = 1,
         modifier = modifier
@@ -43,5 +43,3 @@ internal fun TimeBoxItem(
             ),
     )
 }
-
-private const val TIME_FORMAT = "%02d"
