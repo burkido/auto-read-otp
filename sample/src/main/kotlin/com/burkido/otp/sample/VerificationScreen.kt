@@ -25,7 +25,7 @@ import com.burkido.otp.sample.showcase.MidnightOtpSample
 import com.burkido.otp.sample.showcase.OutlinedOtpSample
 import com.burkido.otp.sample.showcase.PillOtpSample
 import com.burkido.otp.sample.showcase.UnderlineOtpSample
-import com.burkido.otp.sms.SmsUserConsent
+import com.burkido.otp.sms.SmsUserConsentEffect
 import com.burkido.otp.timer.CountdownTimer
 import com.burkido.otp.timer.CountdownTimerDefaults
 import com.burkido.otp.timer.rememberCountdownTimerState
@@ -98,15 +98,14 @@ fun VerificationScreen() {
         CompactOtpSample(compactState, OTP_LENGTH,
             onComplete = { otp -> Log.d(TAG, "Compact complete: $otp") })
 
-        // SMS auto-read — fills all 6 designs simultaneously
-        SmsUserConsent(
-            smsCodeLength = OTP_LENGTH,
-            onOTPReceived = { otp ->
-                Log.d(TAG, "SMS received: $otp")
+        SmsUserConsentEffect(
+            codeLength = OTP_LENGTH,
+            onCodeReceived = { code ->
+                Log.d(TAG, "SMS received: $code")
                 listOf(defaultState, outlinedState, underlineState, midnightState, pillState, compactState)
-                    .forEach { it.fillOtp(otp, OTP_LENGTH) }
+                    .forEach { it.fillOtp(code, OTP_LENGTH) }
             },
-            onError = { error -> Log.e(TAG, "Error: $error") },
+            onError = { error -> Log.w(TAG, "SMS consent ended: $error") },
         )
     }
 }

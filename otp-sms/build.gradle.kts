@@ -12,8 +12,11 @@ dokka {
 }
 
 dependencies {
-    implementation(libs.core.ktx)
+    api(platform(libs.compose.bom))
+    api(libs.compose.runtime)
+    implementation(libs.compose.ui)
     implementation(libs.activity.compose)
+    implementation(libs.core.ktx)
     implementation(libs.play.services.auth.api.phone)
 
     testImplementation(libs.junit)
