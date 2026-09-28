@@ -24,6 +24,8 @@ style:
     maxLineLength: 120
     excludeCommentStatements: true
   MagicNumber:
+    # Tests and the sample are full of values that read better inline than as named constants.
+    excludes: ['**/test/**', '**/androidTest/**', '**/sample/**']
     ignorePropertyDeclaration: true
     ignoreAnnotation: true
     ignoreEnums: true

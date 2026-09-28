@@ -249,12 +249,7 @@ public fun OtpInputField(
 }
 
 @Composable
-private fun CompletionEffect(
-    key: Any,
-    otpLength: Int,
-    text: () -> CharSequence,
-    onComplete: ((String) -> Unit)?,
-) {
+private fun CompletionEffect(key: Any, otpLength: Int, text: () -> CharSequence, onComplete: ((String) -> Unit)?) {
     val currentText by rememberUpdatedState(text)
     val currentOnComplete by rememberUpdatedState(onComplete)
 

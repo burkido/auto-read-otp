@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.dokka)
+    alias(libs.plugins.kover)
 }
 
 dokka {
@@ -14,4 +15,19 @@ dependencies {
     dokka(projects.otpSms)
     dokka(projects.otpInput)
     dokka(projects.otpTimer)
+
+    kover(projects.otpSms)
+    kover(projects.otpInput)
+    kover(projects.otpTimer)
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                // Previews are for the IDE and never run in tests.
+                annotatedBy("androidx.compose.ui.tooling.preview.Preview")
+            }
+        }
+    }
 }

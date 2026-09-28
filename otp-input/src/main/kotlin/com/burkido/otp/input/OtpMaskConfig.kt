@@ -7,11 +7,7 @@ import androidx.compose.runtime.Immutable
  * milliseconds, the way password fields on phones do. Get one from [OtpInputDefaults.maskConfig].
  */
 @Immutable
-public class OtpMaskConfig(
-    public val isMasked: Boolean,
-    public val maskCharacter: Char,
-    public val maskDelay: Long,
-) {
+public class OtpMaskConfig(public val isMasked: Boolean, public val maskCharacter: Char, public val maskDelay: Long) {
 
     public fun copy(
         isMasked: Boolean = this.isMasked,

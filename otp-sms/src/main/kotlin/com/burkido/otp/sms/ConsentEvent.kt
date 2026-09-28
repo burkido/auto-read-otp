@@ -28,7 +28,9 @@ internal fun readSmsRetrievedBroadcast(intent: Intent, packageManager: PackageMa
                 else -> ConsentEvent.Failed(SmsConsentError.UntrustedIntent)
             }
         }
+
         CommonStatusCodes.TIMEOUT -> ConsentEvent.Failed(SmsConsentError.Timeout)
+
         else -> ConsentEvent.Ignored
     }
 }

@@ -41,8 +41,7 @@ internal fun rememberErrorShake(isError: Boolean, spec: OtpAnimationSpec): Anima
 internal fun Modifier.horizontalOffset(offset: Animatable<Float, AnimationVector1D>): Modifier =
     offset { IntOffset(offset.value.roundToInt(), 0) }
 
-internal fun Modifier.disabledAlpha(isEnabled: Boolean): Modifier =
-    if (isEnabled) this else alpha(DISABLED_ALPHA)
+internal fun Modifier.disabledAlpha(isEnabled: Boolean): Modifier = if (isEnabled) this else alpha(DISABLED_ALPHA)
 
 /**
  * The text a cell should show right now. With masking on, a new digit stays readable for

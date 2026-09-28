@@ -8,10 +8,7 @@ import androidx.compose.ui.text.TextStyle
  * Get one from [OtpInputDefaults.textStyles].
  */
 @Immutable
-public class OtpTextStyles(
-    public val filledTextStyle: TextStyle,
-    public val placeholderTextStyle: TextStyle,
-) {
+public class OtpTextStyles(public val filledTextStyle: TextStyle, public val placeholderTextStyle: TextStyle) {
 
     public fun copy(
         filledTextStyle: TextStyle = this.filledTextStyle,

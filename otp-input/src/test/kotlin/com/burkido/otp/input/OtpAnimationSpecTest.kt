@@ -15,8 +15,8 @@ class OtpAnimationSpecTest {
         assertThat(spec.cellEntryAnimation).isEqualTo(CellAnimation.Scale)
         assertThat(spec.animationDuration).isEqualTo(150)
         assertThat(spec.shakeAmplitude).isEqualTo(OtpTokens.ShakeAmplitude)
-        assertThat(spec.shakeStepDuration).isEqualTo(OtpTokens.ShakeStepDuration)
-        assertThat(spec.shakeRepeatCount).isEqualTo(OtpTokens.ShakeRepeatCount)
+        assertThat(spec.shakeStepDuration).isEqualTo(OtpTokens.SHAKE_STEP_DURATION)
+        assertThat(spec.shakeRepeatCount).isEqualTo(OtpTokens.SHAKE_REPEAT_COUNT)
     }
 
     @Test

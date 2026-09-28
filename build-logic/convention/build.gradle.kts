@@ -8,6 +8,8 @@ dependencies {
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.dokka.gradlePlugin)
     compileOnly(libs.detekt.gradlePlugin)
+    implementation(libs.binary.compatibility.validator)
+    implementation(libs.kotlin.metadata.jvm)
 }
 
 gradlePlugin {

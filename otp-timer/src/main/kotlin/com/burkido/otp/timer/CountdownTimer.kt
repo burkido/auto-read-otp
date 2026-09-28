@@ -1,7 +1,7 @@
 package com.burkido.otp.timer
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -70,14 +70,14 @@ public fun CountdownTimer(
 
 @Composable
 private fun Separator(style: CountdownTimerStyle, dimensions: CountdownTimerDimensions) {
-    Spacer(Modifier.width(dimensions.boxSpacing))
     Text(
         text = ":",
         style = style.textStyle.copy(color = style.separatorColor),
         textAlign = TextAlign.Center,
-        modifier = Modifier.width(CountdownTimerTokens.SeparatorWidth),
+        modifier = Modifier
+            .padding(horizontal = dimensions.boxSpacing)
+            .width(CountdownTimerTokens.SeparatorWidth),
     )
-    Spacer(Modifier.width(dimensions.boxSpacing))
 }
 
 @Composable

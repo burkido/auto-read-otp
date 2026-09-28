@@ -103,7 +103,9 @@ internal fun CellContent(
                 textAlign = TextAlign.Center,
             )
         }
+
         state.isFocused -> CursorIndicator(config = cursorConfig)
+
         placeholder.isNotEmpty() -> Text(
             text = placeholder,
             style = textStyles.placeholderTextStyle,

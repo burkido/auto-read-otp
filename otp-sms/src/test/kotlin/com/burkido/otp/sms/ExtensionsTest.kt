@@ -20,8 +20,7 @@ class ExtensionsTest {
         }
 
         companion object CREATOR : Parcelable.Creator<TestParcelable> {
-            override fun createFromParcel(parcel: Parcel): TestParcelable =
-                TestParcelable(parcel.readString()!!)
+            override fun createFromParcel(parcel: Parcel): TestParcelable = TestParcelable(parcel.readString()!!)
 
             override fun newArray(size: Int): Array<TestParcelable?> = arrayOfNulls(size)
         }

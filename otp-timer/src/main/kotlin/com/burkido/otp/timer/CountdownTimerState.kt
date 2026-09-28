@@ -19,10 +19,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * Create it with [rememberCountdownTimerState] and pass it to [CountdownTimer], which keeps it running.
  */
 @Stable
-public class CountdownTimerState internal constructor(
-    public val endTimeMillis: Long,
-    private val clock: () -> Long,
-) {
+public class CountdownTimerState internal constructor(public val endTimeMillis: Long, private val clock: () -> Long) {
 
     public constructor(endTimeMillis: Long) : this(endTimeMillis, System::currentTimeMillis)
 

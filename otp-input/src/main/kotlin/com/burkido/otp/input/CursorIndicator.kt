@@ -16,10 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 
 @Composable
-internal fun CursorIndicator(
-    config: OtpCursorConfig,
-    modifier: Modifier = Modifier,
-) {
+internal fun CursorIndicator(config: OtpCursorConfig, modifier: Modifier = Modifier) {
     val transition = rememberInfiniteTransition(label = "cursor_blink")
     val alpha by transition.animateFloat(
         initialValue = 1f,

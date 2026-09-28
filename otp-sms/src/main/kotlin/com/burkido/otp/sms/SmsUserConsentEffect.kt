@@ -17,7 +17,7 @@ import kotlinx.coroutines.CancellationException
  * Reads a one-time code from the next incoming SMS using Google's SMS User Consent API.
  *
  * When a message arrives, Play services shows a sheet asking the user to share it. If they agree,
- * the first run of [codeLength] digits is passed to [onCodeReceived]. No SMS permission is needed.
+ * the first run of [codeLength] digits is passed to [onCodeReceive]. No SMS permission is needed.
  *
  * The flow is one shot: after a code, an error or a five minute timeout it stops listening.
  * Change [restartKey] to start again, for example after the user asks for a new code.
@@ -27,14 +27,14 @@ import kotlinx.coroutines.CancellationException
  *
  * SmsUserConsentEffect(
  *     codeLength = 6,
- *     onCodeReceived = { code -> otpState.fillOtp(code, 6) },
+ *     onCodeReceive = { code -> otpState.fillOtp(code, 6) },
  *     onError = { error -> Log.w("Otp", "SMS consent ended: $error") },
  *     restartKey = attempt,
  * )
  * ```
  *
  * @param codeLength Number of digits in the code. Must be positive.
- * @param onCodeReceived Called with the extracted code.
+ * @param onCodeReceive Called with the extracted code.
  * @param onError Called when the flow ends without a code. See [SmsConsentError].
  * @param senderPhoneNumber Only react to messages from this number. Null accepts any sender.
  * @param restartKey Any value. A new value starts a fresh listening session.
@@ -42,14 +42,14 @@ import kotlinx.coroutines.CancellationException
 @Composable
 public fun SmsUserConsentEffect(
     codeLength: Int,
-    onCodeReceived: (code: String) -> Unit,
+    onCodeReceive: (code: String) -> Unit,
     onError: (error: SmsConsentError) -> Unit,
     senderPhoneNumber: String? = null,
     restartKey: Any? = Unit,
 ) {
     SmsUserConsentEffect(
         codeLength = codeLength,
-        onCodeReceived = onCodeReceived,
+        onCodeReceive = onCodeReceive,
         onError = onError,
         senderPhoneNumber = senderPhoneNumber,
         restartKey = restartKey,
@@ -58,11 +58,12 @@ public fun SmsUserConsentEffect(
 }
 
 // Play services reports start failures as plain Exceptions, so there's nothing narrower to catch.
-@Suppress("TooGenericExceptionCaught")
+// A missing consent activity carries no detail beyond its type, so PromptUnavailable says it all.
+@Suppress("TooGenericExceptionCaught", "SwallowedException")
 @Composable
 internal fun SmsUserConsentEffect(
     codeLength: Int,
-    onCodeReceived: (code: String) -> Unit,
+    onCodeReceive: (code: String) -> Unit,
     onError: (error: SmsConsentError) -> Unit,
     senderPhoneNumber: String?,
     restartKey: Any?,
@@ -72,13 +73,13 @@ internal fun SmsUserConsentEffect(
 
     val context = LocalContext.current
     val currentCodeLength by rememberUpdatedState(codeLength)
-    val currentOnCodeReceived by rememberUpdatedState(onCodeReceived)
+    val currentOnCodeReceive by rememberUpdatedState(onCodeReceive)
     val currentOnError by rememberUpdatedState(onError)
     var isListening by remember(restartKey, senderPhoneNumber) { mutableStateOf(false) }
 
     fun dispatch(event: ConsentEvent) {
         when (event) {
-            is ConsentEvent.CodeReceived -> currentOnCodeReceived(event.code)
+            is ConsentEvent.CodeReceived -> currentOnCodeReceive(event.code)
             is ConsentEvent.Failed -> currentOnError(event.error)
             is ConsentEvent.ShowPrompt, ConsentEvent.Ignored -> Unit
         }
@@ -111,10 +112,12 @@ internal fun SmsUserConsentEffect(
                         currentOnError(SmsConsentError.PromptUnavailable)
                     }
                 }
+
                 is ConsentEvent.Failed -> {
                     if (event.error != SmsConsentError.UntrustedIntent) isListening = false
                     dispatch(event)
                 }
+
                 else -> dispatch(event)
             }
         }

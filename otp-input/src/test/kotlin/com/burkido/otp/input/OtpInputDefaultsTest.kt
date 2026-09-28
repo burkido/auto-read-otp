@@ -88,4 +88,7 @@ class OtpInputDefaultsTest {
 
 // Helpers to create Dp/Sp literals outside Compose context
 private inline val Number.dp get() = androidx.compose.ui.unit.Dp(this.toFloat())
-private inline val Number.sp get() = androidx.compose.ui.unit.TextUnit(this.toFloat(), androidx.compose.ui.unit.TextUnitType.Sp)
+private inline val Number.sp get() = androidx.compose.ui.unit.TextUnit(
+    this.toFloat(),
+    androidx.compose.ui.unit.TextUnitType.Sp,
+)

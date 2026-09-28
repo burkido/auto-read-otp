@@ -5,15 +5,10 @@ import androidx.compose.ui.unit.Dp
 
 /** Padding inside each OTP cell. Get one from [OtpInputDefaults.contentPadding]. */
 @Immutable
-public class OtpCellPadding(
-    public val horizontal: Dp,
-    public val vertical: Dp,
-) {
+public class OtpCellPadding(public val horizontal: Dp, public val vertical: Dp) {
 
-    public fun copy(
-        horizontal: Dp = this.horizontal,
-        vertical: Dp = this.vertical,
-    ): OtpCellPadding = OtpCellPadding(horizontal = horizontal, vertical = vertical)
+    public fun copy(horizontal: Dp = this.horizontal, vertical: Dp = this.vertical): OtpCellPadding =
+        OtpCellPadding(horizontal = horizontal, vertical = vertical)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

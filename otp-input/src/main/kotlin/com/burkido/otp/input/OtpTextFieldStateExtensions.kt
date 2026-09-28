@@ -17,7 +17,7 @@ public fun TextFieldState.isOtpComplete(length: Int): Boolean = text.length == l
  * ```kotlin
  * SmsUserConsentEffect(
  *     codeLength = 6,
- *     onCodeReceived = { code -> otpState.fillOtp(code, 6) },
+ *     onCodeReceive = { code -> otpState.fillOtp(code, 6) },
  *     onError = {},
  * )
  * ```

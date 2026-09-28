@@ -5,19 +5,29 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.dokka.gradle.DokkaExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("com.android.library")
         pluginManager.apply("org.jetbrains.dokka")
+        pluginManager.apply("org.jetbrains.kotlinx.kover")
 
         extensions.configure<LibraryExtension> {
             configureAndroidCommon(this)
         }
 
         configureDokka()
+        configureApiGuardrails()
     }
+}
+
+private fun Project.configureApiGuardrails() {
+    extensions.configure<KotlinAndroidProjectExtension> {
+        explicitApi()
+    }
+    configureApiValidation()
 }
 
 private fun Project.configureDokka() {

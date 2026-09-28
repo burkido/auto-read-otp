@@ -19,13 +19,13 @@ internal object OtpTokens {
     val CursorWidth = 2.dp
     val CursorHeight = 24.dp
     val CursorCornerRadius = 1.dp
-    const val CursorBlinkInterval = 500L
+    const val CURSOR_BLINK_INTERVAL = 500L
 
-    const val AnimationDuration = 150
+    const val ANIMATION_DURATION = 150
     val ShakeAmplitude = 8.dp
-    const val ShakeStepDuration = 50
-    const val ShakeRepeatCount = 3
+    const val SHAKE_STEP_DURATION = 50
+    const val SHAKE_REPEAT_COUNT = 3
 
-    const val MaskCharacter = '●'
-    const val MaskDelay = 300L
+    const val MASK_CHARACTER = '●'
+    const val MASK_DELAY = 300L
 }

@@ -73,10 +73,10 @@ public object OtpInputDefaults {
     public fun animationSpec(
         shakeOnError: Boolean = true,
         cellEntryAnimation: CellAnimation = CellAnimation.Scale,
-        animationDuration: Int = OtpTokens.AnimationDuration,
+        animationDuration: Int = OtpTokens.ANIMATION_DURATION,
         shakeAmplitude: Dp = OtpTokens.ShakeAmplitude,
-        shakeStepDuration: Int = OtpTokens.ShakeStepDuration,
-        shakeRepeatCount: Int = OtpTokens.ShakeRepeatCount,
+        shakeStepDuration: Int = OtpTokens.SHAKE_STEP_DURATION,
+        shakeRepeatCount: Int = OtpTokens.SHAKE_REPEAT_COUNT,
     ): OtpAnimationSpec = OtpAnimationSpec(
         shakeOnError = shakeOnError,
         cellEntryAnimation = cellEntryAnimation,
@@ -89,8 +89,8 @@ public object OtpInputDefaults {
     /** Masking is off by default. Turn it on for codes that shouldn't stay visible on screen. */
     public fun maskConfig(
         isMasked: Boolean = false,
-        maskCharacter: Char = OtpTokens.MaskCharacter,
-        maskDelay: Long = OtpTokens.MaskDelay,
+        maskCharacter: Char = OtpTokens.MASK_CHARACTER,
+        maskDelay: Long = OtpTokens.MASK_DELAY,
     ): OtpMaskConfig = OtpMaskConfig(
         isMasked = isMasked,
         maskCharacter = maskCharacter,
@@ -104,7 +104,7 @@ public object OtpInputDefaults {
         width: Dp = OtpTokens.CursorWidth,
         height: Dp = OtpTokens.CursorHeight,
         cornerRadius: Dp = OtpTokens.CursorCornerRadius,
-        blinkInterval: Long = OtpTokens.CursorBlinkInterval,
+        blinkInterval: Long = OtpTokens.CURSOR_BLINK_INTERVAL,
     ): OtpCursorConfig = OtpCursorConfig(
         color = color,
         width = width,

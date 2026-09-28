@@ -36,7 +36,7 @@ import com.burkido.otp.timer.rememberCountdownTimerState
 import kotlin.time.Duration.Companion.minutes
 
 @Composable
-fun VerificationScreen() {
+fun VerificationScreen(modifier: Modifier = Modifier) {
     val timerState = rememberCountdownTimerState(duration = CODE_LIFETIME)
     val defaultState = rememberTextFieldState()
     val outlinedState = rememberTextFieldState()
@@ -46,7 +46,7 @@ fun VerificationScreen() {
     val compactState = rememberTextFieldState()
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .safeDrawingPadding()
             .verticalScroll(rememberScrollState())
@@ -72,37 +72,55 @@ fun VerificationScreen() {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        DefaultOtpSample(defaultState, OTP_LENGTH,
-            onComplete = { otp -> Log.d(TAG, "Default complete: $otp") })
+        DefaultOtpSample(
+            defaultState,
+            OTP_LENGTH,
+            onComplete = { otp -> Log.d(TAG, "Default complete: $otp") },
+        )
 
         SectionDivider()
 
-        OutlinedOtpSample(outlinedState, OTP_LENGTH,
-            onComplete = { otp -> Log.d(TAG, "Outlined complete: $otp") })
+        OutlinedOtpSample(
+            outlinedState,
+            OTP_LENGTH,
+            onComplete = { otp -> Log.d(TAG, "Outlined complete: $otp") },
+        )
 
         SectionDivider()
 
-        UnderlineOtpSample(underlineState, OTP_LENGTH,
-            onComplete = { otp -> Log.d(TAG, "Underline complete: $otp") })
+        UnderlineOtpSample(
+            underlineState,
+            OTP_LENGTH,
+            onComplete = { otp -> Log.d(TAG, "Underline complete: $otp") },
+        )
 
         SectionDivider()
 
-        MidnightOtpSample(midnightState, OTP_LENGTH,
-            onComplete = { otp -> Log.d(TAG, "Midnight complete: $otp") })
+        MidnightOtpSample(
+            midnightState,
+            OTP_LENGTH,
+            onComplete = { otp -> Log.d(TAG, "Midnight complete: $otp") },
+        )
 
         SectionDivider()
 
-        PillOtpSample(pillState, OTP_LENGTH,
-            onComplete = { otp -> Log.d(TAG, "Pill complete: $otp") })
+        PillOtpSample(
+            pillState,
+            OTP_LENGTH,
+            onComplete = { otp -> Log.d(TAG, "Pill complete: $otp") },
+        )
 
         SectionDivider()
 
-        CompactOtpSample(compactState, OTP_LENGTH,
-            onComplete = { otp -> Log.d(TAG, "Compact complete: $otp") })
+        CompactOtpSample(
+            compactState,
+            OTP_LENGTH,
+            onComplete = { otp -> Log.d(TAG, "Compact complete: $otp") },
+        )
 
         SmsUserConsentEffect(
             codeLength = OTP_LENGTH,
-            onCodeReceived = { code ->
+            onCodeReceive = { code ->
                 Log.d(TAG, "SMS received: $code")
                 listOf(defaultState, outlinedState, underlineState, midnightState, pillState, compactState)
                     .forEach { it.fillOtp(code, OTP_LENGTH) }
@@ -128,9 +146,7 @@ fun VerificationScreen() {
 
 @Composable
 private fun SectionDivider() {
-    Spacer(modifier = Modifier.height(32.dp))
-    HorizontalDivider()
-    Spacer(modifier = Modifier.height(32.dp))
+    HorizontalDivider(modifier = Modifier.padding(vertical = 32.dp))
 }
 
 @Preview(showBackground = true, showSystemUi = true)

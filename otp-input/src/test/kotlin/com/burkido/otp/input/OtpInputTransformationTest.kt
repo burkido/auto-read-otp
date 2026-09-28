@@ -1,6 +1,5 @@
 package com.burkido.otp.input
 
-import androidx.compose.foundation.text.input.TextFieldState
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
@@ -11,13 +10,6 @@ import org.junit.Test
  * We test it by applying values through a [TextFieldState].
  */
 class OtpInputTransformationTest {
-
-    private fun createStateWithTransformation(
-        otpLength: Int,
-        initialText: String = "",
-    ): TextFieldState {
-        return TextFieldState(initialText = initialText)
-    }
 
     // Since OtpInputTransformation works inside BasicTextField composition,
     // we test the underlying logic patterns that the transformation checks.
