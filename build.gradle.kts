@@ -1,4 +1,3 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
@@ -8,11 +7,11 @@ plugins {
 }
 
 dokka {
-    moduleName.set("VerificationCodeReader")
+    moduleName.set("Auto Read OTP")
 }
 
-// Aggregate Dokka documentation from library subprojects
 dependencies {
-    dokka(project(":sms-reader"))
-    dokka(project(":otp-input-kit"))
+    dokka(projects.otpSms)
+    dokka(projects.otpInput)
+    dokka(projects.otpTimer)
 }
