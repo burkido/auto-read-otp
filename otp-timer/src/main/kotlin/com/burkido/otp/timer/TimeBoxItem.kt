@@ -2,41 +2,24 @@ package com.burkido.otp.timer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
-/**
- * Renders a single time unit (hours, minutes, or seconds) as a styled rounded box.
- *
- * @param time The numeric value to display (e.g. 5 → "05").
- * @param style Visual configuration.
- * @param size Size/padding configuration.
- * @param backgroundAlpha Alpha multiplier for the box background. Defaults to `1f`.
- */
 @Composable
 internal fun TimeBoxItem(
-    time: Long,
+    value: Long,
     style: CountdownTimerStyle,
-    size: CountdownTimerSize,
+    dimensions: CountdownTimerDimensions,
     modifier: Modifier = Modifier,
-    backgroundAlpha: Float = 1f,
 ) {
     Text(
-        text = time.toString().padStart(2, '0'),
-        style = style.textStyle.copy(fontSize = size.textSize),
+        text = value.toString().padStart(2, '0'),
+        style = style.textStyle,
         maxLines = 1,
         modifier = modifier
-            .wrapContentSize()
-            .background(
-                color = style.backgroundColor.copy(alpha = backgroundAlpha),
-                shape = RoundedCornerShape(CountdownTimerTokens.BoxCornerRadius),
-            )
-            .padding(
-                horizontal = size.horizontalPadding,
-                vertical = size.verticalPadding,
-            ),
+            .background(style.backgroundColor, RoundedCornerShape(CountdownTimerTokens.BoxCornerRadius))
+            .padding(horizontal = dimensions.horizontalPadding, vertical = dimensions.verticalPadding),
     )
 }

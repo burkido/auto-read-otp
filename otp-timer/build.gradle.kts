@@ -12,8 +12,9 @@ dokka {
 }
 
 dependencies {
-    implementation(platform(libs.compose.bom))
-    implementation(libs.compose.ui)
+    api(platform(libs.compose.bom))
+    api(libs.compose.runtime)
+    api(libs.compose.ui)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui.tooling.preview)
@@ -24,4 +25,6 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.robolectric)
     testImplementation(libs.test.ext.junit)
+    testImplementation(libs.compose.ui.test.junit4)
+    debugImplementation(libs.compose.ui.test.manifest)
 }

@@ -2,82 +2,48 @@ package com.burkido.otp.timer
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 
 /**
- * Contains default values and factory functions for [CountdownTimer].
- *
- * Follows the Material3 `*Defaults` pattern (e.g. `ButtonDefaults`).
- * Override only the values you need while keeping sensible defaults:
+ * Default values for [CountdownTimer]. Pass only what you want to change:
  *
  * ```kotlin
- * CountdownTimerDefaults.style(
- *     backgroundColor = Color.Red.copy(alpha = 0.1f)
- * )
+ * CountdownTimerDefaults.style(backgroundColor = MaterialTheme.colorScheme.errorContainer)
  * ```
  */
-object CountdownTimerDefaults {
+public object CountdownTimerDefaults {
 
     /**
-     * Creates a [CountdownTimerStyle] with Material3-derived defaults.
+     * Colors taken from the current [MaterialTheme].
      *
-     * @param backgroundColor Background color of each time box.
-     *   Defaults to [MaterialTheme.colorScheme.primaryContainer].
-     * @param textStyle Text style applied to time-unit values.
-     *   Defaults to a bold variant of [MaterialTheme.typography.labelLarge]
-     *   at the given [textSize].
-     * @param textSize Font size override for the time-unit text.
-     *   Ignored when [textStyle] is provided explicitly.
-     * @param separatorColor Color of the colon `:` separators.
-     *   Defaults to [MaterialTheme.colorScheme.onSurface].
+     * @param textSize Shortcut for changing only the font size of [textStyle].
      */
     @Composable
-    fun style(
-        backgroundColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.primaryContainer,
+    public fun style(
+        backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer,
         textStyle: TextStyle = MaterialTheme.typography.labelLarge.copy(
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
         textSize: TextUnit = TextUnit.Unspecified,
-        separatorColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurface,
-    ): CountdownTimerStyle {
-        val resolvedTextStyle = if (textSize != TextUnit.Unspecified) {
-            textStyle.copy(fontSize = textSize)
-        } else {
-            textStyle
-        }
-        return CountdownTimerStyle(
-            backgroundColor = backgroundColor,
-            textStyle = resolvedTextStyle,
-            separatorColor = separatorColor,
-        )
-    }
+        separatorColor: Color = MaterialTheme.colorScheme.onSurface,
+    ): CountdownTimerStyle = CountdownTimerStyle(
+        backgroundColor = backgroundColor,
+        textStyle = if (textSize == TextUnit.Unspecified) textStyle else textStyle.copy(fontSize = textSize),
+        separatorColor = separatorColor,
+    )
 
-    /**
-     * Creates a [CountdownTimerSize] with sensible defaults.
-     *
-     * Override only the values you need:
-     * ```kotlin
-     * CountdownTimerDefaults.size(textSize = 18.sp)
-     * ```
-     *
-     * @param verticalPadding Vertical padding inside each time box.
-     * @param horizontalPadding Horizontal padding inside each time box.
-     * @param boxSpacing Space between a time box and its adjacent colon separator.
-     * @param textSize Font size of the time-unit text.
-     */
-    fun size(
+    public fun dimensions(
         verticalPadding: Dp = CountdownTimerTokens.VerticalPadding,
         horizontalPadding: Dp = CountdownTimerTokens.HorizontalPadding,
         boxSpacing: Dp = CountdownTimerTokens.BoxSpacing,
-        textSize: TextUnit = CountdownTimerTokens.TextSize,
-    ): CountdownTimerSize = CountdownTimerSize(
+    ): CountdownTimerDimensions = CountdownTimerDimensions(
         verticalPadding = verticalPadding,
         horizontalPadding = horizontalPadding,
         boxSpacing = boxSpacing,
-        textSize = textSize,
     )
 }

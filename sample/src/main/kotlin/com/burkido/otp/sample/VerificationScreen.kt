@@ -19,22 +19,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.burkido.otp.input.fillOtp
+import com.burkido.otp.sample.showcase.AmberTimerSample
 import com.burkido.otp.sample.showcase.CompactOtpSample
+import com.burkido.otp.sample.showcase.DangerTimerSample
 import com.burkido.otp.sample.showcase.DefaultOtpSample
+import com.burkido.otp.sample.showcase.DefaultTimerSample
 import com.burkido.otp.sample.showcase.MidnightOtpSample
+import com.burkido.otp.sample.showcase.MidnightTimerSample
 import com.burkido.otp.sample.showcase.OutlinedOtpSample
 import com.burkido.otp.sample.showcase.PillOtpSample
 import com.burkido.otp.sample.showcase.UnderlineOtpSample
+import com.burkido.otp.sample.showcase.VioletTimerSample
 import com.burkido.otp.sms.SmsUserConsentEffect
 import com.burkido.otp.timer.CountdownTimer
-import com.burkido.otp.timer.CountdownTimerDefaults
 import com.burkido.otp.timer.rememberCountdownTimerState
+import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun VerificationScreen() {
-    val timerState = rememberCountdownTimerState(
-        endDate = System.currentTimeMillis() + java.util.concurrent.TimeUnit.MINUTES.toMillis(TIMER_MINUTES)
-    )
+    val timerState = rememberCountdownTimerState(duration = CODE_LIFETIME)
     val defaultState = rememberTextFieldState()
     val outlinedState = rememberTextFieldState()
     val underlineState = rememberTextFieldState()
@@ -64,7 +67,6 @@ fun VerificationScreen() {
         Spacer(modifier = Modifier.height(8.dp))
         CountdownTimer(
             state = timerState,
-            size = CountdownTimerDefaults.size(),
             onTimerFinish = { Log.d(TAG, "Countdown finished") },
         )
 
@@ -107,6 +109,20 @@ fun VerificationScreen() {
             },
             onError = { error -> Log.w(TAG, "SMS consent ended: $error") },
         )
+
+        SectionDivider()
+
+        Text(text = "Countdown timers", style = MaterialTheme.typography.headlineSmall)
+        Spacer(modifier = Modifier.height(16.dp))
+        DefaultTimerSample()
+        Spacer(modifier = Modifier.height(24.dp))
+        DangerTimerSample()
+        Spacer(modifier = Modifier.height(24.dp))
+        MidnightTimerSample()
+        Spacer(modifier = Modifier.height(24.dp))
+        AmberTimerSample()
+        Spacer(modifier = Modifier.height(24.dp))
+        VioletTimerSample()
     }
 }
 
@@ -125,4 +141,4 @@ private fun VerificationScreenPreview() {
 
 private const val OTP_LENGTH = 6
 private const val TAG = "VerificationScreen"
-private const val TIMER_MINUTES = 5L
+private val CODE_LIFETIME = 5.minutes

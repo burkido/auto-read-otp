@@ -1,114 +1,95 @@
 package com.burkido.otp.timer
 
-import android.os.CountDownTimer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.delay
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
- * State holder for [CountdownTimer] that owns the underlying [CountDownTimer] lifecycle.
+ * Counts down to [endTimeMillis], a wall clock time in milliseconds since the epoch.
  *
- * Create instances via [rememberCountdownTimerState] so the state survives
- * configuration changes through [rememberSaveable].
- *
- * @param endDate The countdown target time in milliseconds since epoch
- *   (e.g. `System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)`).
- *
- * @property remainingTime Remaining milliseconds. Updates every second and triggers
- *   recomposition automatically.
- * @property isFinished `true` once the timer reaches zero.
+ * The remaining time is always worked out from the clock rather than from ticks, so the timer stays
+ * correct after it leaves the screen and comes back, or after the process is recreated.
+ * Create it with [rememberCountdownTimerState] and pass it to [CountdownTimer], which keeps it running.
  */
 @Stable
-class CountdownTimerState(val endDate: Long) {
+public class CountdownTimerState internal constructor(
+    public val endTimeMillis: Long,
+    private val clock: () -> Long,
+) {
 
-    private var onTimerFinish: () -> Unit = {}
+    public constructor(endTimeMillis: Long) : this(endTimeMillis, System::currentTimeMillis)
 
-    private val countDownTimer: CountDownTimer by lazy { createCountDownTimer() }
-
-    var remainingTime: Long by mutableLongStateOf(
-        (endDate - System.currentTimeMillis()).coerceAtLeast(0L)
-    )
+    /** Time left, never negative. Updates once per second while a [CountdownTimer] shows this state. */
+    public var remaining: Duration by mutableStateOf(timeLeft())
         private set
 
-    var isFinished: Boolean by mutableStateOf(endDate <= 0L || endDate <= System.currentTimeMillis())
-        private set
+    public val isFinished: Boolean
+        get() = remaining == Duration.ZERO
 
-    /** Starts the countdown. If [endDate] is already in the past the timer finishes immediately. */
-    fun startTimer() {
-        if (endDate <= 0L || endDate <= System.currentTimeMillis()) {
-            remainingTime = 0L
-            isFinished = true
-            onTimerFinish()
-            return
+    internal var finishReported: Boolean = false
+
+    /** Updates [remaining] on every whole second until the end time is reached. */
+    internal suspend fun run() {
+        while (true) {
+            val left = timeLeft()
+            remaining = left
+            if (left == Duration.ZERO) return
+
+            // Wake up exactly when the displayed second changes instead of drifting with a fixed delay.
+            val untilNextSecond = left.inWholeMilliseconds % MILLIS_PER_SECOND
+            delay(if (untilNextSecond == 0L) MILLIS_PER_SECOND else untilNextSecond)
         }
-        countDownTimer.start()
     }
 
-    /** Cancels the countdown without triggering [onTimerFinish]. */
-    fun cancelTimer() {
-        countDownTimer.cancel()
-    }
+    private fun timeLeft(): Duration = (endTimeMillis - clock()).coerceAtLeast(0L).milliseconds
 
-    /**
-     * Registers a callback that fires once when the timer reaches zero.
-     * Call this before [startTimer]. Replacing the listener does not restart the timer.
-     */
-    fun setOnTimerFinishListener(action: () -> Unit) {
-        onTimerFinish = action
-    }
-
-    /**
-     * Converts [time] (milliseconds) into a [Triple] of `(hours, minutes, seconds)`.
-     */
-    fun getRemainingTimes(time: Long): Triple<Long, Long, Long> {
-        val totalSeconds = time / ONE_SECOND_MS
-        val hours = totalSeconds / ONE_HOUR_SECONDS
-        val minutes = (totalSeconds % ONE_HOUR_SECONDS) / ONE_MINUTE_SECONDS
-        val seconds = totalSeconds % ONE_MINUTE_SECONDS
-        return Triple(hours, minutes, seconds)
-    }
-
-    private fun createCountDownTimer(): CountDownTimer =
-        object : CountDownTimer(endDate - System.currentTimeMillis(), TICK_INTERVAL) {
-            override fun onTick(millisUntilFinished: Long) {
-                remainingTime = (endDate - System.currentTimeMillis()).coerceAtLeast(0L)
-            }
-
-            override fun onFinish() {
-                remainingTime = 0L
-                isFinished = true
-                onTimerFinish()
-            }
-        }
-
-    companion object {
-        private val TICK_INTERVAL = TimeUnit.SECONDS.toMillis(1)
-        private const val ONE_HOUR_SECONDS = 3600L
-        private const val ONE_MINUTE_SECONDS = 60L
-        private const val ONE_SECOND_MS = 1000L
-
-        internal val Saver = listSaver(
-            save = { listOf(it.endDate) },
-            restore = { CountdownTimerState(endDate = it[0] as Long) },
+    internal companion object {
+        val Saver: Saver<CountdownTimerState, Long> = Saver(
+            save = { it.endTimeMillis },
+            restore = { CountdownTimerState(it) },
         )
     }
 }
 
 /**
- * Creates and remembers a [CountdownTimerState] that survives configuration changes.
- *
- * The state is keyed on [endDate] — changing it creates a new timer.
- *
- * @param endDate The countdown target time in milliseconds since epoch.
+ * Remembers a timer that ends at [endTimeMillis], for example an expiry time sent by your backend.
+ * A different [endTimeMillis] creates a new timer.
  */
 @Composable
-fun rememberCountdownTimerState(endDate: Long): CountdownTimerState =
-    rememberSaveable(endDate, saver = CountdownTimerState.Saver) {
-        CountdownTimerState(endDate = endDate)
+public fun rememberCountdownTimerState(endTimeMillis: Long): CountdownTimerState =
+    rememberSaveable(endTimeMillis, saver = CountdownTimerState.Saver) {
+        CountdownTimerState(endTimeMillis)
     }
+
+/**
+ * Remembers a timer that ends [duration] after it's first created. The end time is saved, so
+ * rotating the device or coming back to the screen doesn't restart the countdown.
+ */
+@Composable
+public fun rememberCountdownTimerState(duration: Duration): CountdownTimerState =
+    rememberSaveable(duration, saver = CountdownTimerState.Saver) {
+        CountdownTimerState(System.currentTimeMillis() + duration.inWholeMilliseconds)
+    }
+
+/** Remaining time split for display. Seconds are rounded up so 00:00:00 only shows at the very end. */
+internal class TimeParts(val hours: Long, val minutes: Long, val seconds: Long)
+
+internal fun Duration.toTimeParts(): TimeParts {
+    val totalSeconds = (inWholeMilliseconds + MILLIS_PER_SECOND - 1) / MILLIS_PER_SECOND
+    return TimeParts(
+        hours = totalSeconds / SECONDS_PER_HOUR,
+        minutes = totalSeconds % SECONDS_PER_HOUR / SECONDS_PER_MINUTE,
+        seconds = totalSeconds % SECONDS_PER_MINUTE,
+    )
+}
+
+private const val MILLIS_PER_SECOND = 1_000L
+private const val SECONDS_PER_MINUTE = 60L
+private const val SECONDS_PER_HOUR = 3_600L

@@ -5,17 +5,41 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 
 /**
- * Visual styling for [CountdownTimer].
+ * Colors and text for [CountdownTimer]. Get one from [CountdownTimerDefaults.style].
  *
- * Create instances via [CountdownTimerDefaults.style].
- *
- * @param backgroundColor Background color of each time box.
- * @param textStyle Text style applied to each time-unit value (hours, minutes, seconds).
- * @param separatorColor Color of the colon `:` separators between boxes.
+ * @property backgroundColor Fill of each time box.
+ * @property textStyle Style of the digits, including their size and color.
+ * @property separatorColor Color of the colons between boxes.
  */
 @Immutable
-data class CountdownTimerStyle(
-    val backgroundColor: Color,
-    val textStyle: TextStyle,
-    val separatorColor: Color,
-)
+public class CountdownTimerStyle(
+    public val backgroundColor: Color,
+    public val textStyle: TextStyle,
+    public val separatorColor: Color,
+) {
+
+    public fun copy(
+        backgroundColor: Color = this.backgroundColor,
+        textStyle: TextStyle = this.textStyle,
+        separatorColor: Color = this.separatorColor,
+    ): CountdownTimerStyle = CountdownTimerStyle(
+        backgroundColor = backgroundColor,
+        textStyle = textStyle,
+        separatorColor = separatorColor,
+    )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CountdownTimerStyle) return false
+        return backgroundColor == other.backgroundColor &&
+            textStyle == other.textStyle &&
+            separatorColor == other.separatorColor
+    }
+
+    override fun hashCode(): Int {
+        var result = backgroundColor.hashCode()
+        result = 31 * result + textStyle.hashCode()
+        result = 31 * result + separatorColor.hashCode()
+        return result
+    }
+}

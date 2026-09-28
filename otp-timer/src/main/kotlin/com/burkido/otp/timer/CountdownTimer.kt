@@ -5,127 +5,95 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.seconds
 
 /**
- * Displays a countdown timer as `HH : MM : SS` time boxes.
+ * Shows the time left on [state] as `HH : MM : SS` boxes, and hides itself when it reaches zero.
  *
- * The composable manages the timer lifecycle automatically: it starts the clock
- * when first composed and cancels it when removed from the composition.
- * The entire row hides itself when the timer finishes.
- *
- * ### Basic usage
  * ```kotlin
- * val state = rememberCountdownTimerState(
- *     endDate = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)
- * )
+ * val timer = rememberCountdownTimerState(duration = 2.minutes)
  *
- * CountdownTimer(state = state)
+ * CountdownTimer(state = timer, onTimerFinish = { canResend = true })
  * ```
  *
- * ### Custom style
- * ```kotlin
- * CountdownTimer(
- *     state = state,
- *     style = CountdownTimerDefaults.style(
- *         backgroundColor = MaterialTheme.colorScheme.errorContainer
- *     ),
- *     size = CountdownTimerSize.Large,
- *     onTimerFinish = { /* resend button becomes enabled */ }
- * )
- * ```
+ * Screen readers announce the time as a sentence, like "4 minutes, 32 seconds remaining", when
+ * the timer is focused. It isn't a live region, so it won't interrupt the user every second.
  *
- * @param state A [CountdownTimerState] created via [rememberCountdownTimerState].
- * @param modifier Modifier for the root [Row].
- * @param style Visual configuration. Defaults to [CountdownTimerDefaults.style].
- * @param size Size/padding configuration. Defaults to [CountdownTimerDefaults.size] ([CountdownTimerSize.Medium]).
- * @param backgroundAlpha Alpha multiplier for the time-box backgrounds (0f–1f).
- * @param onTimerFinish Called once when the countdown reaches zero.
+ * @param onTimerFinish Called once when the countdown reaches zero, including when [state]
+ *   had already ended by the time this was first shown.
  */
 @Composable
-fun CountdownTimer(
+public fun CountdownTimer(
     state: CountdownTimerState,
     modifier: Modifier = Modifier,
     style: CountdownTimerStyle = CountdownTimerDefaults.style(),
-    size: CountdownTimerSize = CountdownTimerDefaults.size(),
-    backgroundAlpha: Float = 1f,
+    dimensions: CountdownTimerDimensions = CountdownTimerDefaults.dimensions(),
     onTimerFinish: () -> Unit = {},
 ) {
-    val latestOnTimerFinish by rememberUpdatedState(onTimerFinish)
+    val currentOnTimerFinish by rememberUpdatedState(onTimerFinish)
 
-    DisposableEffect(state) {
-        state.setOnTimerFinishListener { latestOnTimerFinish() }
-        state.startTimer()
-        onDispose { state.cancelTimer() }
+    LaunchedEffect(state) {
+        state.run()
+        if (!state.finishReported) {
+            state.finishReported = true
+            currentOnTimerFinish()
+        }
     }
 
     if (state.isFinished) return
 
-    val remainingTimes by remember(state) {
-        derivedStateOf { state.getRemainingTimes(state.remainingTime) }
-    }
-    val (hours, minutes, seconds) = remainingTimes
+    val parts = state.remaining.toTimeParts()
+    val description = remainingDescription(parts)
 
     Row(
-        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.clearAndSetSemantics { contentDescription = description },
     ) {
-        TimeBoxItem(time = hours, style = style, size = size, backgroundAlpha = backgroundAlpha)
-        Spacer(modifier = Modifier.width(size.boxSpacing))
-        Separator(style = style)
-        Spacer(modifier = Modifier.width(size.boxSpacing))
-        TimeBoxItem(time = minutes, style = style, size = size, backgroundAlpha = backgroundAlpha)
-        Spacer(modifier = Modifier.width(size.boxSpacing))
-        Separator(style = style)
-        Spacer(modifier = Modifier.width(size.boxSpacing))
-        TimeBoxItem(time = seconds, style = style, size = size, backgroundAlpha = backgroundAlpha)
+        TimeBoxItem(value = parts.hours, style = style, dimensions = dimensions)
+        Separator(style = style, dimensions = dimensions)
+        TimeBoxItem(value = parts.minutes, style = style, dimensions = dimensions)
+        Separator(style = style, dimensions = dimensions)
+        TimeBoxItem(value = parts.seconds, style = style, dimensions = dimensions)
     }
 }
 
 @Composable
-private fun Separator(style: CountdownTimerStyle) {
+private fun Separator(style: CountdownTimerStyle, dimensions: CountdownTimerDimensions) {
+    Spacer(Modifier.width(dimensions.boxSpacing))
     Text(
         text = ":",
         style = style.textStyle.copy(color = style.separatorColor),
-        modifier = Modifier.width(CountdownTimerTokens.SeparatorHorizontalPadding * 2),
+        textAlign = TextAlign.Center,
+        modifier = Modifier.width(CountdownTimerTokens.SeparatorWidth),
     )
+    Spacer(Modifier.width(dimensions.boxSpacing))
+}
+
+@Composable
+private fun remainingDescription(parts: TimeParts): String {
+    val pieces = buildList {
+        if (parts.hours > 0) add(pluralStringResource(R.plurals.otp_timer_hours, parts.hours.toInt(), parts.hours))
+        if (parts.hours > 0 || parts.minutes > 0) {
+            add(pluralStringResource(R.plurals.otp_timer_minutes, parts.minutes.toInt(), parts.minutes))
+        }
+        add(pluralStringResource(R.plurals.otp_timer_seconds, parts.seconds.toInt(), parts.seconds))
+    }
+    return stringResource(R.string.otp_timer_remaining, pieces.joinToString(", "))
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun CountdownTimerLargePreview() {
-    val state = rememberCountdownTimerState(
-        endDate = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(PREVIEW_DURATION),
-    )
-    CountdownTimer(state = state, size = CountdownTimerDefaults.size(textSize = 16.sp, verticalPadding = 6.dp, horizontalPadding = 8.dp))
+private fun CountdownTimerPreview() {
+    CountdownTimer(state = rememberCountdownTimerState(duration = 3_672.seconds))
 }
-
-@Preview(showBackground = true)
-@Composable
-private fun CountdownTimerMediumPreview() {
-    val state = rememberCountdownTimerState(
-        endDate = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(PREVIEW_DURATION),
-    )
-    CountdownTimer(state = state)
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun CountdownTimerSmallPreview() {
-    val state = rememberCountdownTimerState(
-        endDate = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(PREVIEW_DURATION),
-    )
-    CountdownTimer(state = state, size = CountdownTimerDefaults.size(textSize = 12.sp, verticalPadding = 1.dp, horizontalPadding = 5.dp))
-}
-
-private const val PREVIEW_DURATION = 3672L // 1h 1m 12s
