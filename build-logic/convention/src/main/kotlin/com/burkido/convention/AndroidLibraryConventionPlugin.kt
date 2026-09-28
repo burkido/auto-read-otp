@@ -33,10 +33,8 @@ private fun Project.configureApiGuardrails() {
 private fun Project.configureDokka() {
     val modulePath = projectDir.relativeTo(rootDir).invariantSeparatorsPath
 
-    // AGP 9 ships its own Kotlin integration, so Dokka can't discover source sets through KGP.
     extensions.configure<DokkaExtension> {
-        dokkaSourceSets.register("main") {
-            sourceRoots.from(file("src/main/kotlin"))
+        dokkaSourceSets.configureEach {
             sourceLink {
                 localDirectory.set(file("src/main/kotlin"))
                 remoteUrl("$REPOSITORY_URL/blob/main/$modulePath/src/main/kotlin")

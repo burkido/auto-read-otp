@@ -1,6 +1,6 @@
 plugins {
     `java-platform`
-    id("maven-publish")
+    id("burkido.publish")
 }
 
 dependencies {
@@ -8,13 +8,5 @@ dependencies {
         api(projects.otpSms)
         api(projects.otpInput)
         api(projects.otpTimer)
-    }
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("release") {
-            from(components["javaPlatform"])
-        }
     }
 }

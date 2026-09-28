@@ -1,5 +1,6 @@
 plugins {
     id("burkido.android.library")
+    id("burkido.publish")
     alias(libs.plugins.roborazzi)
 }
 

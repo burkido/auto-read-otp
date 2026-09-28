@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
     alias(libs.plugins.roborazzi) apply false
+    alias(libs.plugins.maven.publish) apply false
 }
 
 dokka {
