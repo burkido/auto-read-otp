@@ -3,14 +3,23 @@ package com.burkido.otp.input
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
 
-/**
- * Inner padding applied inside each OTP cell box.
- *
- * @param horizontal Padding on the left and right edges of the cell content.
- * @param vertical Padding on the top and bottom edges of the cell content.
- */
+/** Padding inside each OTP cell. Get one from [OtpInputDefaults.contentPadding]. */
 @Immutable
-data class OtpCellPadding(
-    val horizontal: Dp,
-    val vertical: Dp,
-)
+public class OtpCellPadding(
+    public val horizontal: Dp,
+    public val vertical: Dp,
+) {
+
+    public fun copy(
+        horizontal: Dp = this.horizontal,
+        vertical: Dp = this.vertical,
+    ): OtpCellPadding = OtpCellPadding(horizontal = horizontal, vertical = vertical)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is OtpCellPadding) return false
+        return horizontal == other.horizontal && vertical == other.vertical
+    }
+
+    override fun hashCode(): Int = 31 * horizontal.hashCode() + vertical.hashCode()
+}

@@ -15,9 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 
-/**
- * Internal blinking cursor indicator for focused OTP cells.
- */
 @Composable
 internal fun CursorIndicator(
     config: OtpCursorConfig,

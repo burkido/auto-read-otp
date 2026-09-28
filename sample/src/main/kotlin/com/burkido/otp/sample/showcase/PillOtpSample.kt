@@ -10,70 +10,42 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.burkido.otp.input.CellAnimation
-import com.burkido.otp.input.DefaultOtpCell
-import com.burkido.otp.input.OtpCursorConfig
 import com.burkido.otp.input.OtpInputDefaults
 import com.burkido.otp.input.OtpInputField
 
-private val PillColors
-    @Composable get() = OtpInputDefaults.colors(
-        focusedBorderColor = Color(0xFFFF6F00),
-        unfocusedBorderColor = Color(0xFFFFCC80),
-        filledBorderColor = Color(0xFFFF6F00),
-        errorBorderColor = Color(0xFFD32F2F),
-        focusedContainerColor = Color(0xFFFFF3E0),
-        unfocusedContainerColor = Color(0xFFF5F5F5),
-        filledContainerColor = Color(0xFFFFE0B2),
-        errorContainerColor = Color(0xFFFFEBEE),
-        textColor = Color(0xFF4A2C00),
-        cursorColor = Color(0xFFFF6F00),
-        placeholderColor = Color(0xFFFFCC80),
-    )
+private val Amber = Color(0xFFFF6F00)
+private val LightAmber = Color(0xFFFFCC80)
 
-private val PillDimensions
-    @Composable get() = OtpInputDefaults.dimensions(cornerRadius = 28.dp)
-
-private val PillAnimationSpec
-    @Composable get() = OtpInputDefaults.animationSpec(cellEntryAnimation = CellAnimation.FadeIn)
-
-private val PillMaskConfig
-    @Composable get() = OtpInputDefaults.maskConfig(isMasked = true)
-
-/**
- * Pill OTP input — warm amber palette, fully-rounded pill shape,
- * digits auto-masked after 300ms, FadeIn cell animation.
- */
+/** Warm amber pills that mask each digit shortly after it's typed. */
 @Composable
 fun PillOtpSample(
-    textFieldState: TextFieldState,
+    state: TextFieldState,
     otpLength: Int,
     modifier: Modifier = Modifier,
     onComplete: (String) -> Unit = {},
 ) {
-    val colors = PillColors
-    val dimensions = PillDimensions
-    val animationSpec = PillAnimationSpec
-    val maskConfig = PillMaskConfig
-
-    Text("Pill · Masked", style = MaterialTheme.typography.titleMedium)
+    Text("Pill, masked", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(12.dp))
     OtpInputField(
-        textFieldState = textFieldState,
+        state = state,
         otpLength = otpLength,
         modifier = modifier,
-        dimensions = dimensions,
+        colors = OtpInputDefaults.colors(
+            focusedBorderColor = Amber,
+            unfocusedBorderColor = LightAmber,
+            filledBorderColor = Amber,
+            errorBorderColor = Color(0xFFD32F2F),
+            focusedContainerColor = Color(0xFFFFF3E0),
+            unfocusedContainerColor = Color(0xFFF5F5F5),
+            filledContainerColor = Color(0xFFFFE0B2),
+            errorContainerColor = Color(0xFFFFEBEE),
+            textColor = Color(0xFF4A2C00),
+            cursorColor = Amber,
+            placeholderColor = LightAmber,
+        ),
+        dimensions = OtpInputDefaults.dimensions(cornerRadius = 28.dp),
+        animationSpec = OtpInputDefaults.animationSpec(cellEntryAnimation = CellAnimation.FadeIn),
+        maskConfig = OtpInputDefaults.maskConfig(isMasked = true),
         onComplete = onComplete,
-        cell = { _, char, focused, error ->
-            DefaultOtpCell(
-                char = char,
-                focused = focused,
-                isError = error,
-                colors = colors,
-                dimensions = dimensions,
-                animationSpec = animationSpec,
-                maskConfig = maskConfig,
-                cursorConfig = OtpCursorConfig(color = Color(0xFFFF6F00)),
-            )
-        },
     )
 }

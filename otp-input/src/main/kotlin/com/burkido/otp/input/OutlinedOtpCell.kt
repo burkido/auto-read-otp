@@ -7,27 +7,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 
 /**
- * Outlined (circle / pill) OTP cell with transparent background.
+ * A round cell with a transparent background. It's [DefaultOtpCell] with different defaults.
  *
- * A variant of [DefaultOtpCell] with transparent backgrounds and
- * a circular shape by default. Ideal for modern, minimal OTP designs.
- *
- * Use this inside the `cell` lambda of [OtpInputField]:
  * ```kotlin
- * OtpInputField(
- *     state = state,
- *     otpLength = 6,
- *     cell = { index, char, focused, error ->
- *         OutlinedOtpCell(char = char, focused = focused, isError = error)
- *     }
- * )
+ * OtpInputField(state = otpState, otpLength = 6) { cell ->
+ *     OutlinedOtpCell(state = cell)
+ * }
  * ```
  */
 @Composable
-fun OutlinedOtpCell(
-    char: Char?,
-    focused: Boolean,
-    isError: Boolean,
+public fun OutlinedOtpCell(
+    state: OtpCellState,
     modifier: Modifier = Modifier,
     placeholder: String = "",
     colors: OtpCellColors = OtpInputDefaults.colors(
@@ -36,21 +26,17 @@ fun OutlinedOtpCell(
         filledContainerColor = Color.Transparent,
         errorContainerColor = Color.Transparent,
     ),
-    dimensions: OtpCellDimensions = OtpInputDefaults.dimensions(
-        cellWidth = defaultDimensions().cellWidth,
-        cellHeight = defaultDimensions().cellWidth, // Square for circle shape
-    ),
+    // Square by default so CircleShape draws a circle rather than an oval.
+    dimensions: OtpCellDimensions = OtpInputDefaults.dimensions(cellHeight = OtpTokens.CellWidth),
     animationSpec: OtpAnimationSpec = OtpInputDefaults.animationSpec(),
     shape: Shape = CircleShape,
     maskConfig: OtpMaskConfig = OtpInputDefaults.maskConfig(),
-    cursorConfig: OtpCursorConfig = OtpCursorConfig(color = colors.cursorColor),
+    cursorConfig: OtpCursorConfig = OtpInputDefaults.cursorConfig(color = colors.cursorColor),
     textStyles: OtpTextStyles = OtpInputDefaults.textStyles(dimensions.textSize),
     contentPadding: OtpCellPadding = OtpInputDefaults.contentPadding(),
 ) {
     DefaultOtpCell(
-        char = char,
-        focused = focused,
-        isError = isError,
+        state = state,
         modifier = modifier,
         placeholder = placeholder,
         colors = colors,
@@ -63,8 +49,3 @@ fun OutlinedOtpCell(
         contentPadding = contentPadding,
     )
 }
-
-/**
- * Internal helper to avoid calling the composable function in a default argument.
- */
-private fun defaultDimensions(): OtpCellDimensions = OtpInputDefaults.dimensions()

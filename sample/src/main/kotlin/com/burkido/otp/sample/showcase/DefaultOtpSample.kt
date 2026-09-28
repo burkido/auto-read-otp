@@ -10,12 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.burkido.otp.input.OtpInputField
 
-/**
- * Default OTP input — rounded box cells with Material3 theming.
- */
 @Composable
 fun DefaultOtpSample(
-    textFieldState: TextFieldState,
+    state: TextFieldState,
     otpLength: Int,
     modifier: Modifier = Modifier,
     onComplete: (String) -> Unit = {},
@@ -23,7 +20,7 @@ fun DefaultOtpSample(
     Text("Default", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(12.dp))
     OtpInputField(
-        textFieldState = textFieldState,
+        state = state,
         otpLength = otpLength,
         modifier = modifier,
         onComplete = onComplete,

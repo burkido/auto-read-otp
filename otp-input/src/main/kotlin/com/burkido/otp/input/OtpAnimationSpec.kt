@@ -4,35 +4,67 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
 
 /**
- * Configures animations for OTP input cells.
+ * Animation settings for OTP cells. Get one from [OtpInputDefaults.animationSpec].
  *
- * Use [OtpInputDefaults.animationSpec] to create an instance
- * with sensible defaults.
+ * @property shakeOnError Shake the cells sideways when the field switches into the error state.
+ * @property cellEntryAnimation How a newly typed character appears.
+ * @property animationDuration Duration of color, border and entry animations, in milliseconds.
+ * @property shakeAmplitude How far a cell moves to each side while shaking.
+ * @property shakeStepDuration Duration of a single shake movement, in milliseconds.
+ * @property shakeRepeatCount Number of side to side movements in one shake.
  */
 @Immutable
-data class OtpAnimationSpec(
-    /** Whether to shake the input field on error. */
-    val shakeOnError: Boolean,
-    /** Animation applied when a character enters a cell. */
-    val cellEntryAnimation: CellAnimation,
-    /** Duration of entry/transition animations in milliseconds. */
-    val animationDuration: Int,
-    /** Maximum horizontal displacement of the cell during a shake, in dp. */
-    val shakeAmplitude: Dp,
-    /** Duration in milliseconds of each individual shake step. */
-    val shakeStepDuration: Int,
-    /** Number of oscillations performed during a shake. */
-    val shakeRepeatCount: Int,
-)
+public class OtpAnimationSpec(
+    public val shakeOnError: Boolean,
+    public val cellEntryAnimation: CellAnimation,
+    public val animationDuration: Int,
+    public val shakeAmplitude: Dp,
+    public val shakeStepDuration: Int,
+    public val shakeRepeatCount: Int,
+) {
 
-/** Possible animation styles when a new character is entered into a cell. */
-enum class CellAnimation {
-    /** No animation. */
+    public fun copy(
+        shakeOnError: Boolean = this.shakeOnError,
+        cellEntryAnimation: CellAnimation = this.cellEntryAnimation,
+        animationDuration: Int = this.animationDuration,
+        shakeAmplitude: Dp = this.shakeAmplitude,
+        shakeStepDuration: Int = this.shakeStepDuration,
+        shakeRepeatCount: Int = this.shakeRepeatCount,
+    ): OtpAnimationSpec = OtpAnimationSpec(
+        shakeOnError = shakeOnError,
+        cellEntryAnimation = cellEntryAnimation,
+        animationDuration = animationDuration,
+        shakeAmplitude = shakeAmplitude,
+        shakeStepDuration = shakeStepDuration,
+        shakeRepeatCount = shakeRepeatCount,
+    )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is OtpAnimationSpec) return false
+        return shakeOnError == other.shakeOnError &&
+            cellEntryAnimation == other.cellEntryAnimation &&
+            animationDuration == other.animationDuration &&
+            shakeAmplitude == other.shakeAmplitude &&
+            shakeStepDuration == other.shakeStepDuration &&
+            shakeRepeatCount == other.shakeRepeatCount
+    }
+
+    override fun hashCode(): Int {
+        var result = shakeOnError.hashCode()
+        result = 31 * result + cellEntryAnimation.hashCode()
+        result = 31 * result + animationDuration
+        result = 31 * result + shakeAmplitude.hashCode()
+        result = 31 * result + shakeStepDuration
+        result = 31 * result + shakeRepeatCount
+        return result
+    }
+}
+
+/** How a character appears when it's typed into a cell. */
+public enum class CellAnimation {
     None,
-    /** The cell scales up briefly. */
     Scale,
-    /** The character fades in. */
     FadeIn,
-    /** The character slides up into view. */
     SlideUp,
 }

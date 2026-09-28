@@ -2,36 +2,32 @@ package com.burkido.otp.input
 
 import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.TextFieldBuffer
-import androidx.compose.foundation.text.input.maxLength
-import androidx.compose.foundation.text.input.then
-import androidx.core.text.isDigitsOnly
+import androidx.compose.foundation.text.input.placeCursorAtEnd
 
 /**
- * An [InputTransformation] that restricts input to digits only
- * and enforces a maximum length. Used internally by the state-based
- * [OtpInputField] overload.
+ * Keeps a text field to at most [otpLength] ASCII digits.
  *
- * Developers can also use this directly:
- * ```kotlin
- * BasicTextField(
- *     state = textFieldState,
- *     inputTransformation = OtpInputTransformation(otpLength = 6)
- * )
- * ```
+ * Anything else in an edit is dropped instead of rejecting the whole edit, so pasting
+ * "Code: 123-456" leaves "123456". The cursor always ends up after the last digit.
+ * [OtpInputField] applies this for you. Use it directly only with your own BasicTextField.
  */
-class OtpInputTransformation(
-    otpLength: Int,
-) : InputTransformation {
+public class OtpInputTransformation(private val otpLength: Int) : InputTransformation {
 
-    private val maxLengthTransformation = InputTransformation.maxLength(otpLength)
+    init {
+        require(otpLength > 0) { "otpLength must be positive but was $otpLength" }
+    }
 
     override fun TextFieldBuffer.transformInput() {
-        // First apply max length
-        with(maxLengthTransformation) { transformInput() }
-
-        // Then filter non-digits
-        if (!asCharSequence().isDigitsOnly()) {
-            revertAllChanges()
+        val sanitized = sanitizeOtp(asCharSequence(), otpLength)
+        if (!asCharSequence().contentEquals(sanitized)) {
+            replace(0, length, sanitized)
         }
+        placeCursorAtEnd()
     }
+
+    override fun equals(other: Any?): Boolean = other is OtpInputTransformation && other.otpLength == otpLength
+
+    override fun hashCode(): Int = otpLength
+
+    override fun toString(): String = "OtpInputTransformation(otpLength=$otpLength)"
 }

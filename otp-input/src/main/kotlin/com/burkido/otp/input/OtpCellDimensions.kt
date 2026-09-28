@@ -5,18 +5,59 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 
 /**
- * Defines the sizing dimensions for an OTP input cell.
+ * Sizes used by an OTP cell. Get one from [OtpInputDefaults.dimensions].
  *
- * Use [OtpInputDefaults.dimensions] to create an instance
- * with sensible defaults, then override only the dimensions you want to change.
+ * @property spacing Gap between cells when no separator slot is given.
  */
 @Immutable
-data class OtpCellDimensions(
-    val cellWidth: Dp,
-    val cellHeight: Dp,
-    val borderWidth: Dp,
-    val focusedBorderWidth: Dp,
-    val cornerRadius: Dp,
-    val spacing: Dp,
-    val textSize: TextUnit,
-)
+public class OtpCellDimensions(
+    public val cellWidth: Dp,
+    public val cellHeight: Dp,
+    public val borderWidth: Dp,
+    public val focusedBorderWidth: Dp,
+    public val cornerRadius: Dp,
+    public val spacing: Dp,
+    public val textSize: TextUnit,
+) {
+
+    public fun copy(
+        cellWidth: Dp = this.cellWidth,
+        cellHeight: Dp = this.cellHeight,
+        borderWidth: Dp = this.borderWidth,
+        focusedBorderWidth: Dp = this.focusedBorderWidth,
+        cornerRadius: Dp = this.cornerRadius,
+        spacing: Dp = this.spacing,
+        textSize: TextUnit = this.textSize,
+    ): OtpCellDimensions = OtpCellDimensions(
+        cellWidth = cellWidth,
+        cellHeight = cellHeight,
+        borderWidth = borderWidth,
+        focusedBorderWidth = focusedBorderWidth,
+        cornerRadius = cornerRadius,
+        spacing = spacing,
+        textSize = textSize,
+    )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is OtpCellDimensions) return false
+        return cellWidth == other.cellWidth &&
+            cellHeight == other.cellHeight &&
+            borderWidth == other.borderWidth &&
+            focusedBorderWidth == other.focusedBorderWidth &&
+            cornerRadius == other.cornerRadius &&
+            spacing == other.spacing &&
+            textSize == other.textSize
+    }
+
+    override fun hashCode(): Int {
+        var result = cellWidth.hashCode()
+        result = 31 * result + cellHeight.hashCode()
+        result = 31 * result + borderWidth.hashCode()
+        result = 31 * result + focusedBorderWidth.hashCode()
+        result = 31 * result + cornerRadius.hashCode()
+        result = 31 * result + spacing.hashCode()
+        result = 31 * result + textSize.hashCode()
+        return result
+    }
+}

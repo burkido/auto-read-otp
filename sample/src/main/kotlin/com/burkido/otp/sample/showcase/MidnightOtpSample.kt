@@ -10,60 +10,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.burkido.otp.input.CellAnimation
-import com.burkido.otp.input.DefaultOtpCell
-import com.burkido.otp.input.OtpCursorConfig
 import com.burkido.otp.input.OtpInputDefaults
 import com.burkido.otp.input.OtpInputField
 
-private val MidnightColors
-    @Composable get() = OtpInputDefaults.colors(
-        focusedBorderColor = Color(0xFF00D4FF),
-        unfocusedBorderColor = Color(0xFF3A3A5C),
-        filledBorderColor = Color(0xFF00D4FF),
-        errorBorderColor = Color(0xFFFF4444),
-        focusedContainerColor = Color(0xFF16213E),
-        unfocusedContainerColor = Color(0xFF1A1A2E),
-        filledContainerColor = Color(0xFF0F3460),
-        errorContainerColor = Color(0xFF2E1A1A),
-        textColor = Color(0xFF00D4FF),
-        cursorColor = Color(0xFF00D4FF),
-        placeholderColor = Color(0xFF3A3A5C),
-    )
+private val Cyan = Color(0xFF00D4FF)
 
-private val MidnightAnimationSpec
-    @Composable get() = OtpInputDefaults.animationSpec(
-        cellEntryAnimation = CellAnimation.SlideUp,
-    )
-
-/**
- * Midnight OTP input — dark navy containers with cyan accent, SlideUp cell animation.
- */
+/** Dark navy cells with a cyan accent. Digits slide up as they're typed. */
 @Composable
 fun MidnightOtpSample(
-    textFieldState: TextFieldState,
+    state: TextFieldState,
     otpLength: Int,
     modifier: Modifier = Modifier,
     onComplete: (String) -> Unit = {},
 ) {
-    val colors = MidnightColors
-    val animationSpec = MidnightAnimationSpec
-
     Text("Midnight", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(12.dp))
     OtpInputField(
-        textFieldState = textFieldState,
+        state = state,
         otpLength = otpLength,
         modifier = modifier,
+        colors = OtpInputDefaults.colors(
+            focusedBorderColor = Cyan,
+            unfocusedBorderColor = Color(0xFF3A3A5C),
+            filledBorderColor = Cyan,
+            errorBorderColor = Color(0xFFFF4444),
+            focusedContainerColor = Color(0xFF16213E),
+            unfocusedContainerColor = Color(0xFF1A1A2E),
+            filledContainerColor = Color(0xFF0F3460),
+            errorContainerColor = Color(0xFF2E1A1A),
+            textColor = Cyan,
+            cursorColor = Cyan,
+            placeholderColor = Color(0xFF3A3A5C),
+        ),
+        animationSpec = OtpInputDefaults.animationSpec(cellEntryAnimation = CellAnimation.SlideUp),
         onComplete = onComplete,
-        cell = { _, char, focused, error ->
-            DefaultOtpCell(
-                char = char,
-                focused = focused,
-                isError = error,
-                colors = colors,
-                animationSpec = animationSpec,
-                cursorConfig = OtpCursorConfig(color = Color(0xFF00D4FF)),
-            )
-        },
     )
 }

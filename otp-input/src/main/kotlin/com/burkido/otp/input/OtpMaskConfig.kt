@@ -3,19 +3,32 @@ package com.burkido.otp.input
 import androidx.compose.runtime.Immutable
 
 /**
- * Configuration for masking (obscuring) characters in an OTP cell.
- *
- * When [isMasked] is true, each entered digit is shown briefly for [maskDelay]
- * milliseconds and then replaced by [maskCharacter] — mirroring the UX found
- * in native iOS/Android secure OTP fields.
- *
- * @param isMasked Whether to mask entered characters.
- * @param maskCharacter The character displayed once masking kicks in.
- * @param maskDelay How long (in ms) a digit stays visible before being masked.
+ * Hides entered digits behind [maskCharacter] after they have been visible for [maskDelay]
+ * milliseconds, the way password fields on phones do. Get one from [OtpInputDefaults.maskConfig].
  */
 @Immutable
-data class OtpMaskConfig(
-    val isMasked: Boolean,
-    val maskCharacter: Char,
-    val maskDelay: Long,
-)
+public class OtpMaskConfig(
+    public val isMasked: Boolean,
+    public val maskCharacter: Char,
+    public val maskDelay: Long,
+) {
+
+    public fun copy(
+        isMasked: Boolean = this.isMasked,
+        maskCharacter: Char = this.maskCharacter,
+        maskDelay: Long = this.maskDelay,
+    ): OtpMaskConfig = OtpMaskConfig(isMasked = isMasked, maskCharacter = maskCharacter, maskDelay = maskDelay)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is OtpMaskConfig) return false
+        return isMasked == other.isMasked && maskCharacter == other.maskCharacter && maskDelay == other.maskDelay
+    }
+
+    override fun hashCode(): Int {
+        var result = isMasked.hashCode()
+        result = 31 * result + maskCharacter.hashCode()
+        result = 31 * result + maskDelay.hashCode()
+        return result
+    }
+}

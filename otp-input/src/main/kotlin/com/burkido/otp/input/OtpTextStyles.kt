@@ -2,19 +2,27 @@ package com.burkido.otp.input
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 
 /**
- * State-aware text styles for an OTP cell.
- *
- * Allows distinct typography for filled cells (a character is present) vs.
- * unfocused empty cells that show a placeholder.
- *
- * @param filledTextStyle Style applied to the entered character.
- * @param placeholderTextStyle Style applied to the placeholder text.
+ * Text styles for a cell holding a character and for an empty cell showing the placeholder.
+ * Get one from [OtpInputDefaults.textStyles].
  */
 @Immutable
-data class OtpTextStyles(
-    val filledTextStyle: TextStyle,
-    val placeholderTextStyle: TextStyle,
-)
+public class OtpTextStyles(
+    public val filledTextStyle: TextStyle,
+    public val placeholderTextStyle: TextStyle,
+) {
+
+    public fun copy(
+        filledTextStyle: TextStyle = this.filledTextStyle,
+        placeholderTextStyle: TextStyle = this.placeholderTextStyle,
+    ): OtpTextStyles = OtpTextStyles(filledTextStyle = filledTextStyle, placeholderTextStyle = placeholderTextStyle)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is OtpTextStyles) return false
+        return filledTextStyle == other.filledTextStyle && placeholderTextStyle == other.placeholderTextStyle
+    }
+
+    override fun hashCode(): Int = 31 * filledTextStyle.hashCode() + placeholderTextStyle.hashCode()
+}

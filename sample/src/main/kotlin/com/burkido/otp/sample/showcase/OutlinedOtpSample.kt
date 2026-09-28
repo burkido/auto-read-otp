@@ -11,12 +11,9 @@ import androidx.compose.ui.unit.dp
 import com.burkido.otp.input.OtpInputField
 import com.burkido.otp.input.OutlinedOtpCell
 
-/**
- * Outlined OTP input — circular cells with transparent backgrounds.
- */
 @Composable
 fun OutlinedOtpSample(
-    textFieldState: TextFieldState,
+    state: TextFieldState,
     otpLength: Int,
     modifier: Modifier = Modifier,
     onComplete: (String) -> Unit = {},
@@ -24,12 +21,11 @@ fun OutlinedOtpSample(
     Text("Outlined", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(12.dp))
     OtpInputField(
-        textFieldState = textFieldState,
+        state = state,
         otpLength = otpLength,
         modifier = modifier,
         onComplete = onComplete,
-        cell = { _, char, focused, error ->
-            OutlinedOtpCell(char = char, focused = focused, isError = error)
-        },
-    )
+    ) { cell ->
+        OutlinedOtpCell(state = cell)
+    }
 }

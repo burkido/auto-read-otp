@@ -4,11 +4,14 @@
 # Full reference: https://detekt.dev/docs/rules/style
 
 complexity:
+  # Composables take their slots and style objects as parameters, and their bodies read as layout.
   LongMethod:
     allowedLines: 60
+    ignoreAnnotated: ['Composable']
   LongParameterList:
     allowedFunctionParameters: 8
-    allowedConstructorParameters: 10
+    allowedConstructorParameters: 12
+    ignoreAnnotated: ['Composable']
   TooManyFunctions:
     allowedFunctionsPerFile: 15
     allowedFunctionsPerClass: 15

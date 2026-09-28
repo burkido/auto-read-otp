@@ -11,12 +11,9 @@ import androidx.compose.ui.unit.dp
 import com.burkido.otp.input.OtpInputField
 import com.burkido.otp.input.UnderlineOtpCell
 
-/**
- * Underline OTP input — iOS-style digit above an animated bottom line, no border box.
- */
 @Composable
 fun UnderlineOtpSample(
-    textFieldState: TextFieldState,
+    state: TextFieldState,
     otpLength: Int,
     modifier: Modifier = Modifier,
     onComplete: (String) -> Unit = {},
@@ -24,12 +21,11 @@ fun UnderlineOtpSample(
     Text("Underline", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(12.dp))
     OtpInputField(
-        textFieldState = textFieldState,
+        state = state,
         otpLength = otpLength,
         modifier = modifier,
         onComplete = onComplete,
-        cell = { _, char, focused, error ->
-            UnderlineOtpCell(char = char, focused = focused, isError = error)
-        },
-    )
+    ) { cell ->
+        UnderlineOtpCell(state = cell)
+    }
 }

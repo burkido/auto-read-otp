@@ -1,30 +1,32 @@
 package com.burkido.otp.input
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 
 /**
- * Contains default values and factory functions for OTP input components.
+ * Default values for [OtpInputField] and the built-in cells.
  *
- * Follows the Material3 `*Defaults` pattern (e.g. `TextFieldDefaults`),
- * so developers can call `OtpInputDefaults.colors(focusedBorderColor = ...)` to
- * override only specific values while keeping sensible defaults.
+ * Each function takes every value as an optional argument, so you can change one thing and keep
+ * the rest:
+ *
+ * ```kotlin
+ * OtpInputDefaults.colors(focusedBorderColor = Color(0xFF00D4FF))
+ * ```
  */
-object OtpInputDefaults {
+public object OtpInputDefaults {
 
-    /**
-     * Creates an [OtpCellColors] instance with Material3 defaults.
-     * Override individual colors as needed.
-     */
+    /** Colors taken from the current [MaterialTheme]. */
     @Composable
-    fun colors(
+    public fun colors(
         focusedBorderColor: Color = MaterialTheme.colorScheme.primary,
         unfocusedBorderColor: Color = MaterialTheme.colorScheme.outline,
         errorBorderColor: Color = MaterialTheme.colorScheme.error,
@@ -50,10 +52,7 @@ object OtpInputDefaults {
         placeholderColor = placeholderColor,
     )
 
-    /**
-     * Creates an [OtpCellDimensions] instance with sensible defaults.
-     */
-    fun dimensions(
+    public fun dimensions(
         cellWidth: Dp = OtpTokens.CellWidth,
         cellHeight: Dp = OtpTokens.CellHeight,
         borderWidth: Dp = OtpTokens.BorderWidth,
@@ -71,10 +70,7 @@ object OtpInputDefaults {
         textSize = textSize,
     )
 
-    /**
-     * Creates an [OtpAnimationSpec] instance with sensible defaults.
-     */
-    fun animationSpec(
+    public fun animationSpec(
         shakeOnError: Boolean = true,
         cellEntryAnimation: CellAnimation = CellAnimation.Scale,
         animationDuration: Int = OtpTokens.AnimationDuration,
@@ -90,13 +86,8 @@ object OtpInputDefaults {
         shakeRepeatCount = shakeRepeatCount,
     )
 
-    /**
-     * Creates an [OtpMaskConfig] for obscuring entered digits.
-     *
-     * When [isMasked] is true each digit is shown for [maskDelay] ms before
-     * being replaced by [maskCharacter].
-     */
-    fun maskConfig(
+    /** Masking is off by default. Turn it on for codes that shouldn't stay visible on screen. */
+    public fun maskConfig(
         isMasked: Boolean = false,
         maskCharacter: Char = OtpTokens.MaskCharacter,
         maskDelay: Long = OtpTokens.MaskDelay,
@@ -106,13 +97,9 @@ object OtpInputDefaults {
         maskDelay = maskDelay,
     )
 
-    /**
-     * Creates an [OtpCursorConfig] with Material3-derived defaults.
-     *
-     * The cursor [color] defaults to the primary color of the current theme.
-     */
+    /** A cursor in the theme's primary color. */
     @Composable
-    fun cursorConfig(
+    public fun cursorConfig(
         color: Color = MaterialTheme.colorScheme.primary,
         width: Dp = OtpTokens.CursorWidth,
         height: Dp = OtpTokens.CursorHeight,
@@ -126,41 +113,25 @@ object OtpInputDefaults {
         blinkInterval = blinkInterval,
     )
 
-    /**
-     * Creates an [OtpCellPadding] for inner padding inside each cell box.
-     */
-    fun contentPadding(
+    public fun contentPadding(
         horizontal: Dp = OtpTokens.ContentPaddingHorizontal,
         vertical: Dp = OtpTokens.ContentPaddingVertical,
-    ): OtpCellPadding = OtpCellPadding(
-        horizontal = horizontal,
-        vertical = vertical,
-    )
+    ): OtpCellPadding = OtpCellPadding(horizontal = horizontal, vertical = vertical)
 
-    /**
-     * Creates an [OtpTextStyles] with state-aware text styles.
-     *
-     * [filledTextStyle] is applied to an entered character; [placeholderTextStyle]
-     * is applied to placeholder text in unfocused empty cells.
-     */
-    @Composable
-    fun textStyles(
+    public fun textStyles(
         textSize: TextUnit = OtpTokens.TextSize,
-        filledTextStyle: TextStyle = TextStyle(
-            fontSize = textSize,
-            fontWeight = FontWeight.Bold,
-        ),
-        placeholderTextStyle: TextStyle = TextStyle(
-            fontSize = textSize,
-            fontWeight = FontWeight.Light,
-        ),
+        filledTextStyle: TextStyle = TextStyle(fontSize = textSize, fontWeight = FontWeight.Bold),
+        placeholderTextStyle: TextStyle = TextStyle(fontSize = textSize, fontWeight = FontWeight.Light),
     ): OtpTextStyles = OtpTextStyles(
         filledTextStyle = filledTextStyle,
         placeholderTextStyle = placeholderTextStyle,
     )
 
-    /**
-     * Default shape for OTP cells.
-     */
-    fun shape(cornerRadius: Dp = OtpTokens.CornerRadius): Shape = RoundedCornerShape(cornerRadius)
+    public fun shape(cornerRadius: Dp = OtpTokens.CornerRadius): Shape = RoundedCornerShape(cornerRadius)
+
+    /** A number pad with autocorrect off. */
+    public val keyboardOptions: KeyboardOptions = KeyboardOptions(
+        keyboardType = KeyboardType.Number,
+        autoCorrectEnabled = false,
+    )
 }

@@ -4,47 +4,32 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.placeCursorAtEnd
 
+/** The current text as a plain String. */
+public val TextFieldState.otpValue: String
+    get() = text.toString()
+
+/** True once the field holds [length] characters. */
+public fun TextFieldState.isOtpComplete(length: Int): Boolean = text.length == length
+
 /**
- * Extension functions on [TextFieldState] to make it easy to work with OTP flows.
+ * Replaces the content with the first [length] digits of [otp], for example a code read from SMS.
  *
- * These are useful when combining the OTP input kit with the SMS reader library:
  * ```kotlin
- * val textFieldState = rememberTextFieldState()
- *
- * SmsUserConsent(smsCodeLength = 6,
- *     onOTPReceived = { otp -> textFieldState.fillOtp(otp, 6) },
- *     onError = { }
- * )
- *
- * OtpInputField(
- *     textFieldState = textFieldState,
- *     otpLength = 6,
- *     onComplete = { verifyOtp(it) }
+ * SmsUserConsentEffect(
+ *     codeLength = 6,
+ *     onCodeReceived = { code -> otpState.fillOtp(code, 6) },
+ *     onError = {},
  * )
  * ```
  */
-
-/** The current OTP value as a plain [String]. */
-val TextFieldState.otpValue: String
-    get() = text.toString()
-
-/** Whether the OTP is complete (all digits filled). */
-fun TextFieldState.isOtpComplete(length: Int): Boolean =
-    text.length == length
-
-/**
- * Fills the text field with the given OTP string.
- * Filters to digits only and limits to [length] characters.
- */
-fun TextFieldState.fillOtp(otp: String, length: Int) {
-    val filtered = otp.filter { it.isDigit() }.take(length)
+public fun TextFieldState.fillOtp(otp: String, length: Int) {
+    val sanitized = sanitizeOtp(otp, length)
     edit {
-        replace(0, this.length, filtered)
+        replace(0, this.length, sanitized)
         placeCursorAtEnd()
     }
 }
 
-/** Clears the OTP text field. */
-fun TextFieldState.clearOtp() {
+public fun TextFieldState.clearOtp() {
     clearText()
 }
