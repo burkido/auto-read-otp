@@ -1,0 +1,22 @@
+name: Feature request
+description: Suggest something the libraries could do.
+labels: [ enhancement ]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do
+      description: The problem you want solved, rather than a specific solution.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you'd like to see
+      description: How the API could look, if you have an idea.
+      render: kotlin
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you do today
+      description: Workarounds you're using at the moment, if any.

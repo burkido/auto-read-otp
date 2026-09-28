@@ -1,0 +1,36 @@
+name: Bug report
+description: Something doesn't work the way the docs say it should.
+labels: [ bug ]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: The smallest code or steps that show the problem. For SMS issues, include the message text with the code replaced.
+      render: kotlin
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Library version
+      placeholder: "2.0.0"
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and Android version
+      placeholder: "Pixel 8, Android 15"
+  - type: input
+    id: compose
+    attributes:
+      label: Compose BOM version
+      placeholder: "2026.05.00"
