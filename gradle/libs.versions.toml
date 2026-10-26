@@ -1,6 +1,6 @@
 [versions]
 agp = "9.1.0"
-kotlin = "2.3.21"
+kotlin = "2.4.21"
 dokka = "2.2.0"
 core-ktx = "1.18.0"
 lifecycle = "2.10.0"
@@ -15,7 +15,7 @@ roborazzi = "1.75.0"
 truth = "1.4.5"
 detekt = "2.0.0-alpha.6"
 compose-rules = "0.6.7"
-kover = "0.9.9"
+kover = "0.9.11"
 maven-publish = "0.37.0"
 binary-compatibility-validator = "0.18.2"
 
