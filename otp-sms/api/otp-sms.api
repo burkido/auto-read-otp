@@ -1,0 +1,54 @@
+public abstract interface class com/burkido/otp/sms/SmsConsentError {
+}
+
+public final class com/burkido/otp/sms/SmsConsentError$CodeNotFound : com/burkido/otp/sms/SmsConsentError {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/burkido/otp/sms/SmsConsentError$CodeNotFound;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/burkido/otp/sms/SmsConsentError$ConsentDenied : com/burkido/otp/sms/SmsConsentError {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/burkido/otp/sms/SmsConsentError$ConsentDenied;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/burkido/otp/sms/SmsConsentError$PromptUnavailable : com/burkido/otp/sms/SmsConsentError {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/burkido/otp/sms/SmsConsentError$PromptUnavailable;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/burkido/otp/sms/SmsConsentError$StartFailed : com/burkido/otp/sms/SmsConsentError {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun getCause ()Ljava/lang/Throwable;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/burkido/otp/sms/SmsConsentError$Timeout : com/burkido/otp/sms/SmsConsentError {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/burkido/otp/sms/SmsConsentError$Timeout;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/burkido/otp/sms/SmsConsentError$UntrustedIntent : com/burkido/otp/sms/SmsConsentError {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/burkido/otp/sms/SmsConsentError$UntrustedIntent;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/burkido/otp/sms/SmsUserConsentEffectKt {
+	public static final fun SmsUserConsentEffect (ILkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/Object;Landroidx/compose/runtime/Composer;II)V
+}
+

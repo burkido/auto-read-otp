@@ -8,6 +8,9 @@ dependencies {
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.dokka.gradlePlugin)
     compileOnly(libs.detekt.gradlePlugin)
+    compileOnly(libs.maven.publish.gradlePlugin)
+    implementation(libs.binary.compatibility.validator)
+    implementation(libs.kotlin.metadata.jvm)
 }
 
 gradlePlugin {
@@ -19,6 +22,10 @@ gradlePlugin {
         register("androidLibrary") {
             id = "burkido.android.library"
             implementationClass = "com.burkido.convention.AndroidLibraryConventionPlugin"
+        }
+        register("publish") {
+            id = "burkido.publish"
+            implementationClass = "com.burkido.convention.PublishConventionPlugin"
         }
     }
 }

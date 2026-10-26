@@ -19,20 +19,20 @@ argument-hint: 'Describe what you changed, e.g. "added dark mode toggle"'
 | `refactor` | Code change that neither fixes a bug nor adds a feature |
 | `perf` | Performance improvement |
 | `test` | Adding or updating tests |
-| `style` | Formatting, whitespace — no logic change |
+| `style` | Formatting and whitespace, no logic change |
 | `revert` | Reverts a previous commit |
 
 ## Rules
 
 1. Format: `<prefix>: <subject>`
-2. Subject must **not** start with an uppercase letter — use lowercase.
+2. Subject must **not** start with an uppercase letter. Use lowercase.
 3. Subject must be short (≤72 chars total line length) yet descriptive enough to understand the change without opening the diff.
 4. No trailing period.
 5. Scope is optional. If used: `<prefix>(<scope>): <subject>` (e.g. `fix(sms-reader): handle null bundle on resume`)
 
 ## Procedure
 
-1. Identify the **primary intent** of the change — pick the single most fitting prefix from the table above.
+1. Identify the **primary intent** of the change, then pick the single most fitting prefix from the table above.
 2. Write a subject that answers *what* changed and *why* in plain language, without restating the prefix word.
 3. If the change is breaking, append `!` after the prefix: `feat!: remove deprecated API`.
 
@@ -48,4 +48,4 @@ argument-hint: 'Describe what you changed, e.g. "added dark mode toggle"'
 
 ## PR Titles
 
-PR titles follow the same format. Use the prefix that matches the **overall** purpose of the branch. When a PR touches multiple concerns, pick the dominant one — typically `feat` or `fix` for product changes, `ci` for workflow-only PRs.
+PR titles follow the same format. Use the prefix that matches the **overall** purpose of the branch. When a PR touches multiple concerns, pick the dominant one: typically `feat` or `fix` for product changes, `ci` for workflow-only PRs.

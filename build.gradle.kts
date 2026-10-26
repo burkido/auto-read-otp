@@ -1,18 +1,41 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.dokka)
+    alias(libs.plugins.kover)
+    alias(libs.plugins.roborazzi) apply false
+    alias(libs.plugins.maven.publish) apply false
 }
 
 dokka {
-    moduleName.set("VerificationCodeReader")
+    moduleName.set("Auto Read OTP")
 }
 
-// Aggregate Dokka documentation from library subprojects
 dependencies {
-    dokka(project(":sms-reader"))
-    dokka(project(":otp-input-kit"))
+    dokka(projects.otpSms)
+    dokka(projects.otpInput)
+    dokka(projects.otpTimer)
+
+    kover(projects.otpSms)
+    kover(projects.otpInput)
+    kover(projects.otpTimer)
+}
+
+kover {
+    reports {
+        verify {
+            rule {
+                // A little under the current line coverage, so it only fails when coverage really drops.
+                minBound(75)
+            }
+        }
+        filters {
+            excludes {
+                // Previews are for the IDE and never run in tests.
+                annotatedBy("androidx.compose.ui.tooling.preview.Preview")
+            }
+        }
+    }
 }
