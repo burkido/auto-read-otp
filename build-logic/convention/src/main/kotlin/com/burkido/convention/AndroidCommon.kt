@@ -18,6 +18,12 @@ internal fun Project.configureAndroidCommon(extension: CommonExtension) {
 
     // Robolectric needs merged resources to inflate Compose and resolve strings.
     extension.testOptions.unitTests.isIncludeAndroidResources = true
+    extension.testOptions.unitTests.all {
+        it.jvmArgs(
+            "--add-opens=java.base/java.io=ALL-UNNAMED",
+            "--add-exports=java.base/jdk.internal.access=ALL-UNNAMED",
+        )
+    }
 
     extension.lint.apply {
         warningsAsErrors = true
