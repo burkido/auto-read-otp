@@ -19,7 +19,7 @@ API reference: [burkido.github.io/auto-read-otp](https://burkido.github.io/auto-
 
 ## Installation
 
-The libraries are on Maven Central, so no extra repository is needed. They require `minSdk` 24 and Jetpack Compose.
+The libraries are on Maven Central, so no extra repository is needed. They require `minSdk` 24, `compileSdk` 37 and Jetpack Compose.
 
 In `gradle/libs.versions.toml`:
 
