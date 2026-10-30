@@ -1,0 +1,21 @@
+{
+  "name": "auto-read-otp",
+  "interface": {
+    "displayName": "auto-read-otp"
+  },
+  "plugins": [
+    {
+      "name": "auto-read-otp",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/burkido/auto-read-otp.git",
+        "ref": "v2.0.0"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

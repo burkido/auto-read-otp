@@ -1,0 +1,43 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "auto-read-otp",
+  "version": "2.0.0",
+  "description": "Build OTP verification screens in Jetpack Compose with auto-read-otp: a per-digit code input, SMS code reading through the SMS User Consent API and a resend countdown timer, plus migration from 1.x.",
+  "author": {
+    "name": "burkido",
+    "url": "https://github.com/burkido"
+  },
+  "homepage": "https://burkido.github.io/auto-read-otp/",
+  "repository": "https://github.com/burkido/auto-read-otp",
+  "license": "MIT",
+  "keywords": [
+    "android",
+    "jetpack-compose",
+    "kotlin",
+    "otp",
+    "sms",
+    "verification-code"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "auto-read-otp",
+        "shortDescription": "OTP verification screens in Jetpack Compose",
+        "longDescription": "Add the auto-read-otp libraries to an Android app, build a verification screen with a per-digit code field, read the code from SMS through Google's SMS User Consent API without SMS permissions, show a resend countdown, and migrate code written for 1.x or 2.0.",
+        "developerName": "burkido",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Interactive",
+          "Read",
+          "Write"
+        ],
+        "websiteURL": "https://burkido.github.io/auto-read-otp/",
+        "defaultPrompt": [
+          "Add a 6 digit verification code screen that reads the code from SMS",
+          "Add a resend button with a countdown to my OTP screen",
+          "Migrate this project to the latest auto-read-otp"
+        ]
+      }
+    }
+  }
+}

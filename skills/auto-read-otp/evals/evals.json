@@ -1,0 +1,70 @@
+{
+  "skill_name": "auto-read-otp",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "My Compose app has a phone sign-in. After the user enters their number we call authApi.sendCode(phone), which returns expiresAt in epoch millis, and then show VerifyScreen. Build VerifyScreen with a 6 digit code field that fills itself from the SMS, a countdown until the code expires, and a resend button. Use auto-read-otp.",
+      "expected_output": "A screen using OtpInputField, SmsUserConsentEffect and CountdownTimer from the 2.x packages, verifying in onComplete, restarting SMS listening on resend and driving the timer from expiresAt.",
+      "files": [],
+      "expectations": [
+        "Adds io.github.burkido:otp-bom with otp-ui and otp-sms, not otp-input, otp-timer, com.github.burkido or JitPack",
+        "Imports CountdownTimer from com.burkido.otp.ui and SmsUserConsentEffect from com.burkido.otp.sms",
+        "Calls verify only from OtpInputField's onComplete; onCodeReceive only calls fillOtp",
+        "Uses one constant for otpLength, codeLength and the fillOtp length",
+        "Changes restartKey on SmsUserConsentEffect when the user resends",
+        "Uses rememberCountdownTimerState(endTimeMillis = ...) with the backend's expiresAt",
+        "Does not add RECEIVE_SMS or READ_SMS permissions, an app hash or a BroadcastReceiver"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "we upgraded auto-read-otp from 1.2.0 to 3.0.0 and nothing compiles anymore. the otp screen is in app/src/main/java/com/acme/auth/OtpScreen.kt, it uses SmsUserConsent, OtpInputField(textFieldState = otpState) with a custom cell lambda and rememberCountdownTimerState(endDate = ...). fix it",
+      "expected_output": "The migration workflow: find 1.x usages, replace coordinates and packages, convert each call site to its 2.x form, rerun the check until clean and compile.",
+      "files": [],
+      "expectations": [
+        "Runs or describes scripts/find-1x-usages.sh to list remaining 1.x usages",
+        "Replaces com.github.burkido coordinates with io.github.burkido and takes CountdownTimer from otp-ui, without adding otp-timer",
+        "Rewrites SmsUserConsent to SmsUserConsentEffect with codeLength, onCodeReceive and a SmsConsentError-based onError",
+        "Changes textFieldState = to state = and the four-argument cell lambda to one taking OtpCellState",
+        "Changes endDate = to endTimeMillis =",
+        "Mentions that 2.x extracts the first run of exactly codeLength digits instead of joining every digit"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Using auto-read-otp 2.0 on a Pixel 6 emulator. The OTP field works if I type but the SMS consent popup never shows up. I send the text from the emulator's extended controls right when the app starts, before navigating to the verify screen. What's wrong?",
+      "expected_output": "Explains that messages arriving before SmsUserConsentEffect starts are never forwarded, and walks through the other consent sheet checks.",
+      "files": [],
+      "expectations": [
+        "Identifies that the SMS was sent before SmsUserConsentEffect was in composition",
+        "Says the message needs a 4 to 10 character alphanumeric string with at least one digit",
+        "Mentions the emulator needs Google Play services",
+        "Suggests adb emu sms send after the verify screen is open",
+        "Does not suggest adding SMS permissions"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Users say when they enter a wrong code our OTP field shakes the first time but never again after that. We pass isError = state.wrongCode to OtpInputField and set wrongCode = true when the API returns 401.",
+      "expected_output": "Explains that the shake runs when isError turns from false to true, so wrongCode must be cleared when the user edits the code.",
+      "files": [],
+      "expectations": [
+        "Explains the shake only runs on a false to true change of isError",
+        "Resets the error when the code is edited, with snapshotFlow on the TextFieldState or in the ViewModel's onValueChange",
+        "Does not rebuild the shake animation by hand"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "I bumped the auto-read-otp BOM from 2.0.0 to 3.0.0 and now Gradle can't resolve io.github.burkido:otp-input or otp-timer, and none of the OtpInputField or CountdownTimer imports work",
+      "expected_output": "Explains that 3.0.0 merged otp-input and otp-timer into otp-ui, replaces both dependencies and switches the imports.",
+      "files": [],
+      "expectations": [
+        "Says OtpInputField and CountdownTimer are in otp-ui since 3.0.0",
+        "Replaces otp-input and otp-timer with otp-ui in the build files and the version catalog",
+        "Changes com.burkido.otp.input and com.burkido.otp.timer imports to com.burkido.otp.ui",
+        "Does not pin otp-input or otp-timer to 2.0.0 as a workaround"
+      ]
+    }
+  ]
+}

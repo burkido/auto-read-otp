@@ -63,6 +63,28 @@ jobs:
           path: build/reports/kover/
           retention-days: 14
 
+  skills:
+    name: Agent skills
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+
+      - name: Validate skills and version sync
+        run: node scripts/validate-skills.mjs
+
+      - name: Validate Claude Code marketplace and plugin
+        run: npx --yes @anthropic-ai/claude-code@2.1.310 plugin validate --strict .
+
+      - name: Check this repository has no 1.x usages
+        run: sh skills/auto-read-otp/scripts/find-1x-usages.sh .
+
   pr-title:
     name: Pull request title
     if: github.event_name == 'pull_request'

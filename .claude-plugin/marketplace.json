@@ -1,0 +1,32 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "auto-read-otp",
+  "description": "Agent skills for auto-read-otp, Jetpack Compose building blocks for one-time code screens.",
+  "owner": {
+    "name": "burkido",
+    "url": "https://github.com/burkido"
+  },
+  "plugins": [
+    {
+      "name": "auto-read-otp",
+      "source": {
+        "source": "github",
+        "repo": "burkido/auto-read-otp",
+        "ref": "v2.0.0"
+      },
+      "description": "Build OTP verification screens with otp-ui and otp-sms, and migrate from 1.x or 2.0.",
+      "category": "development",
+      "homepage": "https://burkido.github.io/auto-read-otp/",
+      "repository": "https://github.com/burkido/auto-read-otp",
+      "license": "MIT",
+      "keywords": [
+        "android",
+        "jetpack-compose",
+        "kotlin",
+        "otp",
+        "sms",
+        "verification-code"
+      ]
+    }
+  ]
+}
