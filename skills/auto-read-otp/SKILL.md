@@ -4,7 +4,7 @@ description: Builds one-time code (OTP) verification screens in Jetpack Compose 
 license: MIT
 metadata:
   author: burkido
-  version: "2.0.0" # x-release-please-version
+  version: "3.0.0" # x-release-please-version
   repository: https://github.com/burkido/auto-read-otp
 ---
 
@@ -56,7 +56,7 @@ If the project has `gradle/libs.versions.toml`, add:
 <!-- x-release-please-start-version -->
 ```toml
 [versions]
-otp = "2.0.0"
+otp = "3.0.0"
 
 [libraries]
 otp-bom = { module = "io.github.burkido:otp-bom", version.ref = "otp" }

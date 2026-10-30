@@ -31,7 +31,7 @@ In `gradle/libs.versions.toml`:
 <!-- x-release-please-start-version -->
 ```toml
 [versions]
-otp = "2.0.0"
+otp = "3.0.0"
 
 [libraries]
 otp-bom = { module = "io.github.burkido:otp-bom", version.ref = "otp" }
@@ -55,7 +55,7 @@ Without a version catalog:
 <!-- x-release-please-start-version -->
 ```kotlin
 dependencies {
-    implementation(platform("io.github.burkido:otp-bom:2.0.0"))
+    implementation(platform("io.github.burkido:otp-bom:3.0.0"))
     implementation("io.github.burkido:otp-ui")
     implementation("io.github.burkido:otp-sms")
 }
