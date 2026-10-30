@@ -13,8 +13,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.burkido.otp.input.OtpInputDefaults
-import com.burkido.otp.input.OtpInputField
+import com.burkido.otp.ui.OtpInputDefaults
+import com.burkido.otp.ui.OtpInputField
 
 private val AuroraBackground = Brush.linearGradient(
     listOf(Color(0xFF5B21B6), Color(0xFFDB2777), Color(0xFFF59E0B)),

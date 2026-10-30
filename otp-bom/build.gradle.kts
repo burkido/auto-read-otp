@@ -6,7 +6,6 @@ plugins {
 dependencies {
     constraints {
         api(projects.otpSms)
-        api(projects.otpInput)
-        api(projects.otpTimer)
+        api(projects.otpUi)
     }
 }

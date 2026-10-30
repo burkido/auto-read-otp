@@ -5,7 +5,7 @@ import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.burkido.otp.input.CellAnimation
+import com.burkido.otp.ui.CellAnimation
 
 enum class CellKind(val label: String, val composable: String) {
     Default("Default", "DefaultOtpCell"),

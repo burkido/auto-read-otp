@@ -38,13 +38,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.burkido.otp.input.OtpCellState
-import com.burkido.otp.input.OtpInputDefaults
-import com.burkido.otp.input.OtpInputField
-import com.burkido.otp.input.isOtpComplete
-import com.burkido.otp.timer.CountdownTimer
-import com.burkido.otp.timer.CountdownTimerDefaults
-import com.burkido.otp.timer.rememberCountdownTimerState
+import com.burkido.otp.ui.CountdownTimer
+import com.burkido.otp.ui.CountdownTimerDefaults
+import com.burkido.otp.ui.OtpCellState
+import com.burkido.otp.ui.OtpInputDefaults
+import com.burkido.otp.ui.OtpInputField
+import com.burkido.otp.ui.isOtpComplete
+import com.burkido.otp.ui.rememberCountdownTimerState
 import kotlin.time.Duration.Companion.minutes
 
 private val Phosphor = Color(0xFF3DFF8A)

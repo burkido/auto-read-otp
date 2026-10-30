@@ -30,9 +30,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.burkido.otp.input.OtpCellState
-import com.burkido.otp.input.OtpInputDefaults
-import com.burkido.otp.input.OtpInputField
+import com.burkido.otp.ui.OtpCellState
+import com.burkido.otp.ui.OtpInputDefaults
+import com.burkido.otp.ui.OtpInputField
 
 private val Desk = Color(0xFFEDE8DF)
 private val KeyFace = Color(0xFFFFFDF8)

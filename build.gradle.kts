@@ -15,12 +15,10 @@ dokka {
 
 dependencies {
     dokka(projects.otpSms)
-    dokka(projects.otpInput)
-    dokka(projects.otpTimer)
+    dokka(projects.otpUi)
 
     kover(projects.otpSms)
-    kover(projects.otpInput)
-    kover(projects.otpTimer)
+    kover(projects.otpUi)
 }
 
 kover {

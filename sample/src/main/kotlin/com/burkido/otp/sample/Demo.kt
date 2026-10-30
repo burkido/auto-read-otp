@@ -4,17 +4,17 @@ enum class Demo(val title: String, val summary: String, val modules: List<String
     SignIn(
         title = "Sign-in flow",
         summary = "Phone verification end to end: SMS autofill, expiry, resend, a wrong code and success.",
-        modules = listOf("otp-input", "otp-sms", "otp-timer"),
+        modules = listOf("otp-ui", "otp-sms"),
     ),
     Playground(
         title = "Playground",
         summary = "Change every option live and copy the code that draws it.",
-        modules = listOf("otp-input"),
+        modules = listOf("otp-ui"),
     ),
     Gallery(
         title = "Gallery",
         summary = "Seven designs built on the cell slot, from a PIN pad to a terminal.",
-        modules = listOf("otp-input", "otp-timer"),
+        modules = listOf("otp-ui"),
     ),
     SmsLab(
         title = "SMS lab",

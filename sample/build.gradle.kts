@@ -14,8 +14,7 @@ android {
 
 dependencies {
     implementation(projects.otpSms)
-    implementation(projects.otpInput)
-    implementation(projects.otpTimer)
+    implementation(projects.otpUi)
 
     implementation(libs.core.ktx)
     implementation(libs.activity.compose)

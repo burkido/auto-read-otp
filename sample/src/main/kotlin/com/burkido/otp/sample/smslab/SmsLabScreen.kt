@@ -35,10 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import com.burkido.otp.input.OtpInputDefaults
-import com.burkido.otp.input.OtpInputField
-import com.burkido.otp.input.clearOtp
-import com.burkido.otp.input.fillOtp
 import com.burkido.otp.sample.R
 import com.burkido.otp.sample.ui.ChoiceRow
 import com.burkido.otp.sample.ui.CodeBlock
@@ -49,6 +45,10 @@ import com.burkido.otp.sample.ui.SectionLabel
 import com.burkido.otp.sample.ui.fittedCellWidth
 import com.burkido.otp.sms.SmsConsentError
 import com.burkido.otp.sms.SmsUserConsentEffect
+import com.burkido.otp.ui.OtpInputDefaults
+import com.burkido.otp.ui.OtpInputField
+import com.burkido.otp.ui.clearOtp
+import com.burkido.otp.ui.fillOtp
 
 @Composable
 fun SmsLabScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {

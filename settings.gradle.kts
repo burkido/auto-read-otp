@@ -20,7 +20,6 @@ dependencyResolutionManagement {
 rootProject.name = "auto-read-otp"
 
 include(":otp-sms")
-include(":otp-input")
-include(":otp-timer")
+include(":otp-ui")
 include(":otp-bom")
 include(":sample")

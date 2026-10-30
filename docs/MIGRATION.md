@@ -1,28 +1,37 @@
-# Migrating from 1.x to 2.0
+# Migration guide
 
-2.0 moves the libraries to Maven Central, splits the countdown timer into its own artifact and cleans up the public API. The steps below cover everything that stops compiling.
+## From 2.0 to 3.0
 
-## Dependencies
+2.0.0 moved the countdown timer into its own `otp-timer` artifact. That was a mistake: the timer is small, adds no dependencies of its own, and is almost always used next to the code field. 3.0.0 puts the code field and the timer back together in one artifact, `otp-ui`. Nothing else changed.
+
+1. Replace `io.github.burkido:otp-input` and `io.github.burkido:otp-timer` with `io.github.burkido:otp-ui`, in your build files and version catalog.
+2. Replace `import com.burkido.otp.input.` and `import com.burkido.otp.timer.` with `import com.burkido.otp.ui.`.
+
+## From 1.x to 3.0
+
+2.0 moved the libraries to Maven Central and cleaned up the public API, and 3.0 puts the code field and the countdown timer in `otp-ui`. The steps below cover everything that stops compiling.
+
+### Dependencies
 
 Remove the JitPack repository if nothing else needs it, then replace the dependencies:
 
-| 1.x | 2.0 |
+| 1.x | 3.0 |
 |---|---|
 | `com.github.burkido:otp-bom` | `io.github.burkido:otp-bom` |
 | `com.github.burkido:auto-read-otp` | `io.github.burkido:otp-sms` |
-| `com.github.burkido:otp-input-kit` | `io.github.burkido:otp-input`, plus `io.github.burkido:otp-timer` if you use `CountdownTimer` |
+| `com.github.burkido:otp-input-kit` | `io.github.burkido:otp-ui` |
 
-## Packages
+### Packages
 
-| 1.x | 2.0 |
+| 1.x | 3.0 |
 |---|---|
 | `com.burkido.autoreadotp` | `com.burkido.otp.sms` |
-| `com.burkido.otpinputkit.entry`, `.entry.cell`, `.entry.style` | `com.burkido.otp.input` |
-| `com.burkido.otpinputkit.countdowntimer`, `.countdowntimer.style` | `com.burkido.otp.timer` |
+| `com.burkido.otpinputkit.entry`, `.entry.cell`, `.entry.style` | `com.burkido.otp.ui` |
+| `com.burkido.otpinputkit.countdowntimer`, `.countdowntimer.style` | `com.burkido.otp.ui` |
 
 Each library now has a single package, so most files need one import line per library.
 
-## SMS
+### SMS
 
 ```kotlin
 // 1.x
@@ -32,7 +41,7 @@ SmsUserConsent(
     onError = { message -> showError(message) },
 )
 
-// 2.0
+// 3.0
 SmsUserConsentEffect(
     codeLength = 6,
     onCodeReceive = { code -> state.fillOtp(code, 6) },
@@ -42,11 +51,11 @@ SmsUserConsentEffect(
 
 `onError` now receives a `SmsConsentError` instead of an English sentence, so you can decide what to show for each case and translate it. To listen again after a timeout or a resend, change the new `restartKey` parameter.
 
-The extracted code also changed. 1.x joined every digit in the message, so "Order 77, code 482913" gave `774829`. 2.0 returns the first run of exactly `codeLength` digits, and reports `CodeNotFound` when there isn't one.
+The extracted code also changed. 1.x joined every digit in the message, so "Order 77, code 482913" gave `774829`. 3.0 returns the first run of exactly `codeLength` digits, and reports `CodeNotFound` when there isn't one.
 
-## OTP input
+### OTP input
 
-| 1.x | 2.0 |
+| 1.x | 3.0 |
 |---|---|
 | `OtpInputField(textFieldState = ...)` | `OtpInputField(state = ...)` |
 | `cell = { index, char, focused, error -> ... }` | `cell = { cell -> ... }` with an `OtpCellState` |
@@ -73,9 +82,9 @@ Behavior changes you may notice:
 * The cursor only shows while the field has focus.
 * `UnderlineOtpCell` respects `cellHeight`.
 
-## Countdown timer
+### Countdown timer
 
-| 1.x | 2.0 |
+| 1.x | 3.0 |
 |---|---|
 | `rememberCountdownTimerState(endDate = ...)` | `rememberCountdownTimerState(endTimeMillis = ...)`, or `rememberCountdownTimerState(duration = 5.minutes)` |
 | `CountdownTimer(size = CountdownTimerDefaults.size(...))` | `CountdownTimer(dimensions = CountdownTimerDefaults.dimensions(...))` |
