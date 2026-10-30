@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [ main, development ]
+    branches: [ main ]
   push:
-    branches: [ main, development ]
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -28,8 +28,8 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
         with:
-          # Pull requests reuse the cache from the long lived branches but never write their own.
-          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/development' }}
+          # Pull requests reuse the cache from main but never write their own.
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
       - name: Cache Robolectric SDK jars
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
