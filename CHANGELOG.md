@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.0](https://github.com/burkido/auto-read-otp/compare/v2.0.0...v3.0.0) (2026-10-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* otp-input and otp-timer are replaced by a single otp-ui artifact with the package com.burkido.otp.ui. Replace both dependencies with io.github.burkido:otp-ui and change com.burkido.otp.input and com.burkido.otp.timer imports to com.burkido.otp.ui.
+
+### Features
+
+* add an agent skill for building OTP screens with coding agents ([6813521](https://github.com/burkido/auto-read-otp/commit/68135217b46cf06ada866c408d3d7cb5798e2a31))
+
+
+### Code Refactoring
+
+* merge otp-input and otp-timer into otp-ui ([6813521](https://github.com/burkido/auto-read-otp/commit/68135217b46cf06ada866c408d3d7cb5798e2a31))
+
 ## [2.0.0](https://github.com/burkido/auto-read-otp/compare/v1.2.0...v2.0.0) (2026-10-28)
 
 

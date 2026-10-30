@@ -12,7 +12,7 @@
       "source": {
         "source": "github",
         "repo": "burkido/auto-read-otp",
-        "ref": "v2.0.0"
+        "ref": "v3.0.0"
       },
       "description": "Build OTP verification screens with otp-ui and otp-sms, and migrate from 1.x or 2.0.",
       "category": "development",
