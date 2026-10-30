@@ -15,12 +15,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.burkido.otp.input.CellAnimation
-import com.burkido.otp.input.OtpInputDefaults
-import com.burkido.otp.input.OtpInputField
-import com.burkido.otp.timer.CountdownTimer
-import com.burkido.otp.timer.CountdownTimerDefaults
-import com.burkido.otp.timer.rememberCountdownTimerState
+import com.burkido.otp.ui.CellAnimation
+import com.burkido.otp.ui.CountdownTimer
+import com.burkido.otp.ui.CountdownTimerDefaults
+import com.burkido.otp.ui.OtpInputDefaults
+import com.burkido.otp.ui.OtpInputField
+import com.burkido.otp.ui.rememberCountdownTimerState
 import kotlin.time.Duration.Companion.minutes
 
 private val Gold = Color(0xFFE7C27D)

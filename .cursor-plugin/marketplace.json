@@ -1,0 +1,13 @@
+{
+  "name": "auto-read-otp",
+  "owner": {
+    "name": "burkido"
+  },
+  "plugins": [
+    {
+      "name": "auto-read-otp",
+      "source": "./",
+      "description": "Build OTP verification screens with otp-ui and otp-sms, and migrate from 1.x or 2.0."
+    }
+  ]
+}

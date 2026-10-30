@@ -37,13 +37,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import com.burkido.otp.input.CellAnimation
-import com.burkido.otp.input.OtpInputDefaults
-import com.burkido.otp.input.OtpInputField
 import com.burkido.otp.sample.R
 import com.burkido.otp.sample.ui.PulsingDot
 import com.burkido.otp.sample.ui.SampleCard
 import com.burkido.otp.sample.ui.fittedCellWidth
+import com.burkido.otp.ui.CellAnimation
+import com.burkido.otp.ui.OtpInputDefaults
+import com.burkido.otp.ui.OtpInputField
 import kotlinx.coroutines.delay
 
 private enum class HeroPhase { Waiting, Arrived, Filling, Verified }

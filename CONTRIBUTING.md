@@ -22,6 +22,33 @@ Each library keeps its public API in `api/<module>.api`. If you add, remove or c
 
 Commit the updated file with your change, so the API difference is visible in review. Removing or changing existing API breaks apps that depend on the library, so explain why it's needed in the pull request.
 
+## Agent skill
+
+[`skills/auto-read-otp`](skills/auto-read-otp) teaches coding agents how to use the libraries. Agents follow it more closely than the README, so when you change the public API or a behavior it describes, update the skill in the same pull request. Then run:
+
+```bash
+node scripts/validate-skills.mjs
+claude plugin validate --strict .   # if you have Claude Code installed
+```
+
+When the skill describes something new, mark it **Since x.y.z** with the version it will ship in. The skill tells agents to check the project's library version and skip anything newer, so apps on an older release don't get code that won't compile.
+
+### How the skill reaches agents
+
+`main` can document APIs that aren't on Maven Central yet, so agents install the skill from the release tag rather than from `main`:
+
+| Agent | Installs from | Pinned by |
+|---|---|---|
+| Claude Code | Tag `vX.Y.Z` | `source.ref` in `.claude-plugin/marketplace.json` |
+| Codex | Tag `vX.Y.Z` | `source.ref` in `.agents/plugins/marketplace.json` |
+| Gemini CLI | Source of the latest GitHub release | Gemini installs a release asset only when it is the only one, so the release job attaches the zip and its `.sha256` to make Gemini fall back to the tagged source |
+| Cursor | `main` | Cursor only tracks branches, so it relies on the **Since** markers |
+| Release zip | Tag `vX.Y.Z` | The release job |
+
+The release PR bumps every manifest version and both refs, and the validator fails if any of them disagree with `.release-please-manifest.json`. Don't edit them by hand. Agents pick up skill changes with the next release, so merge a skill fix with a `fix:` title if it shouldn't wait.
+
+[`evals/evals.json`](skills/auto-read-otp/evals/evals.json) lists prompts with the behavior we expect. When you fix a mistake agents make, add a case for it.
+
 ## Screenshot tests
 
 Cell styles and the timer are covered by Roborazzi screenshots in `src/test/screenshots`. If you change how something looks on purpose, record new images and commit them:

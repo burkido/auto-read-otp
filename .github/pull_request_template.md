@@ -13,3 +13,4 @@
 - [ ] `api/*.api` is updated if the public API changed
 - [ ] Screenshots are re-recorded if the look changed on purpose
 - [ ] README and KDoc reflect the change
+- [ ] `skills/auto-read-otp` reflects the change if it touches the public API or documented behavior

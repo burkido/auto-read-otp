@@ -23,9 +23,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.burkido.otp.input.OtpInputDefaults
-import com.burkido.otp.input.OtpInputField
-import com.burkido.otp.input.OutlinedOtpCell
+import com.burkido.otp.ui.OtpInputDefaults
+import com.burkido.otp.ui.OtpInputField
+import com.burkido.otp.ui.OutlinedOtpCell
 
 private val Paper = Color(0xFFFFF4E0)
 private val TicketInk = Color(0xFF1C1917)

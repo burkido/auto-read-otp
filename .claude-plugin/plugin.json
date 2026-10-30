@@ -1,0 +1,21 @@
+{
+  "name": "auto-read-otp",
+  "displayName": "auto-read-otp",
+  "version": "2.0.0",
+  "description": "Build OTP verification screens in Jetpack Compose with auto-read-otp: a per-digit code input, SMS code reading through the SMS User Consent API and a resend countdown timer, plus migration from 1.x.",
+  "author": {
+    "name": "burkido",
+    "url": "https://github.com/burkido"
+  },
+  "homepage": "https://burkido.github.io/auto-read-otp/",
+  "repository": "https://github.com/burkido/auto-read-otp",
+  "license": "MIT",
+  "keywords": [
+    "android",
+    "jetpack-compose",
+    "kotlin",
+    "otp",
+    "sms",
+    "verification-code"
+  ]
+}

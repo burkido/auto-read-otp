@@ -1,0 +1,5 @@
+{
+  "name": "auto-read-otp",
+  "version": "2.0.0",
+  "description": "Build OTP verification screens in Jetpack Compose with auto-read-otp: a per-digit code input, SMS code reading through the SMS User Consent API and a resend countdown timer, plus migration from 1.x."
+}

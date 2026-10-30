@@ -32,18 +32,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.burkido.otp.input.DefaultOtpCell
-import com.burkido.otp.input.OtpCellColors
-import com.burkido.otp.input.OtpInputDefaults
-import com.burkido.otp.input.OtpInputField
-import com.burkido.otp.input.OutlinedOtpCell
-import com.burkido.otp.input.UnderlineOtpCell
-import com.burkido.otp.input.clearOtp
 import com.burkido.otp.sample.ui.CodeBlock
 import com.burkido.otp.sample.ui.DemoScaffold
 import com.burkido.otp.sample.ui.SampleCard
 import com.burkido.otp.sample.ui.SectionLabel
 import com.burkido.otp.sample.ui.fittedCellWidth
+import com.burkido.otp.ui.DefaultOtpCell
+import com.burkido.otp.ui.OtpCellColors
+import com.burkido.otp.ui.OtpInputDefaults
+import com.burkido.otp.ui.OtpInputField
+import com.burkido.otp.ui.OutlinedOtpCell
+import com.burkido.otp.ui.UnderlineOtpCell
+import com.burkido.otp.ui.clearOtp
 
 @Composable
 fun PlaygroundScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {

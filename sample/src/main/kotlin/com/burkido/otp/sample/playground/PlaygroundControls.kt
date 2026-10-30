@@ -30,11 +30,11 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.burkido.otp.input.CellAnimation
 import com.burkido.otp.sample.R
 import com.burkido.otp.sample.ui.ChoiceRow
 import com.burkido.otp.sample.ui.SampleCard
 import com.burkido.otp.sample.ui.SectionLabel
+import com.burkido.otp.ui.CellAnimation
 import kotlin.math.roundToInt
 
 @Composable
