@@ -298,7 +298,7 @@ The remaining time is worked out from the clock, so the timer stays correct afte
 
 ## Using with AI coding agents
 
-This repository ships an [agent skill](skills/auto-read-otp/SKILL.md) that teaches coding agents the current API, the pitfalls of SMS consent and the migration from 1.x. It follows the [Agent Skills](https://agentskills.io) standard. Claude Code, Codex and Gemini CLI install it from the latest release, so it describes the newest version on Maven Central, and it checks which version your project uses before suggesting newer APIs.
+This repository ships an [agent skill](skills/auto-read-otp/SKILL.md) that teaches coding agents the current API, the pitfalls of SMS consent and the migration from 1.x. It follows the [Agent Skills](https://agentskills.io) standard. Claude Code and Codex install it from the latest release, so it describes the newest version on Maven Central, and it checks which version your project uses before suggesting newer APIs.
 
 ### Claude Code
 
@@ -325,21 +325,21 @@ cursor-agent plugin marketplace add https://github.com/burkido/auto-read-otp
 
 Then run `cursor-agent`, open `/plugin`, and install **auto-read-otp** from the Marketplace tab.
 
-### Gemini CLI
+### Antigravity CLI
 
 ```bash
-gemini extensions install https://github.com/burkido/auto-read-otp --auto-update
+agy plugin install https://github.com/burkido/auto-read-otp
 ```
 
-### Android Studio, claude.ai and other agents
+### Android Studio and other agents
 
-Every [release](https://github.com/burkido/auto-read-otp/releases) attaches an `auto-read-otp.zip`. Upload it to claude.ai under **Settings > Capabilities > Skills**, or unzip it into your project's skills directory:
+Every [release](https://github.com/burkido/auto-read-otp/releases) attaches an `auto-read-otp.zip`. Unzip it into your project's skills directory:
 
 | Agent | Directory |
 |---|---|
 | Android Studio | `.agent/skills/` |
 | Claude Code | `.claude/skills/` |
-| Codex, GitHub Copilot and others that read `.agents/skills` | `.agents/skills/` |
+| Codex, Antigravity, GitHub Copilot and others that read `.agents/skills` | `.agents/skills/` |
 
 ## Contributing
 
