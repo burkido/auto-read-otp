@@ -42,6 +42,7 @@ When the skill describes something new, mark it **Since x.y.z** with the version
 | Claude Code | Tag `vX.Y.Z` | `source.ref` in `.claude-plugin/marketplace.json` |
 | Codex | Tag `vX.Y.Z` | `source.ref` in `.agents/plugins/marketplace.json` |
 | Gemini CLI | Source of the latest GitHub release | Gemini installs a release asset only when it is the only one, so the release job attaches the zip and its `.sha256` to make Gemini fall back to the tagged source |
+| Antigravity CLI | Repository URL, read through the root `plugin.json` | Antigravity doesn't document which ref it clones or a way to pin one, so it relies on the **Since** markers |
 | Cursor | `main` | Cursor only tracks branches, so it relies on the **Since** markers |
 | Release zip | Tag `vX.Y.Z` | The release job |
 
